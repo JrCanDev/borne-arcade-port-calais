@@ -1,0 +1,58 @@
+ <script src="./headbreaker.js"></script>
+<body>
+  <div id="puzzle"></div>
+  <script>
+
+class Smooth {
+  draw(piece, size = 50, borderFill = 0) {
+    const offset = borderFill * 5 / size;
+
+    return [
+      -offset, -offset,
+      1 - offset, -offset,
+      2 - offset, piece.up ? -1 - offset : 0 - offset,
+      3 - offset, -offset,
+      4 + offset, -offset,
+      4 + offset, 1 - offset,
+      5 + offset, piece.right ? 2 - offset : 3 - offset,
+      4 + offset, 3 - offset,
+      4 + offset, 4 + offset,
+      3 - offset, 4 + offset,
+      2 - offset, piece.down ? 5 + offset : 4 + offset,
+      1 - offset, 4 + offset,
+      -offset, 4 + offset,
+      -offset, 3 - offset,
+      piece.left ? -1 - offset : 0 - offset, 2 - offset,
+      -offset, 1 - offset
+    ].map((it, index) => it * (index % 2 === 0 ? size : size) / 5)
+  }
+
+  isBezier() {
+    return false;
+  }
+}
+
+let vangogh = new Image();
+vangogh.src = 'testimage.png';
+vangogh.onload = () => {
+  const background = new headbreaker.Canvas('background-canvas', {
+    width: 800, height: 650,
+    pieceSize: 100, proximity: 20,
+    borderFill: 10, strokeWidth: 1,
+    lineSoftness: 0.12, image: vangogh,
+    outline: new Smooth()
+  });
+
+  background.adjustImagesToPuzzleHeight();
+  background.autogenerate({
+    horizontalPiecesCount: 5,
+    verticalPiecesCount: 5
+  });
+  background.draw();
+}
+  </script>
+  <div id="background-canvas"></div>
+</body>
+
+<style>
+</style>
