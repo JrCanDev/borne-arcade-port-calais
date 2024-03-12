@@ -596,7 +596,12 @@ function resumeGhosts() {
 
 function drawHelperGhost(ctx, x, y, d, b, s, a) { 
 	
-	if (s != -1) { 
+	var ghostImage = new Image();
+
+	ghostImage.src = "img/ghost1.png";
+	ctx.drawImage(ghostImage, x-15, y-16, 30, 30);
+
+	/*if (s != -1) { 
 		ctx.beginPath();
 		ctx.moveTo((x - 15), (y + 16));
 		ctx.lineTo((x - 15), (y + 16) - 18);
@@ -703,5 +708,5 @@ function drawHelperGhost(ctx, x, y, d, b, s, a) {
 		ctx.lineTo((x - 14.333) + 7, (y + 6) - 3);
 		ctx.lineTo((x - 14.333) + 3, (y + 6));
 		ctx.stroke();
-	}
+	}*/
 }
