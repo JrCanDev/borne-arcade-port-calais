@@ -1,5 +1,7 @@
 # Borne d'Arcade du Port de Calais
 
+Ce projet à été développé par Joshua Vandaële lors d'un stage se déroulant dans le cadre d'un projet entre le Port Boulogne Calais, VIIA, La Société des Ports du Détroit, la Ville de Calais, le SAS Coluche, JrCanDev, l'Université du Littoral Côte d'Opale et le Lycée Professionnel Pierre de Coubertin.
+
 - [Borne d'Arcade du Port de Calais](#borne-darcade-du-port-de-calais)
   - [Mise en marche](#mise-en-marche)
   - [Utilisation](#utilisation)
