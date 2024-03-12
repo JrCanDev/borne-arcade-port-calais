@@ -594,7 +594,12 @@ function resumeGhosts() {
 	resumeGhost('clyde');
 }
 
-function drawHelperGhost(ctx, x, y, d, b, s, a) { 
+function drawHelperGhost(ctx, x, y, direction, body_state, state, affraid) { 
+
+	const d = direction;
+	const b = body_state;
+	const s = state;
+	const a = affraid;
 	
 	var ghostImage = new Image();
 
