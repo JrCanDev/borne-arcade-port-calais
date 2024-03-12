@@ -12,6 +12,8 @@ function initBoard() {
 	var backgroundImage = new Image();
 	backgroundImage.src = "img/background.png";
 	BOARD_CANVAS_CONTEXT.drawImage(backgroundImage,0,0, 550, 550);
+	//loadImage("img/background.png").then(image => BOARD_CANVAS_CONTEXT.drawImage(backgroundImage,0,0, 550, 550)); // Will loaded the image AFTER the walls, and will hide everything
+	//Workarround in image-loader to pre-load images
 
 }
 
