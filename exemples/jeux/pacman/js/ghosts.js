@@ -595,32 +595,28 @@ function resumeGhosts() {
 }
 
 function drawHelperGhost(ctx, x, y, direction, body_state, state, affraid, color) { 
-
-	const d = direction;
-	const b = body_state;
-	const s = state;
-	const a = affraid;
 	
-	var ghostImage = new Image();
-	if(!color){
-		//Starting screen, color isn't available
-		//I don't know why for the moment, but lost too many time on it to figure out
-		ghostImage.src = `img/ghosts/ghost1.png`;
-	}
+	let usedImage = "GHOST_";
 
-	if(state==1)color="Affraid";
+	//Starting screen, color isn't available
+	//I don't know why for the moment, but lost too many time on it to figure out
+	if(!color)return;//On menu
+
+	if(state==1)color="AFFRAID";
+
+	usedImage = usedImage + color;
 	
 
 	if(direction==4){
-		ghostImage.src = `img/ghosts/ghost${color}Up.png`;
+		usedImage = usedImage + "_UP";
 	}else if(direction==1){
-		ghostImage.src = `img/ghosts/ghost${color}Right.png`;
+		usedImage = usedImage + "_RIGHT";
 	}else if(direction==2){
-		ghostImage.src = `img/ghosts/ghost${color}Down.png`;
+		usedImage = usedImage + "_DOWN";
 	}else if(direction==3){
-		ghostImage.src = `img/ghosts/ghost${color}Left.png`;
+		usedImage = usedImage + "_LEFT";
 	}
 
-	ctx.drawImage(ghostImage, x-16, y-16, 32, 32);
+	eval("ctx.drawImage("+usedImage+"_IMAGE, x-16, y-16, 32, 32);");
 
 }
