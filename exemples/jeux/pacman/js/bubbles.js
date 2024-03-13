@@ -57,16 +57,12 @@ function drawBubbles() {
 				ctx.fill();
 				ctx.closePath();*/
 
-				var bubbleImage = new Image();
-
 				if(type=="s"){
-					bubbleImage.src = "img/bubbles/superbubble.png";
+					ctx.drawImage(SUPER_BUBBLE_IMAGE, x-size/2, y-size/2, size, size);
 				}else if(type=="b"){
-					bubbleImage.src = "img/bubbles/bubble.png";
+					ctx.drawImage(BUBBLE_IMAGE, x-size/2, y-size/2, size, size);
 				}
 				
-
-				ctx.drawImage(bubbleImage, x-size/2, y-size/2, size, size);
 
 				BUBBLES_ARRAY.push( parseInt(correctionX(x, bubble)) + "," + parseInt(y) + ";" + line + ";" + bubble + ";" + type + ";0" );
 				i ++;
