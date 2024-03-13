@@ -170,10 +170,8 @@ function eraseFruit() {
 function drawFruit(ctx, f, x, y, size) {  
 	ctx.save();
 
-	var fruitImage = new Image();
-	fruitImage.src = `img/fruits/${f}.png`;
-
-	ctx.drawImage(fruitImage, x-size/2, y-size/2, size, size);
+	//Loads CHERRY_IMAGE, STRAWBERRY_IMAGE, ... See image-loader.js
+	ctx.drawImage(eval(f.toUpperCase()+"_IMAGE"), x-size/2, y-size/2, size, size);
 
 	
 	ctx.restore();

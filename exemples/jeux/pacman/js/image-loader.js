@@ -17,9 +17,27 @@ let BUBBLE_IMAGE;
 let SUPER_BUBBLE_IMAGE;
 let BACKGROUND_IMAGE;
 
+let CHERRY_IMAGE;
+let STRAWBERRY_IMAGE;
+let ORANGE_IMAGE;
+let APPLE_IMAGE;
+let MELON_IMAGE;
+let GALBOSS_IMAGE;
+let BELL_IMAGE;
+let KEY_IMAGE;
+
 async function preloadRequiredImages(){
     BACKGROUND_IMAGE = await loadImage("img/background.png");
     SUPER_BUBBLE_IMAGE = await loadImage("img/bubbles/superbubble.png");
     BUBBLE_IMAGE = await loadImage("img/bubbles/bubble.png");
+
+    CHERRY_IMAGE = await loadImage("img/fruits/cherry.png");
+    STRAWBERRY_IMAGE = await loadImage("img/fruits/strawberry.png");
+    ORANGE_IMAGE = await loadImage("img/fruits/orange.png");
+    APPLE_IMAGE = await loadImage("img/fruits/apple.png");
+    MELON_IMAGE = await loadImage("img/fruits/melon.png");
+    GALBOSS_IMAGE = await loadImage("img/fruits/galboss.png");
+    BELL_IMAGE = await loadImage("img/fruits/bell.png");
+    KEY_IMAGE = await loadImage("img/fruits/key.png");
 }
 preloadRequiredImages();
