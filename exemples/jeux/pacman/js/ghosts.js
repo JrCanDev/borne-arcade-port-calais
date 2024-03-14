@@ -2,7 +2,7 @@ var GHOST_BLINKY_CANVAS_CONTEXT = null;
 var GHOST_BLINKY_POSITION_X = 276;
 var GHOST_BLINKY_POSITION_Y = 204;
 var GHOST_BLINKY_DIRECTION = 1;
-var GHOST_BLINKY_COLOR = "#ed1b24";
+var GHOST_BLINKY_COLOR = 1//"#ed1b24";
 var GHOST_BLINKY_MOVING_TIMER = -1;
 var GHOST_BLINKY_MOVING = false;
 var GHOST_BLINKY_BODY_STATE = 0;
@@ -16,7 +16,7 @@ var GHOST_PINKY_CANVAS_CONTEXT = null;
 var GHOST_PINKY_POSITION_X = 276;
 var GHOST_PINKY_POSITION_Y = 258;
 var GHOST_PINKY_DIRECTION = 2;
-var GHOST_PINKY_COLOR = "#feaec9";
+var GHOST_PINKY_COLOR = 2//"#feaec9";
 var GHOST_PINKY_MOVING_TIMER = -1;
 var GHOST_PINKY_MOVING = false;
 var GHOST_PINKY_BODY_STATE = 1;
@@ -30,7 +30,7 @@ var GHOST_INKY_CANVAS_CONTEXT = null;
 var GHOST_INKY_POSITION_X = 238;
 var GHOST_INKY_POSITION_Y = 258;
 var GHOST_INKY_DIRECTION = 3;
-var GHOST_INKY_COLOR = "#4adecb";
+var GHOST_INKY_COLOR = 3//"#4adecb";
 var GHOST_INKY_MOVING_TIMER = -1;
 var GHOST_INKY_MOVING = false;
 var GHOST_INKY_BODY_STATE = 2;
@@ -44,7 +44,7 @@ var GHOST_CLYDE_CANVAS_CONTEXT = null;
 var GHOST_CLYDE_POSITION_X = 314;
 var GHOST_CLYDE_POSITION_Y = 258;
 var GHOST_CLYDE_DIRECTION = 4;
-var GHOST_CLYDE_COLOR = "#f99c00";
+var GHOST_CLYDE_COLOR = 4//"#f99c00";
 var GHOST_CLYDE_MOVING_TIMER = -1;
 var GHOST_CLYDE_MOVING = false;
 var GHOST_CLYDE_BODY_STATE = 3;
@@ -54,7 +54,7 @@ var GHOST_CLYDE_AFFRAID_TIMER = null;
 var GHOST_CLYDE_AFFRAID_STATE = 0;
 var GHOST_CLYDE_TUNNEL = false;
 
-var GHOST_AFFRAID_COLOR = "#2d3eff";
+var GHOST_AFFRAID_COLOR = "Affraid";//"#2d3eff";
 var GHOST_AFFRAID_FINISH_COLOR = "#fff";
 var GHOST_POSITION_STEP = 2;
 var GHOST_MOVING_SPEED = 15;
@@ -140,7 +140,7 @@ function drawGhost(ghost) {
 
 	var ctx = getGhostCanevasContext(ghost);
 	
-	if (eval('GHOST_' + ghost.toUpperCase() + '_STATE === 0')) { 
+	/*if (eval('GHOST_' + ghost.toUpperCase() + '_STATE === 0')) { 
 		eval('ctx.fillStyle = GHOST_' + ghost.toUpperCase() + '_COLOR');
 	} else { 
 		if (eval('GHOST_' + ghost.toUpperCase() + '_AFFRAID_STATE === 1')) { 
@@ -148,10 +148,10 @@ function drawGhost(ghost) {
 		} else { 
 			eval('ctx.fillStyle = GHOST_AFFRAID_COLOR');
 		}
-	}
-	eval('drawHelperGhost(ctx, GHOST_' + ghost.toUpperCase() + '_POSITION_X, GHOST_' + ghost.toUpperCase() + '_POSITION_Y, GHOST_' + ghost.toUpperCase() + '_DIRECTION, GHOST_' + ghost.toUpperCase() + '_BODY_STATE, GHOST_' + ghost.toUpperCase() + '_STATE, GHOST_' + ghost.toUpperCase() + '_AFFRAID_STATE)');
+	}*/
+	eval('drawHelperGhost(ctx, GHOST_' + ghost.toUpperCase() + '_POSITION_X, GHOST_' + ghost.toUpperCase() + '_POSITION_Y, GHOST_' + ghost.toUpperCase() + '_DIRECTION, GHOST_' + ghost.toUpperCase() + '_BODY_STATE, GHOST_' + ghost.toUpperCase() + '_STATE, GHOST_' + ghost.toUpperCase() + '_AFFRAID_STATE, GHOST_' + ghost.toUpperCase() + '_COLOR)');
 	
-	ctx.closePath();
+	//ctx.closePath();
 	
 	
 }
@@ -594,114 +594,29 @@ function resumeGhosts() {
 	resumeGhost('clyde');
 }
 
-function drawHelperGhost(ctx, x, y, d, b, s, a) { 
+function drawHelperGhost(ctx, x, y, direction, body_state, state, affraid, color) { 
 	
-	if (s != -1) { 
-		ctx.beginPath();
-		ctx.moveTo((x - 15), (y + 16));
-		ctx.lineTo((x - 15), (y + 16) - 18);
-		ctx.bezierCurveTo((x - 15), (y + 16) - 26, (x - 15) + 6, (y + 16) - 32, (x - 15) + 14, (y + 16) - 32);
-		ctx.bezierCurveTo((x - 15) + 22, (y + 16) - 32, (x - 15) + 28, (y + 16) - 26, (x - 15) + 28, (y + 16) - 18);
-		ctx.lineTo((x - 15) + 28, (y + 16));
-		if (b < 4) { 
-			ctx.lineTo((x - 15) + 23.333, (y + 16) - 5.333);
-			ctx.lineTo((x - 15) + 18.666, (y + 16));
-			ctx.lineTo((x - 15) + 14, (y + 16) - 5.333);
-			ctx.lineTo((x - 15) + 9.333, (y + 16));
-			ctx.lineTo((x - 15) + 4.666, (y + 16) - 5.333);
-		} else { 
-			ctx.lineTo((x - 15) + 24.333, (y + 16) - 5.333);
-			ctx.lineTo((x - 15) + 20.666, (y + 16));
-			ctx.lineTo((x - 15) + 17.333, (y + 16) - 5.333);
-			ctx.lineTo((x - 15) + 12.666, (y + 16));
-			ctx.lineTo((x - 15) + 9, (y + 16) - 5.333);
-			ctx.lineTo((x - 15) + 5.333, (y + 16));
-			ctx.lineTo((x - 15) + 2.666, (y + 16) - 5.333);
-		}
-		ctx.lineTo((x - 15), (y + 16) );
-		ctx.fill();
-	}
+	let usedImage = "GHOST_";
 
-	var eyesX = 0;
-	var eyesY = 0;
+	//Starting screen, color isn't available
+	//I don't know why for the moment, but lost too many time on it to figure out
+	if(!color)return;//On menu
+
+	if(state==1)color="AFFRAID";
+
+	usedImage = usedImage + color;
 	
-	if (d === 4) { 
-		eyesY = -5;
-	} else if (d === 1) { 
-		eyesX = +2;
-	} else if (d === 2) { 
-		eyesY = 0;
-		eyesY = +5;
-	} else if (d === 3) { 
-		eyesX = -3;
+
+	if(direction==4){
+		usedImage = usedImage + "_UP";
+	}else if(direction==1){
+		usedImage = usedImage + "_RIGHT";
+	}else if(direction==2){
+		usedImage = usedImage + "_DOWN";
+	}else if(direction==3){
+		usedImage = usedImage + "_LEFT";
 	}
 
-	if (s === 0 || s === -1) { 
-		ctx.fillStyle = "white";
-		ctx.beginPath();
-		ctx.moveTo((x - 15) + 8 + eyesX, (y + 16) - 24 + eyesY);
-		ctx.bezierCurveTo((x - 15) + 5 + eyesX, (y + 16) - 24 + eyesY, (x - 15) + 4 + eyesX, (y + 16) - 21 + eyesY, (x - 15) + 4 + eyesX, (y + 16) - 19 + eyesY);
-		ctx.bezierCurveTo((x - 15) + 4 + eyesX, (y + 16) - 17 + eyesY, (x - 15) + 5 + eyesX, (y + 16) - 14 + eyesY, (x - 15) + 8 + eyesX, (y + 16) - 14 + eyesY);
-		ctx.bezierCurveTo((x - 15) + 11 + eyesX, (y + 16) - 14 + eyesY, (x - 15) + 12 + eyesX, (y + 16) - 17 + eyesY, (x - 15) + 12 + eyesX, (y + 16) - 19 + eyesY);
-		ctx.bezierCurveTo((x - 15) + 12 + eyesX, (y + 16) - 21 + eyesY, (x - 15) + 11 + eyesX, (y + 16) - 24 + eyesY, (x - 15) + 8 + eyesX, (y + 16) - 24 + eyesY);
-		
-		ctx.moveTo((x - 15) + 20 + eyesX, (y + 16) - 24 + eyesY);
-		ctx.bezierCurveTo((x - 15) + 17 + eyesX, (y + 16) - 24 + eyesY, (x - 15) + 16 + eyesX, (y + 16) - 21 + eyesY, (x - 15) + 16 + eyesX, (y + 16) - 19 + eyesY);
-		ctx.bezierCurveTo((x - 15) + 16 + eyesX, (y + 16) - 17 + eyesY, (x - 15) + 17 + eyesX, (y + 16) - 14 + eyesY, (x - 15) + 20 + eyesX, (y + 16) - 14 + eyesY);
-		ctx.bezierCurveTo((x - 15) + 23 + eyesX, (y + 16) - 14 + eyesY, (x - 15) + 24 + eyesX, (y + 16) - 17 + eyesY, (x - 15) + 24 + eyesX, (y + 16) - 19 + eyesY);
-		ctx.bezierCurveTo((x - 15) + 24 + eyesX, (y + 16) - 21 + eyesY, (x - 15) + 23 + eyesX, (y + 16) - 24 + eyesY, (x - 15) + 20 + eyesX, (y + 16) - 24 + eyesY);
-		ctx.fill();
-		
-		if (d === 4) { 
-			eyesY = -9;
-			eyesX = 2;
-		} else if (d === 1) { 
-			eyesX = +6;
-		} else if (d === 2) { 
-			eyesY = +8;
-			eyesX = 2;
-		} else if (d === 3) { 
-			
-		}
-		
-		ctx.fillStyle = "#0000fa";
-		ctx.beginPath();
-		ctx.arc((x - 15) + 18 + eyesX, (y + 16) - 18 + eyesY, 2, 0, Math.PI * 2, true);
-		ctx.fill();
+	eval("ctx.drawImage("+usedImage+"_IMAGE, x-16, y-16, 32, 32);");
 
-		ctx.beginPath();
-		ctx.arc((x - 15) + 6 + eyesX, (y + 16) - 18 + eyesY, 2, 0, Math.PI * 2, true);
-		ctx.fill();
-	} else { 
-		if (a === 1) { 
-			ctx.fillStyle = "#ee2933";
-		} else { 
-			ctx.fillStyle = "#e5bed0";
-		}
-		ctx.beginPath();
-		ctx.arc((x - 15) + 18, (y + 13) - 17, 2, 0, Math.PI * 2, true);
-		ctx.fill();
-
-		ctx.beginPath();
-		ctx.arc((x - 15) + 10, (y + 13) - 17, 2, 0, Math.PI * 2, true);
-		ctx.fill();
-		
-		if (a === 1) { 
-			ctx.strokeStyle = "#ee2933";
-		} else { 
-			ctx.strokeStyle = "#e5bed0";
-		}
-		ctx.beginPath();
-		ctx.lineTo((x - 14.333) + 24, (y + 6));
-		
-		ctx.lineTo((x - 14.333) + 21, (y + 6) - 3);		
-		ctx.lineTo((x - 14.333) + 17, (y + 6));
-		
-		ctx.lineTo((x - 14.333) + 14, (y + 6) - 3);
-		ctx.lineTo((x - 14.333) + 10, (y + 6));
-		
-		ctx.lineTo((x - 14.333) + 7, (y + 6) - 3);
-		ctx.lineTo((x - 14.333) + 3, (y + 6));
-		ctx.stroke();
-	}
 }

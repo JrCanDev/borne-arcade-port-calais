@@ -5,11 +5,11 @@ var BUBBLES_X_END = 518;
 var BUBBLES_GAP = ((BUBBLES_X_END - BUBBLES_X_START) / 25);
 var BUBBLES_Y_START = 26;
 var BUBBLES_Y_END = 522;
-var BUBBLES_SIZE = 3;
+var BUBBLES_SIZE = 6;
 var BUBBLES_COUNTER = 0;
 
 var SUPER_BUBBLES = [];
-var SUPER_BUBBLES_SIZE = 8;
+var SUPER_BUBBLES_SIZE = 16;
 var SUPER_BUBBLES_BLINK = false;
 var SUPER_BUBBLES_BLINK_STATE = 0;
 var SUPER_BUBBLES_BLINK_TIMER = -1;
@@ -52,11 +52,18 @@ function drawBubbles() {
 					size = BUBBLES_SIZE;
 				}
 				BUBBLES_COUNTER ++;
-				ctx.beginPath();
+				/*ctx.beginPath();
 				ctx.arc(correctionX(x, bubble), y, size, 0, 2 * Math.PI, false);
 				ctx.fill();
-				ctx.closePath();
+				ctx.closePath();*/
+
+				if(type=="s"){
+					ctx.drawImage(SUPER_BUBBLE_IMAGE, x-size/2, y-size/2, size, size);
+				}else if(type=="b"){
+					ctx.drawImage(BUBBLE_IMAGE, x-size/2, y-size/2, size, size);
+				}
 				
+
 				BUBBLES_ARRAY.push( parseInt(correctionX(x, bubble)) + "," + parseInt(y) + ";" + line + ";" + bubble + ";" + type + ";0" );
 				i ++;
 			}
@@ -98,11 +105,14 @@ function blinkSuperBubbles() {
 					eraseBubble("s", sx, sy);
 				} else { 
 					var ctx = getBubblesCanevasContext();
-					ctx.fillStyle = "#dca5be";
+					/*ctx.fillStyle = "#dca5be";
 					ctx.beginPath();
 					ctx.arc(sx, sy, SUPER_BUBBLES_SIZE, 0, 2 * Math.PI, false);
 					ctx.fill();
-					ctx.closePath();
+					ctx.closePath();*/
+					var bubbleImage = new Image();
+					bubbleImage.src = "img/bubbles/superbubble.png";
+					ctx.drawImage(bubbleImage, sx-SUPER_BUBBLES_SIZE/2, sy-SUPER_BUBBLES_SIZE/2, SUPER_BUBBLES_SIZE, SUPER_BUBBLES_SIZE);
 				}
 
 			}

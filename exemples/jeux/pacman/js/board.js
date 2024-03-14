@@ -1,4 +1,5 @@
 var BOARD_CANVAS_CONTEXT = null;
+var WALLs_COLOR = "#EAEAEA"; //"#193fff"; BY DEFAULT
 
 function initBoard() { 
 	var canvas = document.getElementById('canvas-board');
@@ -7,6 +8,11 @@ function initBoard() {
 	if (canvas.getContext) { 
 		BOARD_CANVAS_CONTEXT = canvas.getContext('2d');
 	}
+
+	BOARD_CANVAS_CONTEXT.drawImage(BACKGROUND_IMAGE,0,0, 550, 550);
+	//loadImage("img/background.png").then(image => BOARD_CANVAS_CONTEXT.drawImage(backgroundImage,0,0, 550, 550)); // Will loaded the image AFTER the walls, and will hide everything
+	//Workarround in image-loader to pre-load images
+
 }
 
 function getBoardCanevasContext() { 
@@ -19,7 +25,7 @@ function drawBoard(alternate) {
 	if (alternate && alternate === true) { 
 		ctx.strokeStyle = "#fff";
 	} else { 
-		ctx.strokeStyle = "#193fff";
+		ctx.strokeStyle = WALLs_COLOR;
 	}
 	
 	ctx.lineWidth = "2";
