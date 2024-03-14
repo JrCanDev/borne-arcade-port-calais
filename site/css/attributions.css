@@ -1,3 +1,11 @@
+body {
+    background-color: var(--port-primary);
+}
+
+* {
+    color: white;
+}
+
 main {
     margin: 0 32px 0 32px;
 }
@@ -18,6 +26,8 @@ main {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    background-color: white;
+    padding: 16px;
 }
 
 .logos img {
@@ -26,16 +36,36 @@ main {
 }
 
 .attributions {
-    text-align: center;
-    padding: 20px;
+    position: absolute;
+    width: 70%;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-.attributions h2 {
+.attribution {
+    text-align: center;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 64px;
+}
+
+.attribution-icon {
+    max-width: 348px;
+}
+
+.attribution-qr {
+    background-color: white;
+    width: 256px;
+}
+
+.attribution h2 {
     font-size: 36px;
     margin: 16px;
 }
 
-.attributions p {
+.attribution p {
     font-size: 18px;
     margin: 0;
 }
