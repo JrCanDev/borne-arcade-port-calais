@@ -1,4 +1,4 @@
-let locale = "en";
+let locale = localStorage.getItem('locale') || "en";
 let translations = [];
 
 async function getTranslations(locale) {
@@ -6,7 +6,9 @@ async function getTranslations(locale) {
   return await response.json();
 }
 
-async function setLocale(locale) {
+async function setLocale(newLocale) {
+  locale = newLocale;
+  localStorage.setItem('locale', locale);
   translations = await getTranslations(locale);
   translatePage();
 }

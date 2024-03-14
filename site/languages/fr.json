@@ -1,6 +1,6 @@
 {
     "application-name": "Arcade du port de Calais",
-    "index.title": "Bonjour, monde !",
+    "index.title": "Arcade de Jeu",
     "attributions.title": "Attributions",
     "attributions.intro": "Ce logiciel est une borne d'arcade qui contient plusieurs jeux liés au port et à la ville de Calais. Celui-ci a été réalisé dans le cadre d'un projet entre le Port Boulogne Calais, VIIA, La Société des Ports du Détroit, la Ville de Calais, le SAS Coluche, JrCanDev, l'Institut Universitaire de Technologie du Littoral-Côte-d'Opale et le Lycée Professionnel Pierre de Coubertin.",
     "attributions.main.author": "Auteur: Joshua Vandaële, Kevin Sailly",

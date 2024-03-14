@@ -2,17 +2,26 @@
 <html>
     <head>
         <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/index.css">
         
         <script src="js/i18n.js"></script>
+        <script src="js/utils.js"></script>
         
         <meta charset="UTF-8">
         <meta name="application-name" data-i18n="application-name" data-i18n-field="content" content="Borne Port Calais">
         <meta name="author" content="Joshua Vandaële">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body>
-        <h1 data-i18n="index.title">Bonjour, monde!</h1>
-        <button onclick="setLocale('fr')">FR</button> 
-        <button onclick="setLocale('en')">EN</button> 
+    <body onclick="redirectToPage(event, 'info.html')">
+        <main>
+            <h1 data-i18n="index.title">Bonjour, monde!</h1>
+            <h2>Touche-moi pour commencer !</h2>
+            <h2>Touch me to start!</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras at diam  eget sem cursus placerat.</p>
+        </main>
+        <footer>
+            <img src="img/fr-flag.svg" onclick="setLocale('fr'); stopPropagation(event)">
+            <img src="img/uk-flag.svg" onclick="setLocale('en'); stopPropagation(event)">
+        </footer>
     </body>
 </html>
