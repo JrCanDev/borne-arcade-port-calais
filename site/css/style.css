@@ -1,0 +1,13 @@
+@font-face {
+    font-family: "MadimiOne";
+    src: url("../fonts/MadimiOne-Regular.ttf") format("truetype");
+}
+
+:root {
+    --port-primary: #057076;
+    --port-secondary: #ffd205;
+}
+
+* {
+    font-family: MadimiOne;
+}
