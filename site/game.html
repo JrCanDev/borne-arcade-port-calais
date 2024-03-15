@@ -25,7 +25,7 @@
                 urna. Integer sit amet faucibus ante, ac semper nisi. Suspendisse id arcu in quam sodales posuere ut
                 congue odio.</p>
         </div>
-        <button data-i18n="game.giveup" onclick="promptGiveUp()">Abandonner</button>
+        <button data-i18n="game.giveup" onclick="showGiveUp()">Abandonner</button>
     </div>
     <div id="game-container">
 
@@ -53,6 +53,32 @@
             </ul>
         </div>
     </div>
+
+    <!-- Pop-up -->
+    <div id="giveup" class="modal" style="display: none;">
+        <h2 data-i18n="game.giveup.title">Abandonner</h2>
+        <p data-i18n="game.giveup.text">Êtes-vous sûr de vouloir abandonner ?</p>
+        <div class="buttons">
+            <button onclick="nextPage()" data-i18n="game.giveup.yes">Oui</button>
+            <button onclick="hideGiveUp()" data-i18n="game.giveup.no">Non</button>
+        </div>
+    </div>
 </body>
+
+<script>
+    function showGiveUp() {
+        document.getElementById("giveup").style.display = "block";
+    }
+
+    function hideGiveUp() {
+        document.getElementById("giveup").style.display = "none";
+    }
+
+    function nextPage() {
+        redirectToPage(event, 'info.html');
+    }
+
+    // On game over, go to next page
+</script>
 
 </html>
