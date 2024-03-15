@@ -10,6 +10,17 @@ main {
     margin: 0 32px 0 32px;
 }
 
+#back-arrow {
+    position: fixed;
+    top: 90%;
+    left: 0;
+    transform: translateY(-50%);
+    z-index: 1;
+    padding: 16px;
+    width: 192px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
 #preambule {
     text-align: center;
 }
