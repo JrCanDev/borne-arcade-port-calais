@@ -11,5 +11,14 @@
     "attributions.tetris.title": "Tetris",
     "attributions.puzzle.title": "Puzzle",
     "attributions.snake.title": "Snake",
-    "attributions.maze.title": "Maze"
+    "attributions.maze.title": "Maze",
+    "game.rules": "Rules",
+    "game.giveup": "Give up",
+    "game.score": "Score",
+    "game.highscore": "High Score",
+    "game.giveup.title": "Give up",
+    "game.giveup.text": "Are you sure you want to give up?",
+    "game.giveup.yes": "Yes",
+    "game.giveup.no": "No",
+    "game.puzzle.rules": "Move the pieces to reconstitute the image!\n\nDrag the pieces on the screen to move them.\n\nYou can also drag assembled pieces to move them together."    
 }

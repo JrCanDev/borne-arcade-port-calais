@@ -11,5 +11,14 @@
     "attributions.tetris.title": "Tetris",
     "attributions.puzzle.title": "Puzzle",
     "attributions.snake.title": "Snake",
-    "attributions.maze.title": "Labyrinthe"
+    "attributions.maze.title": "Labyrinthe",
+    "game.rules": "Règles",
+    "game.giveup": "Abandonner",
+    "game.score": "Score",
+    "game.highscore": "Meilleur Score",
+    "game.giveup.title": "Abandonner",
+    "game.giveup.text": "Êtes-vous sûr de vouloir abandonner ?",
+    "game.giveup.yes": "Oui",
+    "game.giveup.no": "Non",
+    "game.puzzle.rules": "Déplacez les pièces pour reconstituer l'image !\n\nGlissez les pièces sur l'écran pour les déplacer.\n\nVous pouvez également faire glisser des pièces assemblées pour les déplacer ensemble."
 }
