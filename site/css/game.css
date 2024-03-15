@@ -44,6 +44,7 @@ p {
     margin-right: auto;
     margin-top: auto;
     margin-bottom: 48px;
+    width: 328px;
 }
 
 #right {
@@ -157,4 +158,5 @@ p {
     text-decoration: none;
     font-size: 32px;
     border-radius: 16px;
+    width: 128px;
 }
