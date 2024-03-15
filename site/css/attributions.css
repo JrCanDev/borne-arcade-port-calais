@@ -15,11 +15,11 @@ main {
 }
 
 #preambule h1 {
-    font-size: 48px;
+    font-size: 64px;
 }
 
 #preambule p {
-    font-size: 24px;
+    font-size: 40px;
 }
 
 .logos {
@@ -61,11 +61,11 @@ main {
 }
 
 .attribution h2 {
-    font-size: 36px;
+    font-size: 40px;
     margin: 16px;
 }
 
 .attribution p {
-    font-size: 18px;
+    font-size: 32px;
     margin: 0;
 }
