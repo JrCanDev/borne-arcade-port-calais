@@ -31,8 +31,8 @@ header a {
 
 #logout {
     margin: 0;
-    width: 160px;
-    height: 160px;
+    height: 128px;
+    filter: invert(13%) sepia(93%) saturate(6800%) hue-rotate(359deg) brightness(98%) contrast(108%);
 }
 
 #flags {
