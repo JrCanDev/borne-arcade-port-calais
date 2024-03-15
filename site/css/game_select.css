@@ -86,7 +86,7 @@ main {
 }
 
 .game-text {
-    background-color: #006b71;
+    background-color: var(--port-primary-dark);
     border-radius: 0 0 15px 15px;
     margin-bottom: 32px;
 }

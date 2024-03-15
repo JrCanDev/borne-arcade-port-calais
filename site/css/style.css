@@ -5,6 +5,8 @@
 
 :root {
     --port-primary: #00747a;
+    --port-primary-dark: #006b71;
+    --port-primary-light: #28b8ce;
     --port-secondary: #ffd500;
 }
 
