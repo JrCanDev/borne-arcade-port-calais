@@ -103,6 +103,10 @@ p {
     border: 2px solid black;
 }
 
+.controls img:active {
+    filter: opacity(0.5)
+}
+
 .controls .blank {
     width: 33%;
     height: 33%;
