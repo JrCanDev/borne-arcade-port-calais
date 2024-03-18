@@ -55,6 +55,7 @@ main {
     display: flex;
     flex-direction: row;
     overflow-x: auto;
+    scrollbar-width: none;
     gap: 32px;
     padding: 0 32px 0 32px
 }
