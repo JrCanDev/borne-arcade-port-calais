@@ -17,6 +17,7 @@
   "game.giveup.no": "Non",
   "game.gameover.title": "Game Over !",
   "game.gameover.text": "Votre score est de ",
+  "game.gameover.timetext": "Votre temps est de ",
   "game.gameover.next": "Suivant",
   "game.gameover.retry": "Rejouer",
   "game.puzzle.name": "Puzzle",

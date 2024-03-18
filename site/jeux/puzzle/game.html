@@ -72,7 +72,7 @@
 
     <div id="gameover" class="modal" style="display: none;">
         <h2 data-i18n="game.gameover.title">Game Over !</h2>
-        <p data-i18n="game.gameover.text"></p>
+        <p data-i18n="game.gameover.timetext"></p>
         <div class="buttons">
             <button onclick="nextPage()" data-i18n="game.gameover.next">Suivant</button>
             <button onclick="hideGameOver()" data-i18n="game.gameover.retry">Rejouer</button>
@@ -91,7 +91,7 @@
     }
 
     function showGameOver() {
-        document.querySelector("#gameover p").innerHTML = translations["game.gameover.text"] + " " + document.getElementById("score").innerHTML;
+        document.querySelector("#gameover p").innerHTML = translations["game.gameover.timetext"] + " " + document.getElementById("score").innerHTML;
         document.getElementById("gameover").style.display = "block";
     }
 
@@ -101,7 +101,7 @@
     }
 
     function nextPage() {
-        redirectToPage(event, '../../info.html');
+        redirectToPage(event, 'info.html');
     }
 
     let timeToSolve = NaN;
