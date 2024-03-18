@@ -9,11 +9,17 @@ Ce projet à été développé par Joshua Vandaële lors d'un stage se déroulan
 
 ## Mise en marche
 
-Pour la première mise en marche, certains paramètres de Firefox ont besoin d'être changé.
+Ce projet nécessite un système Debian avec Firefox (dernier testé : 123.0.1). Pour la première mise en marche, certains paramètres de Firefox ont besoin d'être changé.
 
 1. Accéder à l'URL `about:config`.
 2. Recherchez `security.fileuri.strict_origin_policy` et assurez vous que cette valeur soit à `false`.
 3. Recherchez `privacy.file_unique_origin` et assurez vous que cette valeur soit à `false`.
+
+Pour que le projet démarre automatiquement au démarrage, configurez Firefox pour ouvrir le fichier "index.html" en mode kiosque au démarrage. Vous pouvez le faire en ajoutant la commande suivante à votre fichier `~/.bashrc` ou `~/.bash_profile` :
+
+```bash
+firefox --kiosk /chemin/vers/index.html
+```
 
 ## Utilisation
 
