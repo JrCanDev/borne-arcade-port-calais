@@ -1,5 +1,6 @@
 {
   "application-name": "Arcade of the port of Calais",
+  "translation_not_found_error": "Translation not found!",
   "index.title": "Game Arcade",
   "attributions.title": "Attributions",
   "attributions.intro": "This software is an arcade that contains several games related to the port and the city of Calais. This was done as part of a project between the Port Boulogne Calais, VIIA, La Société des Ports du Détroit, the City of Calais, the SAS Coluche, JrCanDev, the University Institute of Technology of the Littoral-Opal Coast and the Pierre de Coubertin Vocational High School.",
@@ -7,6 +8,8 @@
   "attributions.license": "License:",
   "attributions.source": "Source:",
   "activity.terminalintermodal": "Intermodal Terminal",
+  "activity.terminalintermodal.topText": "Intermodal Terminal Top Text",
+  "activity.terminalintermodal.bottomText": "Intermodal Terminal Bottom Text",
   "game.rules": "Rules",
   "game.giveup": "Give up",
   "game.score": "Score",

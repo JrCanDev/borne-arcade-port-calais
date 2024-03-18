@@ -82,6 +82,9 @@
 </body>
 
 <script>
+    const INFO_TOP_IMAGE = "img/index-bg.jpg";
+    const INFO_BOTTOM_IMAGE = "img/index-bg.jpg";
+
     function showGiveUp() {
         document.getElementById("giveup").style.display = "block";
     }
@@ -101,7 +104,7 @@
     }
 
     function nextPage() {
-        redirectToPage(event, 'info.html');
+        redirectToPage(event, '../../info.html?&info=terminalintermodal&topImage=' + INFO_TOP_IMAGE + '&bottomImage=' + INFO_BOTTOM_IMAGE);
     }
 
     initScore("snake");
