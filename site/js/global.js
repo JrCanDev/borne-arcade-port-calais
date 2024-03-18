@@ -17,11 +17,29 @@ var time = 0;
 var interval = setInterval(function () {
   time++;
   if (time >= INACTIVITY_TIME) {
-    if (window.location.href.indexOf("index.html") == -1) {
-      window.location.href = "index.html";
-    }
+    redirectToIndex();
   }
 }, 1000);
+
+function redirectToIndex() {
+  var path = window.location.pathname;
+  var pathParts = path.split('/');
+  
+  (async function checkAndRedirect() {
+    for (var i = pathParts.length; i >= 0; i--) {
+      var newPath = pathParts.slice(0, i).join('/') + '/index.html';
+      try {
+        let response = await fetch(newPath, { method: 'HEAD' });
+        if (response.ok) {
+          window.location.href = newPath;
+          break;
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  })();
+}
 
 function resetTimer() {
   time = 0;
