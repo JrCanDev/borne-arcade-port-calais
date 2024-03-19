@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="640"
+   height="128"
+   viewBox="0 0 640 128"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   sodipodi:docname="logo-sas-coluche.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     inkscape:zoom="0.52929688"
+     inkscape:cx="-47.232472"
+     inkscape:cy="74.627306"
+     inkscape:window-width="1366"
+     inkscape:window-height="745"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.1122;stroke-opacity:1"
+       id="rect1"
+       width="638.88782"
+       height="126.8878"
+       x="0.55609131"
+       y="0.55609894" />
+    <text
+       xml:space="preserve"
+       style="font-size:64px;font-family:'MS PGothic';-inkscape-font-specification:'MS PGothic';fill:#000000"
+       x="77.024002"
+       y="86.400002"
+       id="text1"><tspan
+         sodipodi:role="line"
+         id="tspan1"
+         x="77.024002"
+         y="86.400002"
+         style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:64px;font-family:Montserrat;-inkscape-font-specification:'Montserrat Heavy';fill:#e2b300;fill-opacity:1">SAS COLUCHE</tspan></text>
+  </g>
+</svg>
