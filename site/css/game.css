@@ -147,6 +147,7 @@ p {
     font-size: 48px;
     text-align: center;
     color: white;
+    white-space: pre-wrap;
 }
 
 .modal .buttons {

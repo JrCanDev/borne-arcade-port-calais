@@ -20,6 +20,7 @@
   "game.giveup.no": "Non",
   "game.gameover.title": "Game Over !",
   "game.gameover.text": "Votre score est de ",
+  "game.gameover.newhighscore": "\nUn nouveau record ! Félicitations !",
   "game.gameover.timetext": "Votre temps est de ",
   "game.gameover.next": "Suivant",
   "game.gameover.retry": "Rejouer",

@@ -94,7 +94,11 @@
     }
 
     function showGameOver() {
-        document.querySelector("#gameover p").innerHTML = translations["game.gameover.text"] + " " + document.getElementById("score").innerHTML;
+        let gameover_text = translations["game.gameover.text"] + " " + document.getElementById("score").innerHTML;
+        if (document.getElementById("score").innerHTML == document.getElementById("highscore").innerHTML) {
+            gameover_text += translations["game.gameover.newhighscore"];
+        }
+        document.querySelector("#gameover p").innerHTML = gameover_text
         document.getElementById("gameover").style.display = "block";
     }
 
