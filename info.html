@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/info.css">
+
+    <script src="js/i18n.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/global.js"></script>
+
+    <meta charset="UTF-8">
+    <meta name="application-name" data-i18n="application-name" data-i18n-field="content" content="Borne Port Calais">
+    <meta name="author" content="Joshua Vandaële">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body onclick="redirectToPage(event, 'game_select.html')">
+    <main>
+        <h1></h1>
+
+        <div class="img-r card">
+            <p></p>
+            <img src="img/index-bg.jpg">
+        </div>
+
+        <div class="img-l card">
+            <img src="img/index-bg.jpg">
+            <p></p>
+
+        </div>
+    </main>
+
+    <script>
+        const params = new Proxy(new URLSearchParams(window.location.search), {
+            get: (searchParams, prop) => searchParams.get(prop),
+        });
+
+        function onLocaleChange() {
+            document.querySelector('h1').innerHTML = translations["activity." + params.info + ""] || translations["translation_not_found_error"];
+
+            document.querySelector('.img-r p').innerHTML = translations["activity." + params.info + ".topText"] || translations["translation_not_found_error"];
+            document.querySelector('.img-r img').src = params.topImage || "img/fallback.svg";
+
+            document.querySelector('.img-l p').innerHTML = translations["activity." + params.info + ".bottomText"] || translations["translation_not_found_error"];
+            document.querySelector('.img-l img').src = params.bottomImage || "img/fallback.svg"; 
+        }
+    </script>
+</body>
+
+</html>

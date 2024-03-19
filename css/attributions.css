@@ -1,0 +1,82 @@
+body {
+    background-color: var(--port-primary);
+}
+
+* {
+    color: white;
+}
+
+main {
+    margin: 0 32px 0 32px;
+}
+
+#back-arrow {
+    position: fixed;
+    top: 90%;
+    left: 0;
+    transform: translateY(-50%);
+    z-index: 1;
+    padding: 16px;
+    width: 160px;
+    filter: drop-shadow(0 0 16px black);
+}
+
+#preambule {
+    text-align: center;
+}
+
+#preambule h1 {
+    font-size: 64px;
+}
+
+#preambule p {
+    font-size: 40px;
+}
+
+.logos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    background-color: white;
+    padding: 16px;
+}
+
+.logos img {
+    object-fit: contain;
+    max-width: 25%;
+}
+
+.attributions {
+    position: absolute;
+    width: 70%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.attribution {
+    text-align: center;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 64px;
+}
+
+.attribution-icon {
+    max-width: 348px;
+}
+
+.attribution-qr {
+    background-color: white;
+    width: 256px;
+}
+
+.attribution h2 {
+    font-size: 40px;
+    margin: 16px;
+}
+
+.attribution p {
+    font-size: 32px;
+    margin: 0;
+}
