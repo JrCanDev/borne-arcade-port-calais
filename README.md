@@ -18,8 +18,10 @@ Ce projet nécessite un système Debian avec Firefox (dernier testé : 123.0.1).
 Pour que le projet démarre automatiquement au démarrage, configurez Firefox pour ouvrir le fichier "index.html" en mode kiosque au démarrage. Vous pouvez le faire en ajoutant la commande suivante à votre fichier `~/.bashrc` ou `~/.bash_profile` :
 
 ```bash
-firefox --kiosk /chemin/vers/index.html
+firefox --disable-pinch --kiosk /chemin/vers/index.html
 ```
+
+`--disable-pinch` est utilisé pour désactiver le zoom sur les écrans tactiles.
 
 ## Liste des jeux
 
