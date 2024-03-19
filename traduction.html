@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #00747a;
+        }
+
+        * {
+            color: white;
+            font-family: MadimiOne, Arial, sans-serif;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            gap: 32px;
+        }
+
+        input,
+        select,
+        button {
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+            background-color: #009688;
+            color: white;
+            font-family: MadimiOne, Arial, sans-serif;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        input:disabled,
+        select:disabled,
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        #discard-translation {
+            background-color: #ff0000;
+        }
+
+        #translation-values {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        textarea {
+            width: 80vh;
+            height: 25vh;
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+            background-color: #009688;
+            color: white;
+            font-family: MadimiOne, Arial, sans-serif;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        label {
+            cursor: pointer;
+            font-size: 32px;
+            background-color: #009688;
+            padding: 16px;
+            border-radius: 90px;
+        }
+
+        label:hover {
+            opacity: 0.8;
+        }
+
+        #translation-area {
+            display: none;
+            /* display: flex; */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            min-height: 100vh;
+        }
+
+        #error-message {
+            display: none;
+        }
+
+        #error-message h1 {
+            font-size: 32px;
+            text-align: center;
+        }
+
+        #error-message h2 {
+            font-size: 24px;
+            text-align: center;
+        }
+
+        #error-message li {
+            font-size: 16px;
+            margin: 4px;
+            color: #eee;
+        }
+
+        #error-message p {
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        #error-message pre {
+            font-size: 16px;
+            white-space: pre-wrap;
+            text-align: center;
+            opacity: 0.6;
+        }
+    </style>
+
+    <title>Outil Traducteur Borne Port Calais</title>
+
+    <meta charset="UTF-8">
+    <meta name="application-name" content="Outil Traducteur Borne Port Calais">
+    <meta name="author" content="Joshua Vandaële">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <main>
+        <input type="file" id="locale-files" multiple accept=".json">
+        <label id="locale-files-label" for="locale-files">Ouvrir les fichiers de traductions</label>
+        <div id="error-message">
+            <h1>Erreur</h1>
+            <h2>Une erreur est survenue lors du chargement des fichiers de traduction</h2>
+            <ul id="error-list">
+                <li>Vous devez sélectionner au moins un fichier de traduction</li>
+                <li>Le fichier doit être au format JSON</li>
+                <li>Le nom du fichier doit être le code de la langue (Exemple: fr.json, en.json, ...)</li>
+                <li>Le navigateur doit avoir l'autorisation de lire les fichiers locaux (<a
+                        href="https://developer.mozilla.org/fr/docs/Web/HTTP/CORS">CORS</a>)</li>
+            </ul>
+            <p>Rafraîchissez la page pour réessayer</p>
+            <pre></pre>
+        </div>
+        <div id="translation-area">
+            <select id="translation-keys"
+                title="Vous devez sauvegarder ou abandonner la traduction actuelle avant de changer la clé">
+                <!-- Rempli avec JavaScript -->
+            </select>
+            <div id="translation-values">
+                <!-- Rempli avec JavaScript -->
+            </div>
+            <button id="save-translation">Sauvegarder</button>
+            <button id="discard-translation">Abandonner</button>
+            <button id="download-translations">Télécharger</button>
+        </div>
+    </main>
+</body>
+
+<script>
+    let locales = [];
+
+    function getTranslations(locale) {
+        return JSON.parse(localStorage.getItem(`translations_${locale}`));
+    }
+
+    function getTranslation(locale, key) {
+        return getTranslations(locale)[key] || "";
+    }
+
+    function getTranslationKeys() {
+        let keys = [];
+        for (const locale of locales) {
+            keys = keys.concat(Object.keys(getTranslations(locale)));
+        }
+        // remove duplicates
+        keys = keys.filter((value, index, self) => self.indexOf(value) === index);
+        return keys;
+    }
+
+    async function loadTranslations() {
+        for (const locale of locales) {
+            const response = await fetch(`languages/${locale}.json`);
+            const translations = await response.json();
+            localStorage.setItem(`translations_${locale}`, JSON.stringify(translations));
+        }
+    }
+
+
+    document.getElementById("locale-files").addEventListener("change", (event) => {
+        document.getElementById("translation-area").style.display = "flex";
+        document.getElementById("locale-files-label").style.display = "none";
+
+        for (const file of event.target.files) {
+            const locale = file.name.split(".")[0];
+            locales.push(locale);
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                localStorage.setItem(`translations_${locale}`, event.target.result);
+            };
+            reader.readAsText(file);
+        }
+        document.getElementById("translation-values").innerHTML = "";
+        for (const locale of locales) {
+            const textarea = document.createElement("textarea");
+            textarea.id = `translation-${locale}`;
+            document.getElementById("translation-values").appendChild(textarea);
+        }
+
+        document.getElementById("translation-keys").innerHTML = "";
+        loadTranslations().then(() => {
+            const select = document.getElementById("translation-keys");
+            for (const key of getTranslationKeys()) {
+                const option = document.createElement("option");
+                option.value = key;
+                option.text = key;
+                select.appendChild(option);
+            }
+            if (select.options.length > 0) {
+                select.disabled = false;
+                select.dispatchEvent(new Event("change"));
+            } else {
+                document.getElementById("error-message").style.display = "block";
+                document.getElementById("translation-area").style.display = "none";
+            }
+        }).catch((e) => {
+            document.getElementById("error-message").style.display = "block";
+            document.getElementById("translation-area").style.display = "none";
+
+            document.querySelector("#error-message pre").textContent = e;
+            // If the error is about CORS/fetching, display only that error message
+            if (e.message.toLowerCase().includes("cors") || e.message.toLowerCase().includes("fetch")) {
+                for (const child of document.getElementById("error-list").children) {
+                    if (!child.textContent.toLowerCase().includes("cors")) {
+                        child.style.display = "none";
+                    }
+                }
+            }
+        });
+    });
+
+    document.getElementById("translation-keys").addEventListener("change", (event) => {
+        const key = event.target.value;
+        for (const locale of locales) {
+            document.getElementById(`translation-${locale}`).value = getTranslation(locale, key);
+        }
+    });
+
+    document.getElementById("save-translation").addEventListener("click", () => {
+        const key = document.getElementById("translation-keys").value;
+
+        for (const locale of locales) {
+            const translations = getTranslations(locale);
+            translations[key] = document.getElementById(`translation-${locale}`).value;
+            localStorage.setItem(`translations_${locale}`, JSON.stringify(translations));
+        }
+
+        document.getElementById("translation-keys").disabled = false;
+    });
+
+    document.getElementById("download-translations").addEventListener("click", () => {
+        for (const locale of locales) {
+            const blob = new Blob([localStorage.getItem(`translations_${locale}`)], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            let link = document.createElement("a");
+            link.href = url;
+            link.download = `${locale}.json`;
+            link.click();
+        }
+    });
+
+    document.getElementById("discard-translation").addEventListener("click", () => {
+        for (const locale of locales) {
+            document.getElementById(`translation-${locale}`).value = getTranslation(locale, document.getElementById("translation-keys").value);
+            document.getElementById("translation-keys").disabled = false;
+        }
+    });
+
+    // gray out the select if the text has been modified
+    document.getElementById("translation-values").addEventListener("input", () => {
+        document.getElementById("translation-keys").disabled = true;
+    });
+</script>
+
+</html>

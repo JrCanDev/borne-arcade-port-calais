@@ -5,6 +5,7 @@ Ce projet à été développé par Joshua Vandaële lors d'un stage se déroulan
 - [Borne d'Arcade du Port de Calais](#borne-darcade-du-port-de-calais)
   - [Mise en marche](#mise-en-marche)
   - [Liste des jeux](#liste-des-jeux)
+  - [Outil de traduction](#outil-de-traduction)
   - [Licence](#licence)
 
 ## Mise en marche
@@ -14,6 +15,8 @@ Ce projet nécessite un système Debian avec Firefox (dernier testé : 123.0.1).
 1. Accéder à l'URL `about:config`.
 2. Recherchez `security.fileuri.strict_origin_policy` et assurez vous que cette valeur soit à `false`.
 3. Recherchez `privacy.file_unique_origin` et assurez vous que cette valeur soit à `false`.
+
+Ces paramètres permettent à Firefox d'accéder aux fichiers locaux et sont nécessaires pour que le projet fonctionne correctement. Si vous ne souhaitez pas les changer, vous pouvez utiliser un serveur local pour ouvrir le projet.
 
 Pour que le projet démarre automatiquement au démarrage, configurez Firefox pour ouvrir le fichier "index.html" en mode kiosque au démarrage. Vous pouvez le faire en ajoutant la commande suivante à votre fichier `~/.bashrc` ou `~/.bash_profile` :
 
@@ -38,6 +41,18 @@ firefox --disable-pinch --kiosk /chemin/vers/index.html
 | Qui est-ce?     | [github.com/flbulgarelli/headbreaker](https://github.com/flbulgarelli/headbreaker)                          | ISC                                                                    | [flbulgarelli.github.io/headbreaker](https://flbulgarelli.github.io/headbreaker/)                                                               |
 | Labyrinthe      | [https://www.the-art-of-web.com/javascript/maze-game](https://www.the-art-of-web.com/javascript/maze-game/) | [Free to use and adapt](https://www.the-art-of-web.com/copyright.html) | [https://www.the-art-of-web.com/javascript/maze-game-large/](https://www.the-art-of-web.com/javascript/maze-game-large/)                        |
 | Snake           | [github.com/rembound/Snake-Game-HTML5](https://github.com/rembound/Snake-Game-HTML5)                        | MIT                                                                    | [rembound.com/articles/creating-a-snake-game-tutorial-with-html5](https://rembound.com/articles/creating-a-snake-game-tutorial-with-html5#demo) |
+
+## Outil de traduction
+
+Ce projet inclut un outil de traduction afin de modifier les fichiers langues de manière plus simple.
+
+Pour l'utiliser, ouvrez le fichier `traduction.html` dans votre navigateur. Vous pouvez ensuite ouvrir les fichiers de langue qui sont dans le dossier `langues` et les modifier.
+
+Une fois que vous avez fini, cliquez sur le bouton "Télécharger" pour télécharger le fichier de langue modifié. Il vous suffit ensuite de remplacer le fichier de langue original par le fichier modifié.
+
+**Attention**: Lors de l'ouverture des fichiers de langue, assurez-vous que le navigateur ait bien accès aux fichiers locaux. Si ce n'est pas le cas, vous pouvez soit utiliser un serveur local pour ouvrir le fichier `traduction.html`, soit ouvrir le fichier `traduction.html` avec un navigateur configuré pour accéder aux fichiers locaux.
+
+Assurez-vous également de sélectionner tout les fichiers de langue que vous souhaitez modifier lors de l'ouverture de ceux-ci.
 
 ## Licence
 
