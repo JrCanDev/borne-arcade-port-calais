@@ -1,4 +1,4 @@
-let locale = localStorage.getItem("locale") || "en";
+let locale = localStorage.getItem("locale") || "fr";
 let translations = [];
 
 async function getTranslations(locale) {
