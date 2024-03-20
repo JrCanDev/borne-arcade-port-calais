@@ -17,7 +17,7 @@ function emulateArrowClick(direction) {
 
 function updateHighScore(gamename, score) {
     const highScore = localStorage.getItem(gamename);
-    if (highScore === null || score > highScore) {
+    if (!highScore || score > highScore) {
         localStorage.setItem(gamename, score);
     }
 }
