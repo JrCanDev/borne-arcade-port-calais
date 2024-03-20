@@ -25,7 +25,7 @@
      inkscape:document-units="px"
      inkscape:zoom="0.37426941"
      inkscape:cx="403.45269"
-     inkscape:cy="514.33538"
+     inkscape:cy="511.66351"
      inkscape:window-width="1366"
      inkscape:window-height="745"
      inkscape:window-x="-8"
@@ -41,14 +41,25 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:42.6667px;font-family:'Madimi One';-inkscape-font-specification:'Madimi One';fill:#ffffff"
-       x="75.434532"
+       x="71.061195"
        y="502.18665"
        id="text1"><tspan
          sodipodi:role="line"
          id="tspan1"
-         x="75.434532"
+         x="71.061195"
          y="502.18665"
-         style="font-size:42.6667px;fill:#000000;fill-opacity:1">Image non trouvée!</tspan></text>
+         style="font-size:42.6667px;fill:#000000;fill-opacity:1">Image non trouvée !</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:42.6667px;font-family:'Madimi One';-inkscape-font-specification:'Madimi One';fill:#ffffff"
+       x="97.770607"
+       y="32.512024"
+       id="text1-4"><tspan
+         sodipodi:role="line"
+         id="tspan1-3"
+         x="97.770607"
+         y="32.512024"
+         style="font-size:42.6667px;fill:#000000;fill-opacity:1">Image not found!</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:170.667px;font-family:'Madimi One';-inkscape-font-specification:'Madimi One';fill:#000000;fill-opacity:1"
