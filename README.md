@@ -4,6 +4,7 @@ Ce projet à été développé par Joshua Vandaële lors d'un stage se déroulan
 
 - [Borne d'Arcade du Port de Calais](#borne-darcade-du-port-de-calais)
   - [Mise en marche](#mise-en-marche)
+  - [Remettre à zéro les scores](#remettre-à-zéro-les-scores)
   - [Liste des jeux](#liste-des-jeux)
   - [Outil de traduction](#outil-de-traduction)
   - [Licence](#licence)
@@ -25,6 +26,10 @@ firefox --disable-pinch --kiosk /chemin/vers/index.html
 ```
 
 `--disable-pinch` est utilisé pour désactiver le zoom sur les écrans tactiles.
+
+## Remettre à zéro les scores
+
+Pour remettre à zéro les scores, cliquez dix fois sur le nom de l'application sur la page attributions. Un message de confirmation apparaîtra. Cliquez sur "OK" pour remettre à zéro les scores.
 
 ## Liste des jeux
 
