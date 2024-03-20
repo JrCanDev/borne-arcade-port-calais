@@ -34,7 +34,7 @@ function updateScore(gamename, score) {
 
 function initScore(gamename) {
     const highScore = localStorage.getItem(gamename);
-    if (highScore === null) {
+    if (!highScore) {
         localStorage.setItem(gamename, 0);
     }
     document.getElementById("highscore").innerHTML = highScore;
