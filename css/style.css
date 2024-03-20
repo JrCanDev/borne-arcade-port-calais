@@ -12,6 +12,7 @@
 
 * {
     font-family: MadimiOne;
+    user-select: none;
 }
 
 html, body {
