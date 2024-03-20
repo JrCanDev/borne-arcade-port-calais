@@ -15,28 +15,34 @@ function emulateArrowClick(direction) {
     }
 }
 
-function updateHighScore(gamename, score) {
-    const highScore = localStorage.getItem(gamename);
-    if (!highScore || score > highScore) {
-        localStorage.setItem(gamename, score);
-    }
+function getHighScore(gamename) {
+    return parseInt(localStorage.getItem(gamename));
+}
+
+function setHighScore(gamename, score) {
+    localStorage.setItem(gamename, score);
+    document.getElementById("highscore").innerHTML = score;
+}
+
+function getScore() {
+    return parseInt(document.getElementById("score").innerHTML);
+}
+
+function setScore(score) {
+    document.getElementById("score").innerHTML = score;
 }
 
 function updateScore(gamename, score) {
-    document.getElementById("score").innerHTML = score;
+    setScore(score);
 
-    highscore = document.getElementById("highscore").innerHTML;
-    if (score > highscore) {
-        document.getElementById("highscore").innerHTML = score;
-        updateHighScore(gamename, score);
+    const highScore = getHighScore(gamename);
+    if (!highScore || score > highScore) {
+        setHighScore(gamename, score);
     }
 }
 
 function initScore(gamename) {
-    const highScore = localStorage.getItem(gamename);
-    if (!highScore) {
-        localStorage.setItem(gamename, 0);
-    }
-    document.getElementById("highscore").innerHTML = highScore;
-    document.getElementById("score").innerHTML = 0;
+    const highScore = getHighScore(gamename);
+    setHighScore(gamename, highScore ? highScore : 0);
+    setScore(0);
 }
