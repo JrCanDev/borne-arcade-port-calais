@@ -1,5 +1,5 @@
 body {
-    background: var(--port-primary);
+    background: var(--primary-color);
     background-size: cover;
     margin: 0;
     padding: 0;
@@ -7,7 +7,7 @@ body {
 }
 
 * {
-    color: #eee;
+    color: var(--text-color-light);
 }
 
 main {
@@ -22,9 +22,7 @@ main {
 h1 {
     font-size: 64px;
     margin: 0;
-    color: #fff;
     text-align: center;
-    /* text-shadow: 2px 2px 2px #000; */
 }
 
 p {
@@ -44,14 +42,14 @@ img {
     align-items: center;
     gap: 16px;
     height: 40%;
-    background-color: #fff;
+    background-color: var(--text-color-light);
     border-radius: 90px;
     /* box-shadow: 4px 4px 16px #000; */
 }
 
 .card p {
     padding: 0 32px 0 32px;
-    color: var(--port-primary);
+    color: var(--primary-color);
 }
 
 main::after {
@@ -60,7 +58,6 @@ main::after {
     position: absolute;
     right: 16px;
     bottom: 8px;
-    color: #fff;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     animation: grow-shrink 1.5s infinite ease-in-out;
 }

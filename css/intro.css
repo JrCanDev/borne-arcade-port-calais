@@ -9,19 +9,22 @@ body {
     justify-content: flex-end;
 }
 
+* {
+    color: var(--text-color-light);
+}
+
 main {
     width: 100%;
-    background-color: var(--port-primary);
+    background-color: var(--primary-color);
 }
 
 h1 {
     font-size: 64px;
     margin: 0;
-    background-color: var(--port-secondary);
+    background-color: var(--secondary-color);
     width: 30%;
     text-align: center;
     border-radius: 0 0 90px 0;
-    color: #fff;
 }
 
 p {
@@ -29,7 +32,6 @@ p {
     max-width: 90%;
     margin-left: auto;
     margin-right: auto;
-    color: #fff;
 }
 
 p::after {
@@ -37,7 +39,6 @@ p::after {
     font-size: 64px;
     position: absolute;
     right: 64px;
-    color: #fff;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     animation: grow-shrink 1.5s infinite ease-in-out;
 }

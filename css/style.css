@@ -4,10 +4,10 @@
 }
 
 :root {
-    --port-primary: #00747a;
-    --port-primary-dark: #006b71;
-    --port-primary-light: #28b8ce;
-    --port-secondary: #ffd500;
+    --primary-color: #6528F7;
+    --secondary-color: #40128B;
+    --text-color-dark: #1A1A1A;
+    --text-color-light: #F2F2F2;
 }
 
 * {
@@ -33,3 +33,15 @@ html, body {
         transform: scale(1);
     }
 }
+
+@keyframes panorama {
+    0% {
+      background-position-x: 0%;
+    }
+    50% {
+      background-position-x: 100%;
+    }
+    100% {
+      background-position-x: 0%;
+    }
+  }
