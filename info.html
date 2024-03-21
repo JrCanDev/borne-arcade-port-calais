@@ -21,11 +21,11 @@
 
         <div class="img-r card">
             <p></p>
-            <img src="img/index-bg.jpg">
+            <img src="img/fallback.svg">
         </div>
 
         <div class="img-l card">
-            <img src="img/index-bg.jpg">
+            <img src="img/fallback.svg">
             <p></p>
 
         </div>
@@ -36,14 +36,34 @@
             get: (searchParams, prop) => searchParams.get(prop),
         });
 
+        function setImageSourceWithAvailableExtension(imgElement, basePath, extensions) {
+            for (const extension of extensions) {
+                const imgPath = basePath + "." + extension;
+                const img = new Image();
+                img.src = imgPath;
+                img.onload = () => {
+                    imgElement.src = imgPath;
+                }
+            }
+        }
+
         function onLocaleChange() {
-            document.querySelector('h1').innerHTML = translations["activity." + params.info + ""] || translations["translation_not_found_error"];
+            document.querySelector('h1').innerHTML = translations["game." + params.game + ".theme"] || translations["translation_not_found_error"];
 
-            document.querySelector('.img-r p').innerHTML = translations["activity." + params.info + ".topText"] || translations["translation_not_found_error"];
-            document.querySelector('.img-r img').src = params.topImage || "img/fallback.svg";
+            document.querySelector('.img-r p').innerHTML = translations["game." + params.game + ".theme.topText"] || translations["translation_not_found_error"];
+            setImageSourceWithAvailableExtension(
+                document.querySelector('.img-r img'),
+                "img/" + params.game + "-top",
+                ["jpg", "jpeg", "png", "svg"]
+            )
 
-            document.querySelector('.img-l p').innerHTML = translations["activity." + params.info + ".bottomText"] || translations["translation_not_found_error"];
-            document.querySelector('.img-l img').src = params.bottomImage || "img/fallback.svg"; 
+            document.querySelector('.img-l p').innerHTML = translations["game." + params.game + ".theme.bottomText"] || translations["translation_not_found_error"];
+            setImageSourceWithAvailableExtension(
+                document.querySelector('.img-l img'),
+                "img/" + params.game + "-bottom",
+                ["jpg", "jpeg", "png", "svg"]
+            )
+
         }
     </script>
 </body>

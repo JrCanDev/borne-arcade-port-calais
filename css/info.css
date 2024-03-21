@@ -27,11 +27,14 @@ h1 {
 
 p {
     font-size: 32px;
+    white-space: pre-wrap;
 }
 
-img {
+.card img {
     height: 100%;
     border-radius: 89px;
+    max-width: 40%;
+    object-fit: cover;
 }
 
 .card {

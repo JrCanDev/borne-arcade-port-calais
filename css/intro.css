@@ -1,5 +1,5 @@
 body {
-    background-image: url('../img/index-bg.jpg');
+    background-image: url('../img/intro-bg.jpg');
     background-size: cover;
     margin: 0;
     padding: 0;
@@ -22,7 +22,9 @@ h1 {
     font-size: 64px;
     margin: 0;
     background-color: var(--secondary-color);
-    width: 30%;
+    width: fit-content;
+    padding-right: 64px;
+    padding-left: 48px;
     text-align: center;
     border-radius: 0 0 90px 0;
 }

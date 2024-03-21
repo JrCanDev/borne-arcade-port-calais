@@ -21,17 +21,17 @@
         <img src="img/en-flag.svg" onclick="setLocale('en'); stopPropagation(event)">
     </header>
     <main>
-        <h1 data-i18n="index.title">Bonjour, monde!</h1>
+        <h1 data-i18n="index.title"></h1>
         <h2>Touche-moi pour commencer !</h2>
         <h2>Touch me to start!</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras at diam eget sem cursus placerat.</p>
+        <p data-i18n="index.subtitle"></p>
     </main>
     <footer>
         <div class="logos square-logos">
             <img src="img/logo-viia.png">
             <div class="bottom-square-logos">
                 <img src="img/logo-societe-ports-detroit.png">
-                <img src="img/logo-port-boulogne-calais.jpg">
+                <img src="img/logo-port-boulogne-calais.svg">
             </div>
         </div>
         <div class="logos center-logos">
@@ -55,7 +55,6 @@
         document.querySelector(`img[src="img/${locale}-flag.svg"]`).id = "selected-language";
     }
 
-
     // Change the id "#selected-language" to the new selected language when an img in the header is clicked
     document.querySelectorAll("img").forEach(img => {
         img.addEventListener("click", function () {
@@ -63,5 +62,4 @@
             document.querySelector(`img[src="img/${locale}-flag.svg"]`).id = "selected-language";
         });
     });
-
 </script>
