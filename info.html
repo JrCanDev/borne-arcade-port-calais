@@ -39,6 +39,7 @@
                 <button onclick="toggleFullscreen()">X</button>
             </div>
             <img id="img-zoom">
+            <p data-i18n="info.magnifier" id="magnifier-tutorial"></p>
             <div id="magnifier"></div>
         </div>
     </main>
@@ -154,6 +155,8 @@
         function startDrag(event) {
             event.preventDefault();
 
+            document.getElementById('magnifier-tutorial').style.opacity = 0;
+            
             let shiftX = (event.touches ? event.touches[0].clientX : event.clientX) - magnifier.getBoundingClientRect().left;
             let shiftY = (event.touches ? event.touches[0].clientY : event.clientY) - magnifier.getBoundingClientRect().top;
 
