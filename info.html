@@ -83,14 +83,14 @@
 
             setImageSourceWithAvailableExtension(
                 document.getElementById('img-zoom'),
-                "img/" + params.game + "-info",
+                "img/" + params.game + "-info-" + locale,
                 ["jpg", "jpeg", "png", "svg", "webp"]
             )
 
 
             setImageSourceWithAvailableExtension(
                 document.getElementById('magnifier'),
-                "img/" + params.game + "-info",
+                "img/" + params.game + "-info-" + locale,
                 ["jpg", "jpeg", "png", "svg", "webp"]
             )
             updateMagnifierDisplay();
