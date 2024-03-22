@@ -16,7 +16,7 @@ main {
     gap: 32px;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    height: calc(100vh - 48px); 
 }
 
 h1 {
@@ -33,7 +33,7 @@ p {
 .card img {
     height: 100%;
     border-radius: 89px;
-    max-width: 40%;
+    max-width: 36%;
     object-fit: cover;
 }
 
@@ -44,7 +44,7 @@ p {
     justify-content: space-between;
     align-items: center;
     gap: 16px;
-    height: 40%;
+    height: 36%;
     background-color: var(--text-color-light);
     border-radius: 90px;
     /* box-shadow: 4px 4px 16px #000; */
@@ -60,8 +60,9 @@ p {
     flex-direction: row;
     gap: 16px;
     align-self: flex-end;
-    margin-right: 64px;
-    margin-bottom: 32px;
+    position: absolute;
+    bottom: 16px;
+    right: 57px;
 }
 
 button {

@@ -34,7 +34,7 @@
             <button id="nextbutton" onclick="redirectToPage(event, 'game_select.html')">></button>
         </div>
 
-        <div id="fullscreenimg" style="display: none;">
+        <div id="fullscreenimg" style="display: none">
             <div class="fullscreenbuttons">
                 <button onclick="toggleFullscreen()">X</button>
             </div>
@@ -156,7 +156,7 @@
             event.preventDefault();
 
             document.getElementById('magnifier-tutorial').style.opacity = 0;
-            
+
             let shiftX = (event.touches ? event.touches[0].clientX : event.clientX) - magnifier.getBoundingClientRect().left;
             let shiftY = (event.touches ? event.touches[0].clientY : event.clientY) - magnifier.getBoundingClientRect().top;
 
