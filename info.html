@@ -164,7 +164,7 @@
             document.addEventListener('touchend', onEnd);
 
             function onMove(event) {
-                const leeway = 32;
+                const leeway = 64;
                 let newLeft = (event.touches ? event.touches[0].clientX : event.clientX) - shiftX;
                 let newTop = (event.touches ? event.touches[0].clientY : event.clientY) - shiftY;
 

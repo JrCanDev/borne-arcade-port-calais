@@ -107,8 +107,8 @@ button {
     border: none;
     border-radius: 100%;
     padding: 16px 16px;
-    width: 256px;
-    height: 256px;
+    width: 384px;
+    height: 384px;
     border: 8px solid var(--primary-color);
     background-repeat: no-repeat;
     background-position: -9999px -9999px;
@@ -118,13 +118,13 @@ button {
 #magnifier::after {
     content: "";
     display: block;
-    width: 256px;
+    width: 384px;
     height: 64px;
     background-color: var(--primary-color);
     border-radius: 0px 32px 32px 0px;
     position: absolute;
-    bottom: -80px;
-    right: -180px;
+    bottom: -100px;
+    right: -270px;
     /* rotate 45 deg */
     transform: rotate(45deg);
 }
