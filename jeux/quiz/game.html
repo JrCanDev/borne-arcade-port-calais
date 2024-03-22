@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/game.css">
+
+    <link rel="stylesheet" href="quiz.css">
+
+    <script src="../../js/i18n.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script src="../../js/game.js"></script>
+    <script src="../../js/global.js"></script>
+
+    <script src="quiz.js"></script>
+
+    <meta charset="UTF-8">
+    <meta name="application-name" data-i18n="application-name" data-i18n-field="content" content="Borne Port Calais">
+    <meta name="author" content="Joshua Vandaële">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <div id="left">
+        <div class="rules">
+            <h1 data-i18n="game.rules"></h1>
+            <p data-i18n="game.quiz.rules"></p>
+        </div>
+        <button data-i18n="game.giveup" onclick="showGiveUp()"></button>
+    </div>
+    <div id="game-container">
+        <div id="question-container">
+            <img id="question-img" src="../../img/loading.svg">
+            <h1 id="question"></h1>
+            <div id="answers">
+            </div>
+            <p id="explanation" onclick="nextQuestion()"></p>
+        </div>
+    </div>
+    <div id="right">
+        <div class="score">
+            <h1 data-i18n="game.score"></h1>
+            <p id="score">0</p>
+            <hr>
+            <h1 data-i18n="game.maxscore"></h1>
+            <p id="maxscore">0</p>
+        </div>
+    </div>
+
+    <!-- Pop-up -->
+    <div id="giveup" class="modal" style="display: none;">
+        <h2 data-i18n="game.giveup.title"></h2>
+        <p data-i18n="game.giveup.text"></p>
+        <div class="buttons">
+            <button onclick="nextPage()" data-i18n="game.giveup.yes">Oui</button>
+            <button onclick="hideGiveUp()" data-i18n="game.giveup.no">Non</button>
+        </div>
+    </div>
+
+    <div id="gameover" class="modal" style="display: none;">
+        <h2 data-i18n="game.gameover.title"></h2>
+        <p data-i18n="game.gameover.timetext"></p>
+        <div class="buttons">
+            <button onclick="nextPage()" data-i18n="game.gameover.next"></button>
+            <button onclick="hideGameOver()" data-i18n="game.gameover.retry"></button>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    function showGiveUp() {
+        document.getElementById("giveup").style.display = "block";
+    }
+
+    function hideGiveUp() {
+        document.getElementById("giveup").style.display = "none";
+    }
+
+    function showGameOver() {
+        let gameover_text = translations["game.gameover.text"] + " " + document.getElementById("score").innerHTML + "/" + document.getElementById("maxscore").innerHTML;
+        document.querySelector("#gameover p").innerHTML = gameover_text
+        document.getElementById("gameover").style.display = "block";
+    }
+
+    function hideGameOver() {
+        window.location.reload();
+        document.getElementById("gameover").style.display = "none";
+    }
+
+    function nextPage() {
+        redirectToPage(event, '../../info.html?&game=quiz');
+    }
+</script>
+
+</html>
