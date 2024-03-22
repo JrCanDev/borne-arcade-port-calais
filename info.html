@@ -21,11 +21,11 @@
 
         <div class="img-r card">
             <p></p>
-            <img src="img/fallback.svg">
+            <img src="img/loading.svg">
         </div>
 
         <div class="img-l card">
-            <img src="img/fallback.svg">
+            <img src="img/loading.svg">
             <p></p>
         </div>
 
@@ -49,16 +49,24 @@
         });
 
         function setImageSourceWithAvailableExtension(imgElement, basePath, extensions) {
+            let loadAttempts = 0;
             for (const extension of extensions) {
                 const imgPath = basePath + "." + extension;
                 const img = new Image();
                 img.src = imgPath;
                 img.onload = () => {
-                    // if img set src otherwise set background image
+                    loadAttempts = -Infinity;
                     if (imgElement.tagName === "IMG") {
                         imgElement.src = imgPath;
                     } else {
                         imgElement.style.backgroundImage = "url(" + imgPath + ")";
+                    }
+                }
+                img.onerror = () => {
+                    loadAttempts++;
+                    if (loadAttempts === extensions.length-1) {
+                        console.error("No image found for " + basePath + " with any of the following extensions: " + extensions.join(", "));
+                        imgElement.src = "img/fallback.svg";
                     }
                 }
             }
