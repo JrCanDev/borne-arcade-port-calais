@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-<body onclick="redirectToPage(event, 'game_select.html')">
+<body>
     <main>
         <h1></h1>
 
@@ -27,7 +27,19 @@
         <div class="img-l card">
             <img src="img/fallback.svg">
             <p></p>
+        </div>
 
+        <div class="buttons">
+            <button data-i18n="info.moreinfo" onclick="toggleFullscreen()"></button>
+            <button id="nextbutton" onclick="redirectToPage(event, 'game_select.html')">></button>
+        </div>
+
+        <div id="fullscreenimg" style="display: none;">
+            <div class="fullscreenbuttons">
+                <button onclick="toggleFullscreen()">X</button>
+            </div>
+            <img id="img-zoom">
+            <div id="magnifier"></div>
         </div>
     </main>
 
@@ -42,7 +54,12 @@
                 const img = new Image();
                 img.src = imgPath;
                 img.onload = () => {
-                    imgElement.src = imgPath;
+                    // if img set src otherwise set background image
+                    if (imgElement.tagName === "IMG") {
+                        imgElement.src = imgPath;
+                    } else {
+                        imgElement.style.backgroundImage = "url(" + imgPath + ")";
+                    }
                 }
             }
         }
@@ -54,17 +71,122 @@
             setImageSourceWithAvailableExtension(
                 document.querySelector('.img-r img'),
                 "img/" + params.game + "-top",
-                ["jpg", "jpeg", "png", "svg"]
+                ["jpg", "jpeg", "png", "svg", "webp"]
             )
 
             document.querySelector('.img-l p').innerHTML = translations["game." + params.game + ".theme.bottomText"] || translations["translation_not_found_error"];
             setImageSourceWithAvailableExtension(
                 document.querySelector('.img-l img'),
                 "img/" + params.game + "-bottom",
-                ["jpg", "jpeg", "png", "svg"]
+                ["jpg", "jpeg", "png", "svg", "webp"]
             )
 
+            setImageSourceWithAvailableExtension(
+                document.getElementById('img-zoom'),
+                "img/" + params.game + "-info",
+                ["jpg", "jpeg", "png", "svg", "webp"]
+            )
+
+
+            setImageSourceWithAvailableExtension(
+                document.getElementById('magnifier'),
+                "img/" + params.game + "-info",
+                ["jpg", "jpeg", "png", "svg", "webp"]
+            )
+            updateMagnifierDisplay();
         }
+
+        function toggleFullscreen() {
+            const fullscreenimg = document.getElementById('fullscreenimg');
+            fullscreenimg.style.display = fullscreenimg.style.display === 'none' ? 'flex' : 'none';
+        }
+
+        function getObjectFitSize(imageElement) {
+            var width = imageElement.naturalWidth;
+            var height = imageElement.naturalHeight;
+            var containerWidth = imageElement.offsetWidth;
+            var containerHeight = imageElement.offsetHeight;
+
+            var doRatio = width / height;
+            var cRatio = containerWidth / containerHeight;
+            var targetWidth = 0;
+            var targetHeight = 0;
+            var test = true ? (doRatio > cRatio) : (doRatio < cRatio);
+
+            if (test) {
+                targetWidth = containerWidth;
+                targetHeight = targetWidth / doRatio;
+            } else {
+                targetHeight = containerHeight;
+                targetWidth = targetHeight * doRatio;
+            }
+
+            return {
+                width: targetWidth,
+                height: targetHeight,
+                x: (containerWidth - targetWidth) / 2,
+                y: (containerHeight - targetHeight) / 2
+            };
+        }
+
+        const magnifier = document.getElementById('magnifier');
+
+        function updateMagnifierDisplay() {
+            const img = document.getElementById('img-zoom');
+            const rendered = getObjectFitSize(img);
+            const magnifierRect = magnifier.getBoundingClientRect();
+
+            let relativeX = (magnifierRect.left - rendered.x + magnifierRect.width / 2) / rendered.width;
+            let relativeY = (magnifierRect.top - rendered.y + magnifierRect.height / 2) / rendered.height;
+
+            magnifier.style.backgroundPositionX = (relativeX * 100) + "%";
+            magnifier.style.backgroundPositionY = (relativeY * 100) + "%";
+        }
+
+        function startDrag(event) {
+            event.preventDefault();
+
+            let shiftX = (event.touches ? event.touches[0].clientX : event.clientX) - magnifier.getBoundingClientRect().left;
+            let shiftY = (event.touches ? event.touches[0].clientY : event.clientY) - magnifier.getBoundingClientRect().top;
+
+            document.addEventListener('mousemove', onMove);
+            document.addEventListener('mouseup', onEnd);
+
+            document.addEventListener('touchmove', onMove);
+            document.addEventListener('touchend', onEnd);
+
+            function onMove(event) {
+                const leeway = 32;
+                let newLeft = (event.touches ? event.touches[0].clientX : event.clientX) - shiftX;
+                let newTop = (event.touches ? event.touches[0].clientY : event.clientY) - shiftY;
+
+                if (newLeft < -leeway) newLeft = -leeway;
+                if (newTop < -leeway) newTop = -leeway;
+
+                let rightEdge = document.documentElement.clientWidth - magnifier.offsetWidth + leeway;
+                if (newLeft > rightEdge) newLeft = rightEdge;
+
+                let bottomEdge = document.documentElement.clientHeight - magnifier.offsetHeight + leeway;
+                if (newTop > bottomEdge) newTop = bottomEdge;
+
+                magnifier.style.left = newLeft + 'px';
+                magnifier.style.top = newTop + 'px';
+
+                updateMagnifierDisplay()
+            }
+
+            function onEnd() {
+                document.removeEventListener('mousemove', onMove);
+                document.removeEventListener('mouseup', onEnd);
+
+                document.removeEventListener('touchmove', onMove);
+                document.removeEventListener('touchend', onEnd);
+            }
+        }
+
+        magnifier.addEventListener('mousedown', startDrag);
+        magnifier.addEventListener('touchstart', startDrag);
+
     </script>
 </body>
 

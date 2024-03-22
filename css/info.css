@@ -55,12 +55,100 @@ p {
     color: var(--primary-color);
 }
 
-main::after {
-    content: ">";
-    font-size: 64px;
+.buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-self: flex-end;
+    margin-right: 64px;
+    margin-bottom: 32px;
+}
+
+button {
+    background-color: var(--text-color-light);
+    color: var(--primary-color);
+    border: none;
+    border-radius: 90px;
+    padding: 16px 32px;
+    font-size: 32px;
+}
+
+#nextbutton {
+    font-weight: bold;
+    line-height: 0;
+}
+
+#fullscreenimg {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#img-zoom {
+    object-fit: contain;
+    box-shadow: 4px 4px 16px #000;
+    width: 100%;
+    height: 100%;
+}
+
+#magnifier {
     position: absolute;
+    bottom: 16px;
+    right: 32px;
+    font-size: 64px;
+    border: none;
+    border-radius: 100%;
+    padding: 16px 16px;
+    width: 256px;
+    height: 256px;
+    border: 8px solid var(--primary-color);
+    background-repeat: no-repeat;
+    background-position: -9999px -9999px;
+}
+
+/* handle */
+#magnifier::after {
+    content: "";
+    display: block;
+    width: 256px;
+    height: 64px;
+    background-color: var(--primary-color);
+    border-radius: 0px 32px 32px 0px;
+    position: absolute;
+    bottom: -80px;
+    right: -180px;
+    /* rotate 45 deg */
+    transform: rotate(45deg);
+}
+
+.fullscreenbuttons {
+    position: absolute;
+    top: 16px;
     right: 16px;
-    bottom: 8px;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    animation: grow-shrink 1.5s infinite ease-in-out;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    z-index: 101;
+}
+
+.fullscreenbuttons button {
+    background-color: var(--text-color-light);
+    color: var(--primary-color);
+    border: none;
+    border-radius: 90px;
+    padding: 16px 32px;
+    font-size: 32px;
+}
+
+.fullscreenbuttons hr {
+    border: 1px solid var(--text-color-light);
+    width: 100%;
 }
