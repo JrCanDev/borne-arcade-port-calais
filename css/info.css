@@ -136,7 +136,7 @@ button {
 #magnifier-tutorial {
     position: absolute;
     bottom: 450px;
-    right: 108px;
+    right: 110px;
     font-size: 32px;
     color: var(--text-color-light);
     text-align: center;
@@ -152,9 +152,8 @@ button {
     border-right: 16px solid transparent;
     border-top: 16px solid var(--text-color-light);
     position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
+    left: calc(50% - 16px);
+    animation: bounce 1s infinite;
 }
 
 .fullscreenbuttons {
