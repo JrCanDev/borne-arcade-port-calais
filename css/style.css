@@ -8,6 +8,7 @@
     --secondary-color: #40128B;
     --text-color-dark: #1A1A1A;
     --text-color-light: #F2F2F2;
+    --card-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);
 }
 
 * {

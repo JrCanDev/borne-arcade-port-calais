@@ -18,7 +18,7 @@ main {
     z-index: 1;
     padding: 16px;
     width: 148px;
-    filter: drop-shadow(0 0 16px black);
+    filter: drop-shadow(0 0 4px gray);
 }
 
 #preambule {

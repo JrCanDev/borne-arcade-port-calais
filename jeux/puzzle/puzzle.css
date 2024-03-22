@@ -3,3 +3,12 @@
     background-position: center;
     background-size: contain;
 }
+
+#restart-button {
+    border: 0;
+    filter: invert(100%);    
+}
+
+#restart-button:active {
+    opacity: 0.5;  
+}

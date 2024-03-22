@@ -45,6 +45,10 @@ p {
     width: 328px;
 }
 
+button:hover, button:active {
+    transform: scale(0.95);
+}
+
 #right {
     width: 20%;
     display: flex;

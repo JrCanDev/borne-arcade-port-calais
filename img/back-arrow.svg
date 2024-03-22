@@ -24,38 +24,26 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
      inkscape:zoom="0.70710678"
-     inkscape:cx="0"
+     inkscape:cx="246.07316"
      inkscape:cy="279.30718"
      inkscape:window-width="1366"
      inkscape:window-height="745"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="g3" />
   <defs
      id="defs1" />
   <g
      inkscape:label="Calque 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <circle
-       style="fill:#ffffff;fill-opacity:1"
-       id="path2"
-       cx="255"
-       cy="255"
-       r="239"
-       inkscape:label="white-background" />
-    <path
-       id="path1"
-       style="fill:#000000;fill-opacity:1"
-       d="M 255 0 A 255 255 0 0 0 0 255 A 255 255 0 0 0 255 510 A 255 255 0 0 0 510 255 A 255 255 0 0 0 255 0 z M 255 16 A 239 239 0 0 1 494 255 A 239 239 0 0 1 255 494 A 239 239 0 0 1 16 255 A 239 239 0 0 1 255 16 z "
-       inkscape:label="black-circle" />
     <g
        id="g3"
        inkscape:label="Arrow"
        transform="translate(24.999996,-7.7914198)">
       <rect
-         style="fill:#000000;fill-opacity:1"
+         style="fill:#ffffff;fill-opacity:1"
          id="rect3"
          width="192"
          height="64"
@@ -63,7 +51,7 @@
          y="67.377945"
          transform="rotate(45)" />
       <rect
-         style="fill:#000000;fill-opacity:1"
+         style="fill:#ffffff;fill-opacity:1"
          id="rect2"
          width="256"
          height="64"
@@ -71,7 +59,7 @@
          y="224"
          transform="translate(0,7.7914198)" />
       <rect
-         style="fill:#000000;fill-opacity:1"
+         style="fill:#ffffff;fill-opacity:1"
          id="rect3-2"
          width="192"
          height="64"

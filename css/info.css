@@ -47,7 +47,7 @@ p {
     height: 36%;
     background-color: var(--text-color-light);
     border-radius: 90px;
-    /* box-shadow: 4px 4px 16px #000; */
+    box-shadow: var(--card-shadow);
 }
 
 .card p {
@@ -72,6 +72,11 @@ button {
     border-radius: 90px;
     padding: 16px 32px;
     font-size: 32px;
+    box-shadow: var(--card-shadow);
+}
+
+button:hover, button:active {
+    transform: scale(0.95);
 }
 
 #nextbutton {
