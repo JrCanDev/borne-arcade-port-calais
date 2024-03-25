@@ -47,7 +47,7 @@
   "game.guesswho.name": "Guess Who",
   "game.guesswho.theme": "The operation of the port",
   "game.guesswho.description": "Find out who owns the tools of the port of Calais! Be careful not to make mistakes!",
-  "game.guesswho.rules": "Find out who owns the tools of the port of Calais!\n\nSelect a tool and attach it to a character to guess who it belongs to.\n\nYou have 3 tries to find the right character.",
+  "game.guesswho.rules": "Find out who owns the tools of the port of Calais!\n\nSelect a tool and attach it to a character to guess who it belongs to.",
   "game.blindtest.name": "Blind Test",
   "game.blindtest.description": "Find out which animal present at the port corresponds to the noise you hear!",
   "game.blindtest.theme": "The environment",

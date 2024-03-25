@@ -49,7 +49,7 @@
   "game.guesswho.name": "Devine Qui",
   "game.guesswho.theme": "Le fonctionnement du port",
   "game.guesswho.description": "Retrouvez à qui appartiennent les outils du port de Calais ! Attention a ne pas vous tromper !",
-  "game.guesswho.rules": "Retrouvez à qui appartiennent les outils du port de Calais !\n\nSélectionnez un outil et attachez-le à un personnage pour deviner à qui il appartient.\n\nVous avez 3 essais pour trouver le bon personnage.",
+  "game.guesswho.rules": "Retrouvez à qui appartiennent les outils du port de Calais !\n\nSélectionnez un outil et attachez-le à un personnage pour deviner à qui il appartient.",
   "game.blindtest.name": "Blind Test",
   "game.blindtest.description": "Retrouvez à quel animal présent au port correspond le bruit que vous entendez !",
   "game.blindtest.theme": "L'environnement",
