@@ -1,6 +1,6 @@
-const Y_POS = 900;
 const PIECE_SIZE = 110;
 const CANVAS_SIZE = 1026;
+const Y_POS = CANVAS_SIZE - PIECE_SIZE * 2;
 
 let timeToSolve = NaN;
 let gameOver = true;
@@ -261,19 +261,26 @@ jobImage.onload = () => {
   }
 
   function checkWin() {
-    for (const fixedPiece in FIXED_POSITIONS) {
-      const fixedPieceObj = getPieceById(fixedPiece);
-      let connections = fixedPieceObj.connections;
+    // get unique i & j indexes in FIXED_POSITIONS (i.e. 1, 2, 3 & b, e)
+    const i_indexes = new Set();
+    const j_indexes = new Set();
+    for (const key in FIXED_POSITIONS) {
+      i_indexes.add(key[1]);
+      j_indexes.add(key[0]);
+    }
+
+    for (const i of i_indexes) {
       let valid_connections = 0;
-      for (let i = 0; i < connections.length; i++) {
-        if (connections[i] && connections[i].id[1] === fixedPieceObj.id[1]) {
-          valid_connections++;
-        }
+      for (const j of j_indexes) {
+        const piece = getPieceById(j + i);
+        valid_connections += piece.connections.filter((c) => c).length;
       }
-      if (valid_connections != 3) {
+      
+      if (valid_connections != 6) {
         return;
       }
     }
+
     gameOver = true;
     if (score < highscore) {
       highscore = score;
