@@ -196,7 +196,7 @@ window.onload = function () {
     // Variables
     var score = 0;              // Score
     var gameover = true;        // Game is over
-    var played = false;
+    var startScreenDrew = true;
     var gameovertime = 1;       // How long we have been game over
     var gameoverdelay = 0.5;    // Waiting time after game over
 
@@ -425,10 +425,12 @@ window.onload = function () {
             context.fillStyle = "#ffffff";
             context.font = "24px Verdana";
             drawCenterText(translations["game.snake.presstostart"], 0, canvas.height / 2, canvas.width);
-            if (played) {
+            if (!startScreenDrew) {
                 showGameOver();
-                played = false;
             }
+            startScreenDrew = true;
+        } else {
+            startScreenDrew = false;
         }
     }
 
@@ -563,7 +565,6 @@ window.onload = function () {
         if (gameover) {
             tryNewGame();
         } else {
-            played = true;
             if (e.keyCode == 37 || e.keyCode == 65) {
                 // Left or A
                 if (snake.direction != 1) {
