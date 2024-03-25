@@ -408,9 +408,11 @@ window.onload = function () {
 
     // Render the game
     function render() {
-        // Draw background
-        context.fillStyle = "#577ddb";
-        context.fillRect(0, 0, canvas.width, canvas.height);
+        var bg_img = new Image();
+        bg_img.onload = function() {
+            context.drawImage(bg_img, 0, 0, canvas.width, canvas.height);
+        };
+        bg_img.src = 'background.png';
 
         drawLevel();
         drawSnake();
@@ -440,22 +442,10 @@ window.onload = function () {
                 var tiley = j * level.tileheight;
 
                 // Draw tiles based on their type
-                if (tile == 0) {
-                    // Empty space
-                    context.fillStyle = "#f7e697";
-                    context.fillRect(tilex, tiley, level.tilewidth, level.tileheight);
-                } else if (tile == 1) {
-                    // Wall
-                    context.fillStyle = "#bcae76";
-                    context.fillRect(tilex, tiley, level.tilewidth, level.tileheight);
-                } else if (tile == 2) {
+                // Type 0 is the background which is transparent
+                // Type 1 is a wall, which is also part of the background
+                if (tile == 2) {
                     // Apple
-
-                    // Draw apple background
-                    context.fillStyle = "#f7e697";
-                    context.fillRect(tilex, tiley, level.tilewidth, level.tileheight);
-
-                    // Draw the apple image
                     var tx = 0;
                     var ty = 3;
                     var tilew = 64;
