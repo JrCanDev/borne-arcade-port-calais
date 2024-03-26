@@ -43,6 +43,8 @@
   "game.tetris.name": "Tetris",
   "game.tetris.theme": "Le chantier Calais port 2015",
   "game.tetris.description": "Assemblez les blocs pour les faire disparaître sans atteindre le haut de l'écran ! Une pièce spéciale du port de Calais apparaîtra de temps en temps : le X-bloc !",
+  "game.tetris.rows": "Lignes",
+  "game.tetris.start": "Commencer",
   "game.maze.name": "Labyrinthe",
   "game.maze.theme": "Les acteurs",
   "game.maze.description": "Aidez le voyageur à arriver à son bateau en passant par les différents acteurs du port de Calais ! N'arrivez pas en retard !",

@@ -41,6 +41,8 @@
   "game.tetris.name": "Tetris",
   "game.tetris.theme": "The Calais port 2015 construction site",
   "game.tetris.description": "Assemble the blocks to make them disappear without reaching the top of the screen! A special piece from the port of Calais will appear from time to time: the X-block!",
+  "game.tetris.rows": "Rows",
+  "game.tetris.start": "Start",
   "game.maze.name": "Maze",
   "game.maze.theme": "The actors",
   "game.maze.description": "Help the traveler get to his boat by going through the different actors of the port of Calais! Don't be late!",

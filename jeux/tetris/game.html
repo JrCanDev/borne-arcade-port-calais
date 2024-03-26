@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/game.css">
+
+    <link rel="stylesheet" href="tetris.css">
+
+    <script src="../../js/i18n.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script src="../../js/game.js"></script>
+    <script src="../../js/global.js"></script>
+
+    <meta charset="UTF-8">
+    <meta name="application-name" data-i18n="application-name" data-i18n-field="content" content="Borne Port Calais">
+    <meta name="author" content="Joshua Vandaële">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <div id="left">
+        <div class="rules">
+            <h1 data-i18n="game.rules">Régles</h1>
+            <p data-i18n="game.tetris.rules"></p>
+        </div>
+        <button data-i18n="game.giveup" onclick="showGiveUp()">Abandonner</button>
+    </div>
+    <div id="game-container">
+        <div id="start">
+            <a id="start" href="javascript:play();">Start</a>
+        </div>
+        <div id="tetris">
+            <div id="menu">
+                <canvas id="upcoming"></canvas>
+            </div>
+            <canvas id="canvas"></canvas>
+        </div>
+    </div>
+    <div id="right">
+        <div class="score">
+            <h1 data-i18n="game.score">Score</h1>
+            <p id="score">0</p>
+            <h1 data-i18n="game.tetris.rows">Rows</h1>
+            <p id="rows">0</p>
+            <hr>
+            <h1 data-i18n="game.highscore">High Score</h1>
+            <p id="highscore">0</p>
+        </div>
+        <div class="controls">
+            <ul>
+                <li>
+                    <span class="blank"></span>
+                    <img src="../../img/up-arrow.svg" onclick="emulateArrowClick('up')">
+                    <span class="blank"></span>
+                </li>
+                <li>
+                    <img src="../../img/left-arrow.svg" onclick="emulateArrowClick('left')">
+                    <span class="blank"></span>
+                    <img src="../../img/right-arrow.svg" onclick="emulateArrowClick('right')">
+                </li>
+                <li>
+                    <span class="blank"></span>
+                    <img src="../../img/down-arrow.svg" onclick="emulateArrowClick('down')">
+                    <span class="blank"></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Pop-up -->
+    <div id="giveup" class="modal" style="display: none;">
+        <h2 data-i18n="game.giveup.title">Abandonner</h2>
+        <p data-i18n="game.giveup.text">Êtes-vous sûr de vouloir abandonner ?</p>
+        <div class="buttons">
+            <button onclick="nextPage()" data-i18n="game.giveup.yes">Oui</button>
+            <button onclick="hideGiveUp()" data-i18n="game.giveup.no">Non</button>
+        </div>
+    </div>
+
+    <div id="gameover" class="modal" style="display: none;">
+        <h2 data-i18n="game.gameover.title">Game Over !</h2>
+        <p data-i18n="game.gameover.text"></p>
+        <div class="buttons">
+            <button onclick="nextPage()" data-i18n="game.gameover.next">Suivant</button>
+            <button onclick="hideGameOver()" data-i18n="game.gameover.retry">Rejouer</button>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    let gameover_text = ""
+
+    function showGiveUp() {
+        document.getElementById("giveup").style.display = "block";
+    }
+
+    function hideGiveUp() {
+        document.getElementById("giveup").style.display = "none";
+    }
+
+    function showGameOver() {
+        document.getElementById("gameover").style.display = "block";
+    }
+
+    function hideGameOver() {
+        document.getElementById("gameover").style.display = "none";
+        initScore("tetris");
+    }
+
+    function nextPage() {
+        redirectToPage(event, '../../info.html?&game=tetris');
+    }
+
+    initScore("tetris");
+</script>
+
+<script type="text/javascript" src="tetris.js"></script>
+
+</html>
