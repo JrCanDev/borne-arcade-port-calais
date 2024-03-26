@@ -41,8 +41,8 @@ if (!window.requestAnimationFrame) {
 // game constants
 //-------------------------------------------------------------------------
 
-var KEY = { ESC: 27, SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40 },
-  DIR = { UP: 0, RIGHT: 1, DOWN: 2, LEFT: 3, MIN: 0, MAX: 3 },
+var KEY = { ESC: 27, SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, SHIFT: 16},
+  DIR = { UP: 0, RIGHT: 1, DOWN: 2, LEFT: 3, MIN: 0, MAX: 3, DROP: 4},
   canvas = get("canvas"),
   ctx = canvas.getContext("2d"),
   ucanvas = get("upcoming"),
@@ -242,6 +242,10 @@ function keydown(ev) {
         actions.push(DIR.DOWN);
         handled = true;
         break;
+      case KEY.SHIFT:
+        actions.push(DIR.DROP);
+        handled = true;
+        break;
       case KEY.ESC:
         lose();
         handled = true;
@@ -357,6 +361,8 @@ function handle(action) {
       break;
     case DIR.DOWN:
       drop();
+      break;
+    case DIR.DROP: 
       let cur = current;
       while (cur === current) {
         drop();
