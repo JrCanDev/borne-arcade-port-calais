@@ -197,7 +197,7 @@ jobImage.onload = () => {
     e3: { x: currentXPos, y: Y_POS },
   };
   guesswho.sketchPiece({
-    structure: "SSSS",
+    structure: "S-SS",
     metadata: {
       id: "b1",
       targetPosition: { x: PIECE_SIZE * 2 - 2, y: PIECE_SIZE - 2 },
@@ -205,7 +205,7 @@ jobImage.onload = () => {
     },
   });
   guesswho.sketchPiece({
-    structure: "SSST",
+    structure: "SSS-",
     metadata: {
       id: "e1",
       targetPosition: { x: PIECE_SIZE * 2 - 2, y: PIECE_SIZE * 2 - 2 },
@@ -213,7 +213,7 @@ jobImage.onload = () => {
     },
   });
   guesswho.sketchPiece({
-    structure: "SSSS",
+    structure: "S-SS",
     metadata: {
       id: "b2",
       targetPosition: { x: PIECE_SIZE * 5 - 2, y: PIECE_SIZE - 2 },
@@ -221,7 +221,7 @@ jobImage.onload = () => {
     },
   });
   guesswho.sketchPiece({
-    structure: "SSST",
+    structure: "SSS-",
     metadata: {
       id: "e2",
       targetPosition: { x: PIECE_SIZE * 5 - 2, y: PIECE_SIZE * 2 - 2 },
@@ -229,7 +229,7 @@ jobImage.onload = () => {
     },
   });
   guesswho.sketchPiece({
-    structure: "SSSS",
+    structure: "S-SS",
     metadata: {
       id: "b3",
       targetPosition: { x: PIECE_SIZE * 8 - 2, y: PIECE_SIZE - 2 },
@@ -237,7 +237,7 @@ jobImage.onload = () => {
     },
   });
   guesswho.sketchPiece({
-    structure: "SSST",
+    structure: "SSS-",
     metadata: {
       id: "e3",
       targetPosition: { x: PIECE_SIZE * 8 - 2, y: PIECE_SIZE * 2 - 2 },
@@ -276,7 +276,7 @@ jobImage.onload = () => {
         valid_connections += piece.connections.filter((c) => c).length;
       }
       
-      if (valid_connections != 6) {
+      if (valid_connections != 4) {
         return;
       }
     }
@@ -301,15 +301,6 @@ jobImage.onload = () => {
           FIXED_POSITIONS[element.id].x,
           FIXED_POSITIONS[element.id].y
         );
-
-        if (!element.connections[1] && !element.connections[3]) {
-          // we need to reconnect the piece to the puzzle (e3 connects to b3, e2 connects to b2, etc)
-          const target = ("b" ? "e" : element.id[0] == "e") + element.id[1];
-          const targetPiece = getPieceById(target);
-          if (targetPiece) {
-            element.connectVerticallyWith(targetPiece);
-          }
-        }
       }
     });
   }
