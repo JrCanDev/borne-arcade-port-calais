@@ -62,7 +62,7 @@ jobImage.onload = () => {
     width: CANVAS_SIZE,
     height: CANVAS_SIZE,
     pieceSize: PIECE_SIZE,
-    proximity: 20,
+    proximity: PIECE_SIZE / 3,
     borderFill: PIECE_SIZE / 10 + 1,
     strokeWidth: 0,
     lineSoftness: 0,
