@@ -92,7 +92,12 @@ var o = { size: 2, blocks: [0xcc00, 0xcc00, 0xcc00, 0xcc00], color: "yellow" };
 var s = { size: 3, blocks: [0x06c0, 0x8c40, 0x6c00, 0x4620], color: "green" };
 var t = { size: 3, blocks: [0x0e40, 0x4c40, 0x4e00, 0x4640], color: "purple" };
 var z = { size: 3, blocks: [0x0c60, 0x4c80, 0xc600, 0x2640], color: "red" };
-var x = { size: 3, blocks: [0x5250, 0x5250, 0x5250, 0x5250], color: "gray" };
+var x = {
+  size: 3,
+  blocks: [0x5250, 0x5250, 0x5250, 0x5250],
+  image: "xblock.png",
+  color: "gray",
+};
 
 //------------------------------------------------
 // do the bit manipulation and iterate through each
@@ -526,10 +531,22 @@ function drawRows() {
   }
 }
 
+function drawImagePiece(ctx, type, x, y) {
+  var img = new Image();
+  img.src = type.image;
+  img.onload = function () {
+    ctx.drawImage(img, dx + x * dx, y * dy, dx * type.size, dy * type.size);
+  };
+}
+
 function drawPiece(ctx, type, x, y, dir) {
-  eachblock(type, x, y, dir, function (x, y) {
-    drawBlock(ctx, x, y, type.color);
-  });
+  if (type.image) {
+    drawImagePiece(ctx, type, x, y);
+  } else {
+    eachblock(type, x, y, dir, function (x, y) {
+      drawBlock(ctx, x, y, type.color);
+    });
+  }
 }
 
 function drawBlock(ctx, x, y, color) {
