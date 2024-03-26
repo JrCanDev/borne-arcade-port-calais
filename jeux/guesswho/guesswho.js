@@ -303,14 +303,12 @@ jobImage.onload = () => {
         );
 
         if (!element.connections[1] && !element.connections[3]) {
-          console.log(element.connections);
           // we need to reconnect the piece to the puzzle (e3 connects to b3, e2 connects to b2, etc)
           const target = ("b" ? "e" : element.id[0] == "e") + element.id[1];
           const targetPiece = getPieceById(target);
           if (targetPiece) {
             element.connectVerticallyWith(targetPiece);
           }
-          console.log(element.connections);
         }
       }
     });
