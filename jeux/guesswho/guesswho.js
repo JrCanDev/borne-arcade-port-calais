@@ -306,4 +306,13 @@ jobImage.onload = () => {
   }
   setInterval(placePersonsPiecesBack, 100);
   setInterval(checkWin, 100);
+
+  document.getElementById("restart-button").addEventListener("click", () => {
+    guesswho.puzzle.shuffle(CANVAS_SIZE, Y_POS - PIECE_SIZE * 2);
+    placePersonsPiecesBack();
+    guesswho.redraw();
+    timeToSolve = NaN;
+    score = Infinity;
+    document.getElementById("score").innerHTML = "00:00:00";
+}); 
 };
