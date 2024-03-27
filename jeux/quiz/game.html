@@ -81,6 +81,7 @@
         let gameover_text = translations["game.gameover.text"] + " " + document.getElementById("score").innerHTML + "/" + document.getElementById("maxscore").innerHTML;
         document.querySelector("#gameover p").innerHTML = gameover_text
         document.getElementById("gameover").style.display = "block";
+        hideGiveUp();
     }
 
     function hideGameOver() {
