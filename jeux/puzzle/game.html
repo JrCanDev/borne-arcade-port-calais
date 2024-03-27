@@ -144,6 +144,9 @@
         background.draw();
 
         document.getElementById("restart-button").addEventListener("click", () => {
+            if (gameOver) {
+                return;
+            }
             background.shuffle(0.8);
             background.redraw();
             timeToSolve = NaN;
