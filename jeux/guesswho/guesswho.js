@@ -308,6 +308,9 @@ jobImage.onload = () => {
   setInterval(checkWin, 100);
 
   document.getElementById("restart-button").addEventListener("click", () => {
+    if (gameOver) {
+      return;
+    }
     guesswho.puzzle.shuffle(CANVAS_SIZE, Y_POS - PIECE_SIZE * 2);
     placePersonsPiecesBack();
     guesswho.redraw();
