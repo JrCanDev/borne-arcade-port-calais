@@ -538,6 +538,8 @@ window.onload = function () {
 
     // Draw text that is centered
     function drawCenterText(text, x, y, width) {
+        context.font = document.defaultView.getComputedStyle(canvas, null).getPropertyValue('font');
+
         var textdim = context.measureText(text);
         context.fillText(text, x + (width - textdim.width) / 2, y);
     }
