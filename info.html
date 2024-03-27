@@ -67,7 +67,12 @@
                     loadAttempts++;
                     if (loadAttempts === extensions.length-1) {
                         console.error("No image found for " + basePath + " with any of the following extensions: " + extensions.join(", "));
-                        imgElement.src = "img/fallback.svg";
+                        
+                        if (imgElement.tagName === "IMG") {
+                            imgElement.src = "img/fallback.svg";
+                        } else {
+                            imgElement.style.backgroundImage = "url(img/fallback.svg)";
+                        }
                     }
                 }
             }
