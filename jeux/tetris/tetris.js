@@ -180,7 +180,7 @@ function randomPiece() {
   return {
     type: type,
     dir: DIR.UP,
-    x: Math.round(random(0, nx - type.size)),
+    x: Math.round(random(0, nx - type.size - 1)),
     y: 0,
   };
 }
