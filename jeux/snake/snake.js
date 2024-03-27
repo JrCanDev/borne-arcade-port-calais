@@ -406,13 +406,14 @@ window.onload = function () {
         framecount++;
     }
 
+    var bg_img = new Image();
+    bg_img.onload = function() {
+        context.drawImage(bg_img, 0, 0, canvas.width, canvas.height);
+    };
+    bg_img.src = 'background.png';
     // Render the game
     function render() {
-        var bg_img = new Image();
-        bg_img.onload = function() {
-            context.drawImage(bg_img, 0, 0, canvas.width, canvas.height);
-        };
-        bg_img.src = 'background.png';
+        context.drawImage(bg_img, 0, 0, canvas.width, canvas.height);
 
         drawLevel();
         drawSnake();
