@@ -19,14 +19,38 @@ main {
 }
 
 h1 {
+    position: relative;
     font-size: 64px;
     margin: 0;
     background-color: var(--secondary-color);
     width: fit-content;
-    padding-right: 64px;
+    padding-right: 48px;
     padding-left: 48px;
     text-align: center;
-    border-radius: 0 0 90px 0;
+    clip-path: polygon(0% 0%, 98% 0%, 100% 50%, 98% 100%, 0% 100%);
+    display: inline-block;
+}
+
+#arrowfade {
+    display: inline-block;
+    position: fixed;
+    width: 2%;
+    height: 85px;
+    background-color: var(--secondary-color);
+    margin-left: -38px;
+    animation: move-fade 1.5s infinite ease-in-out;
+    clip-path: polygon(46% 15%, 46% 0, 100% 50%, 46% 100%, 46% 85%, 85% 50%);
+}
+
+@keyframes move-fade {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(128px);
+        opacity: 0;
+    }
 }
 
 p {
@@ -41,6 +65,5 @@ p::after {
     font-size: 64px;
     position: absolute;
     right: 64px;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     animation: grow-shrink 1.5s infinite ease-in-out;
 }
