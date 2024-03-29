@@ -108,19 +108,6 @@
     function nextPage() {
         redirectToPage(event, '../../info.html?&game=puzzle');
     }
-
-    let timeToSolve = NaN;
-    let gameOver = false;
-    let score = Infinity;
-    let highscore = parseInt(localStorage.getItem("puzzle")) || 86399000;
-
-    function updateHighscoreDisplay() {
-        let prettyTimeHighscore = new Date(highscore).toISOString().substr(11, 8);
-        
-        document.getElementById("highscore").innerHTML = prettyTimeHighscore;
-    }
-
-    updateHighscoreDisplay()
 </script>
 
 <script src="puzzle.js"></script>

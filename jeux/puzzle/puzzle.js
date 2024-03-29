@@ -1,11 +1,26 @@
+const pixelSize = 1000;
+const pieceSize = 150;
+const puzzleSize = 4;
+
+let timeToSolve = NaN;
+let gameOver = false;
+let score = Infinity;
+let highscore = parseInt(localStorage.getItem("puzzle")) || 86399000;
+
+function updateHighscoreDisplay() {
+    let prettyTimeHighscore = new Date(highscore).toISOString().substr(11, 8);
+    
+    document.getElementById("highscore").innerHTML = prettyTimeHighscore;
+}
+
 let puzzle = new Image();
 puzzle.src = "puzzle.png";
 puzzle.onload = () => {
   const background = new headbreaker.Canvas("puzzle", {
-    width: 1000,
-    height: 1000,
-    pieceSize: 150,
-    proximity: 150 / 3,
+    width: pixelSize,
+    height: pixelSize,
+    pieceSize: pieceSize,
+    proximity: pieceSize / puzzleSize,
     borderFill: 0,
     strokeWidth: 2,
     lineSoftness: 0.0,
@@ -17,8 +32,8 @@ puzzle.onload = () => {
 
   background.adjustImagesToPuzzleHeight();
   background.autogenerate({
-    horizontalPiecesCount: 4,
-    verticalPiecesCount: 4,
+    horizontalPiecesCount: puzzleSize,
+    verticalPiecesCount: puzzleSize,
   });
   background.shuffle(0.8);
 
@@ -74,6 +89,7 @@ setInterval(() => {
 
   if (score < highscore) {
     localStorage.setItem("puzzle", score);
-    let prettyTime = new Date(score).toISOString().substr(11, 8);
   }
 }, 100);
+
+updateHighscoreDisplay()
