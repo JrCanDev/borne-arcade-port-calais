@@ -16,6 +16,7 @@ Ce projet nécessite un système Debian avec Firefox (dernier testé : 123.0.1).
 1. Accéder à l'URL `about:config`.
 2. Recherchez `security.fileuri.strict_origin_policy` et assurez vous que cette valeur soit à `false`.
 3. Recherchez `privacy.file_unique_origin` et assurez vous que cette valeur soit à `false`.
+4. Recherchez `browser.translations.automaticallyPopup` et assurez vous que cette valeur soit à `false`.
 
 Ces paramètres permettent à Firefox d'accéder aux fichiers locaux et sont nécessaires pour que le projet fonctionne correctement. Si vous ne souhaitez pas les changer, vous pouvez utiliser un serveur local pour ouvrir le projet.
 
