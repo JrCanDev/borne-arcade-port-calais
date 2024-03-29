@@ -23,7 +23,7 @@ Ces paramètres permettent à Firefox d'accéder aux fichiers locaux et sont né
 Pour que le projet démarre automatiquement au démarrage, configurez Firefox pour ouvrir le fichier "index.html" en mode kiosque au démarrage. Vous pouvez le faire en ajoutant la commande suivante à votre fichier `~/.bashrc` ou `~/.bash_profile` :
 
 ```bash
-firefox --disable-pinch --kiosk /chemin/vers/index.html
+firefox --disable-pinch --kiosk /chemin/absolut/vers/index.html
 ```
 
 `--disable-pinch` est utilisé pour désactiver le zoom sur les écrans tactiles.
