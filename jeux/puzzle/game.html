@@ -127,7 +127,7 @@
     puzzle.onload = () => {
         const background = new headbreaker.Canvas('puzzle', {
             width: 1000, height: 1000,
-            pieceSize: 150, proximity: 20,
+            pieceSize: 150, proximity: 150 / 3,
             borderFill: 0, strokeWidth: 2,
             lineSoftness: 0.0, image: puzzle,
             outline: new headbreaker.outline.Rounded(),
