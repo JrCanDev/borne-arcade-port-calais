@@ -38,7 +38,6 @@
   "game.snake.description": "Incarnez un train qui doit collecter des containers pour les amener à bon port. Attention à ne pas vous mordre la queue !",
   "game.snake.rules": "Déplacez le train pour collecter les containers et les amener à bon port.\n\nUtilisez les flèches directionnelles pour diriger le train.\n\nAttention à ne pas vous mordre la queue !",
   "game.snake.presstostart": "Appuyez sur une touche pour commencer !",
-  "game.frogger.name": "Frogger",
   "game.pacman.name": "Pacman",
   "game.tetris.name": "Tetris",
   "game.tetris.theme": "Le chantier Calais port 2015",

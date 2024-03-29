@@ -36,7 +36,6 @@
   "game.snake.description": "Play as a train that must collect containers so that they can safely be transported. Be careful not to bite your tail!",
   "game.snake.rules": "Move the train to collect the containers so that they can safely be transported!\n\nUse the arrow keys to steer the train.\n\nBe careful not to bite your tail!",
   "game.snake.presstostart": "Press any key to start!",
-  "game.frogger.name": "Frogger",
   "game.pacman.name": "Pacman",
   "game.tetris.name": "Tetris",
   "game.tetris.theme": "The Calais port 2015 construction site",
