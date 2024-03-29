@@ -4,6 +4,9 @@ Ce projet à été développé par Joshua Vandaële lors d'un stage se déroulan
 
 - [Borne d'Arcade du Port de Calais](#borne-darcade-du-port-de-calais)
   - [Mise en marche](#mise-en-marche)
+    - [Installation de Debian](#installation-de-debian)
+    - [Installation de Firefox](#installation-de-firefox)
+    - [Installation du serveur X](#installation-du-serveur-x)
   - [Remettre à zéro les scores](#remettre-à-zéro-les-scores)
   - [Liste des jeux](#liste-des-jeux)
   - [Outil de traduction](#outil-de-traduction)
@@ -11,22 +14,50 @@ Ce projet à été développé par Joshua Vandaële lors d'un stage se déroulan
 
 ## Mise en marche
 
-Ce projet nécessite un système Debian avec Firefox (dernier testé : 123.0.1). Pour la première mise en marche, certains paramètres de Firefox ont besoin d'être changé.
+Ce projet nécessite l'installation de Debian avec une installation non graphique (sans DE tels que GNOME), de Firefox, et d'un serveur X minimal. Pour la première mise en marche, certains paramètres ont besoin d'être changé.
 
-1. Accéder à l'URL `about:config`.
-2. Recherchez `security.fileuri.strict_origin_policy` et assurez vous que cette valeur soit à `false`.
-3. Recherchez `privacy.file_unique_origin` et assurez vous que cette valeur soit à `false`.
-4. Recherchez `browser.translations.automaticallyPopup` et assurez vous que cette valeur soit à `false`.
+### Installation de Debian
 
-Ces paramètres permettent à Firefox d'accéder aux fichiers locaux et sont nécessaires pour que le projet fonctionne correctement. Si vous ne souhaitez pas les changer, vous pouvez utiliser un serveur local pour ouvrir le projet.
+1. Téléchargez l'image ISO netinstall de Debian sur le site officiel de Debian : [https://www.debian.org/distrib/](https://www.debian.org/distrib/).
+2. Flasher l'image ISO sur une clé USB en utilisant un logiciel tel que Rufus ou Etcher.
+3. Démarrez votre ordinateur sur la clé USB.
+4. Suivez les instructions d'installation de Debian. Lorsque vous arrivez à l'étape de sélection des paquets, décochez toutes les cases pour n'installer aucun paquet. Cela installera une installation minimale de Debian sans interface graphique.
+5. Une fois l'installation terminée, redémarrez votre ordinateur, retirez la clé USB et connectez-vous en tant que root.
+6. Installez les mises à jour en utilisant la commande suivante dans le terminal : `sudo apt-get update && sudo apt-get upgrade`.
+7. Créez un utilisateur non-root en utilisant la commande suivante dans le terminal : `sudo adduser borne`. Cet utilisateur sera utilisé pour se connecter automatiquement et lancer l'interface graphique.
+8. Faite que l'utilisateur non-root se connecte automatiquement en utilisant la commande suivante dans le terminal : `sudo nano /etc/systemd/logind.conf`. Recherchez la ligne `#NAutoVTs=6` et remplacez-la par `NAutoVTs=1`. Enregistrez et quittez le fichier.
+9.  Créez un fichier override pour le service `getty@tty1` en utilisant la commande suivante dans le terminal : `sudo systemctl edit getty@tty1`. Ajoutez les lignes suivantes dans le fichier et enregistrez-le :
 
-Pour que le projet démarre automatiquement au démarrage, configurez Firefox pour ouvrir le fichier "index.html" en mode kiosque au démarrage. Vous pouvez le faire en ajoutant la commande suivante à votre fichier `~/.bashrc` ou `~/.bash_profile` :
-
-```bash
-firefox --disable-pinch --kiosk /chemin/absolut/vers/index.html
+```conf
+[Service]
+ExecStart=
+ExecStart=-/sbin/agetty --autologin borne --noclear %I $TERM
 ```
 
+Cela permettra à l'utilisateur non-root de se connecter automatiquement et de lancer l'interface graphique sur le premier terminal virtuel.
+
+10. Suivez les étapes suivantes pour installer Firefox et le serveur X.
+11. Redémarrez votre ordinateur pour que les changements prennent effet.
+
+### Installation de Firefox
+
+1. Installez Firefox en utilisant la commande suivante dans le terminal : `sudo apt-get install firefox`.
+
+Pour que le projet fonctionne correctement, vous devez changer certains paramètres de Firefox. Pour ce faire, suivez les étapes suivantes une fois que vous avez ouvert Firefox pour la première fois depuis le serveur X :
+
+1. Accéder à l'URL `about:config`. Si vous êtes en mode kiosque, vous pouvez appuyer sur `Ctrl + L` pour accéder à la barre d'adresse.
+2. Recherchez `security.fileuri.strict_origin_policy` et assurez vous que cette valeur soit à `false`. Cela permet à Firefox d'accéder aux fichiers locaux.
+3. Recherchez `browser.translations.automaticallyPopup` et assurez vous que cette valeur soit à `false`. Cela empêche la traduction automatique des pages web.
+
+### Installation du serveur X
+
+1. Installez le serveur X en utilisant la commande suivante dans le terminal : `sudo apt-get install xorg`.
+2. Créez un fichier `.xinitrc` dans le répertoire personnel de l'utilisateur non-root (`/home/borne/.xinitrc`) et ajoutez la ligne suivante : `exec firefox --disable-pinch --kiosk /chemin/absolut/vers/index.html`. Cela permettra de lancer Firefox en mode kiosque au démarrage du serveur X.
+3. Rendez le fichier `.xinitrc` exécutable avec la commande : `chmod +x ~/.xinitrc`.
+
 `--disable-pinch` est utilisé pour désactiver le zoom sur les écrans tactiles.
+  
+`--kiosk` est utilisé pour ouvrir Firefox en mode kiosque, ce qui signifie que Firefox s'ouvrira en plein écran sans barre d'adresse ni barre d'onglets.
 
 ## Remettre à zéro les scores
 
