@@ -65,9 +65,9 @@
                 }
                 img.onerror = () => {
                     loadAttempts++;
-                    if (loadAttempts === extensions.length-1) {
+                    if (loadAttempts === extensions.length - 1) {
                         console.error("No image found for " + basePath + " with any of the following extensions: " + extensions.join(", "));
-                        
+
                         if (imgElement.tagName === "IMG") {
                             imgElement.src = "img/fallback.svg";
                         } else {
@@ -112,7 +112,18 @@
 
         function toggleFullscreen() {
             const fullscreenimg = document.getElementById('fullscreenimg');
-            fullscreenimg.style.display = fullscreenimg.style.display === 'none' ? 'flex' : 'none';
+            if (fullscreenimg.style.display === 'none') {
+                fullscreenimg.style.display = 'flex';
+                // For some reason, the fade-in class doesn't work if it's added immediately
+                setTimeout(() => {
+                    fullscreenimg.classList.add('fade-in');
+                }, 10);
+            } else {
+                fullscreenimg.classList.remove('fade-in');
+                setTimeout(() => {
+                    fullscreenimg.style.display = 'none';
+                }, 300);
+            }
         }
 
         function getObjectFitSize(imageElement) {
