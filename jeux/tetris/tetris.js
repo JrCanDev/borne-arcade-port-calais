@@ -41,8 +41,16 @@ if (!window.requestAnimationFrame) {
 // game constants
 //-------------------------------------------------------------------------
 
-var KEY = { ESC: 27, SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, SHIFT: 16},
-  DIR = { UP: 0, RIGHT: 1, DOWN: 2, LEFT: 3, MIN: 0, MAX: 3, DROP: 4},
+var KEY = {
+    ESC: 27,
+    SPACE: 32,
+    LEFT: 37,
+    UP: 38,
+    RIGHT: 39,
+    DOWN: 40,
+    SHIFT: 16,
+  },
+  DIR = { UP: 0, RIGHT: 1, DOWN: 2, LEFT: 3, MIN: 0, MAX: 3, DROP: 4 },
   canvas = get("canvas"),
   ctx = canvas.getContext("2d"),
   ucanvas = get("upcoming"),
@@ -85,18 +93,55 @@ var dx,
 //
 //-------------------------------------------------------------------------
 
-var i = { size: 4, blocks: [0x0f00, 0x2222, 0x00f0, 0x4444], color: "cyan" };
-var j = { size: 3, blocks: [0x44c0, 0x8e00, 0x6440, 0x0e20], color: "blue" };
-var l = { size: 3, blocks: [0x4460, 0x0e80, 0xc440, 0x2e00], color: "orange" };
-var o = { size: 2, blocks: [0xcc00, 0xcc00, 0xcc00, 0xcc00], color: "yellow" };
-var s = { size: 3, blocks: [0x06c0, 0x8c40, 0x6c00, 0x4620], color: "green" };
-var t = { size: 3, blocks: [0x0e40, 0x4c40, 0x4e00, 0x4640], color: "purple" };
-var z = { size: 3, blocks: [0x0c60, 0x4c80, 0xc600, 0x2640], color: "red" };
+var i = {
+  size: 4,
+  blocks: [0x4444, 0x0f00, 0x2222, 0x00f0],
+  image: "blocks/iblock.png",
+  color: "cyan",
+};
+var j = {
+  size: 3,
+  blocks: [0x44c0, 0x8e00, 0x6440, 0x0e20],
+  image: "blocks/jblock.png",
+  color: "blue",
+};
+var l = {
+  size: 3,
+  blocks: [0xc440, 0x2e00, 0x4460, 0x0e80],
+  image: "blocks/lblock.png",
+  color: "orange",
+};
+var o = {
+  size: 2,
+  blocks: [0xcc00, 0xcc00, 0xcc00, 0xcc00],
+  image: "blocks/oblock.png",
+  color: "yellow",
+  square: true,
+};
+var s = {
+  size: 3,
+  blocks: [0x8c40, 0x6c00, 0x4620, 0x06c0],
+  image: "blocks/sblock.png",
+  color: "green",
+};
+var z = {
+  size: 3,
+  blocks: [0x4c80, 0xc600, 0x2640, 0x0c60],
+  image: "blocks/zblock.png",
+  color: "red",
+};
+var t = {
+  size: 3,
+  blocks: [0x4c40, 0x4e00, 0x4640, 0x0e40],
+  image: "blocks/tblock.png",
+  color: "purple",
+};
 var x = {
   size: 3,
   blocks: [0x5250, 0x5250, 0x5250, 0x5250],
-  image: "xblock.png",
+  image: "blocks/xblock.png",
   color: "gray",
+  square: true,
 };
 
 //------------------------------------------------
@@ -144,42 +189,18 @@ function randomPiece() {
   if (pieces.length == 0)
     pieces = [
       i,
-      i,
-      i,
-      i,
-      j,
-      j,
-      j,
       j,
       l,
-      l,
-      l,
-      l,
-      o,
-      o,
-      o,
       o,
       s,
-      s,
-      s,
-      s,
-      t,
-      t,
-      t,
       t,
       z,
-      z,
-      z,
-      z,
-      x,
-      x,
-      x,
       x,
     ];
   var type = pieces.splice(random(0, pieces.length - 1), 1)[0];
   return {
     type: type,
-    dir: DIR.UP,
+    dir: [DIR.UP, DIR.RIGHT, DIR.DOWN, DIR.LEFT][Math.round(random(0, 3))],
     x: Math.round(random(0, nx - type.size - 1)),
     y: 0,
   };
@@ -362,7 +383,7 @@ function handle(action) {
     case DIR.DOWN:
       drop();
       break;
-    case DIR.DROP: 
+    case DIR.DROP:
       let cur = current;
       while (cur === current) {
         drop();
@@ -537,17 +558,44 @@ function drawRows() {
   }
 }
 
-function drawImagePiece(ctx, type, x, y) {
+function drawImagePiece(ctx, type, x, y, dir) {
   var img = new Image();
   img.src = type.image;
   img.onload = function () {
-    ctx.drawImage(img, dx + x * dx, y * dy, dx * type.size, dy * type.size);
+    ctx.save();
+    var y_translation = (0, y + type.size / 2);
+    var x_translation = x + type.size / 2;
+
+    if (type.square) {
+      if (type.size === 3) {
+        x_translation += type.size / 3;
+      }
+    } else if (dir === 0) {
+      x_translation -= 0.5;
+    } else if (dir === 1) {
+      y_translation -= 0.5;
+    } else if (dir === 2) {
+      x_translation += 0.5;
+    } else if (dir === 3) {
+      y_translation += 0.5;
+    }
+    ctx.translate(x_translation * dx, y_translation * dy);
+
+    ctx.rotate((dir * Math.PI) / 2);
+    ctx.drawImage(
+      img,
+      (-type.size / 2) * dx,
+      (-type.size / 2) * dy,
+      type.size * dx,
+      type.size * dy
+    );
+    ctx.restore();
   };
 }
 
 function drawPiece(ctx, type, x, y, dir) {
   if (type.image) {
-    drawImagePiece(ctx, type, x, y);
+    drawImagePiece(ctx, type, x, y, dir);
   } else {
     eachblock(type, x, y, dir, function (x, y) {
       drawBlock(ctx, x, y, type.color);
