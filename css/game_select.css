@@ -109,6 +109,13 @@ main {
     text-align: center;
 }
 
+.game hr {
+    margin: 0;
+    border: 0;
+    height: 2px;
+    background: var(--text-color-light);
+}
+
 .game-text {
     background-color: rgba(0, 0, 0, 0.2);
     border-radius: 0 0 15px 15px;
