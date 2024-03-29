@@ -97,50 +97,50 @@ var i = {
   size: 4,
   blocks: [0x4444, 0x0f00, 0x2222, 0x00f0],
   image: "blocks/iblock.png",
-  color: "cyan",
+  color: "#a4a4ac",
 };
 var j = {
   size: 3,
   blocks: [0x44c0, 0x8e00, 0x6440, 0x0e20],
   image: "blocks/jblock.png",
-  color: "blue",
+  color: "#888386",
 };
 var l = {
   size: 3,
   blocks: [0xc440, 0x2e00, 0x4460, 0x0e80],
   image: "blocks/lblock.png",
-  color: "orange",
+  color: "#5c585c",
 };
 var o = {
   size: 2,
   blocks: [0xcc00, 0xcc00, 0xcc00, 0xcc00],
   image: "blocks/oblock.png",
-  color: "yellow",
+  color: "#bbb4bb",
   square: true,
 };
 var s = {
   size: 3,
   blocks: [0x8c40, 0x6c00, 0x4620, 0x06c0],
   image: "blocks/sblock.png",
-  color: "green",
+  color: "#918a8a",
 };
 var z = {
   size: 3,
   blocks: [0x4c80, 0xc600, 0x2640, 0x0c60],
   image: "blocks/zblock.png",
-  color: "red",
+  color: "#626267",
 };
 var t = {
   size: 3,
   blocks: [0x4c40, 0x4e00, 0x4640, 0x0e40],
   image: "blocks/tblock.png",
-  color: "purple",
+  color: "#a49fa3",
 };
 var x = {
   size: 3,
-  blocks: [0x5250, 0x5250, 0x5250, 0x5250],
+  blocks: [0x4e40, 0x4e40, 0x4e40, 0x4e40],
   image: "blocks/xblock.png",
-  color: "gray",
+  color: "#313134",
   square: true,
 };
 
@@ -186,17 +186,7 @@ function unoccupied(type, x, y, dir) {
 //-----------------------------------------
 var pieces = [];
 function randomPiece() {
-  if (pieces.length == 0)
-    pieces = [
-      i,
-      j,
-      l,
-      o,
-      s,
-      t,
-      z,
-      x,
-    ];
+  if (pieces.length == 0) pieces = [i, j, l, o, s, t, z, x];
   var type = pieces.splice(random(0, pieces.length - 1), 1)[0];
   return {
     type: type,
@@ -566,18 +556,16 @@ function drawImagePiece(ctx, type, x, y, dir) {
     var y_translation = (0, y + type.size / 2);
     var x_translation = x + type.size / 2;
 
-    if (type.square) {
-      if (type.size === 3) {
-        x_translation += type.size / 3;
+    if (!type.square) {
+      if (dir === 0) {
+        x_translation -= 0.5;
+      } else if (dir === 1) {
+        y_translation -= 0.5;
+      } else if (dir === 2) {
+        x_translation += 0.5;
+      } else if (dir === 3) {
+        y_translation += 0.5;
       }
-    } else if (dir === 0) {
-      x_translation -= 0.5;
-    } else if (dir === 1) {
-      y_translation -= 0.5;
-    } else if (dir === 2) {
-      x_translation += 0.5;
-    } else if (dir === 3) {
-      y_translation += 0.5;
     }
     ctx.translate(x_translation * dx, y_translation * dy);
 
