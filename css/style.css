@@ -4,10 +4,10 @@
 }
 
 :root {
-    --primary-color: #6528F7;
-    --secondary-color: #40128B;
-    --text-color-dark: #1A1A1A;
-    --text-color-light: #F2F2F2;
+    --primary-color: #62B6CB;
+    --secondary-color: #1B4965;
+    --text-color-dark: #333;
+    --text-color-light: #F8F7FF;
     --card-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);
 }
 
