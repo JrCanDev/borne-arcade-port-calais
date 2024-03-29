@@ -102,12 +102,7 @@
             )
 
 
-            setImageSourceWithAvailableExtension(
-                document.getElementById('magnifier'),
-                "img/" + params.game + "-info-" + locale,
-                ["jpg", "jpeg", "png", "svg", "webp"]
-            )
-            updateMagnifierDisplay();
+            resetMagnifier();
         }
 
         function toggleFullscreen() {
@@ -122,6 +117,7 @@
                 fullscreenimg.classList.remove('fade-in');
                 setTimeout(() => {
                     fullscreenimg.style.display = 'none';
+                    resetMagnifier()
                 }, 300);
             }
         }
@@ -155,6 +151,10 @@
         }
 
         const magnifier = document.getElementById('magnifier');
+        magnifier.defaultStyle = {
+            left: magnifier.style.left,
+            top: magnifier.style.top,
+        };
 
         function updateMagnifierDisplay() {
             const img = document.getElementById('img-zoom');
@@ -166,6 +166,17 @@
 
             magnifier.style.backgroundPositionX = (relativeX * 100) + "%";
             magnifier.style.backgroundPositionY = (relativeY * 100) + "%";
+        }
+
+        function resetMagnifier() {
+            magnifier.style.cssText = magnifier.defaultStyle.left + " " + magnifier.defaultStyle.top;
+            setImageSourceWithAvailableExtension(
+                document.getElementById('magnifier'),
+                "img/" + params.game + "-info-" + locale,
+                ["jpg", "jpeg", "png", "svg", "webp"]
+            )
+            document.getElementById('magnifier-tutorial').style.opacity = 1;
+            updateMagnifierDisplay();
         }
 
         function startDrag(event) {
