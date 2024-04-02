@@ -41,7 +41,7 @@
   "game.pacman.description": "Play as an electric boat and collect the batteries you need!",
   "game.pacman.rules": "Play as an electric boat and collect the necessary batteries!\n\nUse the arrow keys to steer the boat.\n\nWatch out for electric discharges!",
   "game.tetris.name": "Tetris",
-  "game.tetris.theme": "The Calais port 2015 construction site",
+  "game.tetris.theme": "The Calais port 2015 site",
   "game.tetris.description": "Assemble the blocks to make them disappear without reaching the top of the screen! A special piece from the port of Calais will appear from time to time: the X-block!",
   "game.tetris.rules": "Assemble the rocks in a straight vertical line to make them disappear without reaching the top of the screen!\n\nUse the arrow keys to move the blocks and to rotate them.\n\nA special piece from the port of Calais will appear from time to time: the X-block!",
   "game.tetris.rows": "Rows",
