@@ -93,3 +93,4 @@ setInterval(() => {
 }, 100);
 
 updateHighscoreDisplay()
+document.getElementById("score").innerHTML = "00:00:00";

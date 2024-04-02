@@ -395,3 +395,5 @@ image2.onload = onLoadImage;
 image2_solved.onload = onLoadImage;
 image3.onload = onLoadImage;
 image3_solved.onload = onLoadImage;
+
+document.getElementById("score").innerHTML = "00:00:00";
