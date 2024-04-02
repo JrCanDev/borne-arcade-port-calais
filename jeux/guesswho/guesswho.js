@@ -55,42 +55,23 @@ class Flat {
   }
 }
 
-var canvas = document.createElement('canvas');
-canvas.width = 900;
-canvas.height = 200;
-var context = canvas.getContext('2d');
-
-var combinedImage = new Image();
+var combinedImages = {};
 var image1 = new Image();
+var image1_solved = new Image();
 var image2 = new Image();
+var image2_solved = new Image();
 var image3 = new Image();
+var image3_solved = new Image();
 
 image1.src = "guesswho1.png";
+image1_solved.src = "guesswho1_solved.png";
 image2.src = "guesswho2.png";
+image2_solved.src = "guesswho2_solved.png";
 image3.src = "guesswho3.png";
+image3_solved.src = "guesswho3_solved.png";
 
-var imagesLoaded = 0;
-
-var onLoadImage = () => {
-  console.log("Image loaded");
-  imagesLoaded++;
-  if (imagesLoaded === 3) {
-    context.drawImage(image1, 0, 0, 300, 200);
-    context.drawImage(image2, 300, 0, 300, 200);
-    context.drawImage(image3, 600, 0, 300, 200);
-    combinedImage.src = canvas.toDataURL("image/png");
-    console.log("Combined image loaded");
-    // append image to body
-    d
-  }
-};
-
-image1.onload = onLoadImage;
-image2.onload = onLoadImage;
-image3.onload = onLoadImage;
-
-combinedImage.onload = () => {
-  console.log("Image loaded");
+let guessed = 0b000;
+function onCombined() {
   const guesswho = new headbreaker.Canvas("guesswho", {
     width: CANVAS_SIZE,
     height: CANVAS_SIZE,
@@ -99,12 +80,18 @@ combinedImage.onload = () => {
     borderFill: PIECE_SIZE / 10 + 1,
     strokeWidth: 0,
     lineSoftness: 0,
-    image: combinedImage,
+    image: combinedImages[guessed],
     maxPiecesCount: { x: 3, y: 2 },
     preventOffstageDrag: true,
     fixed: true,
     outline: new Flat(),
   });
+
+  function setImage() {
+    guesswho.imageMetadata.content = combinedImages[guessed];
+    guesswho.refill();
+    guesswho.redraw();
+  }
 
   guesswho.adjustImagesToPuzzleHeight();
   guesswho.puzzle.forceDisconnectionWhileDragging();
@@ -302,16 +289,31 @@ combinedImage.onload = () => {
       j_indexes.add(key[0]);
     }
 
+    let old_guessed = guessed;
+    guessed = 0;
+
     for (const i of i_indexes) {
       let valid_connections = 0;
       for (const j of j_indexes) {
         const piece = getPieceById(j + i);
         valid_connections += piece.connections.filter((c) => c).length;
       }
-      
-      if (valid_connections != 4) {
-        return;
+
+      if (valid_connections == 4) {
+        // Binary 2, 4, 8 for 1, 2, 3 (111 if 1, 2 and 3 is solved 001 if only 3 is solved, etc)
+        guessed |= 1 << (i - 1);
       }
+    }
+    // switch from LE to BE
+    let binaryString = guessed.toString(2);
+    let paddedBinaryString = binaryString.padStart(3, "0"); // enforce 3 bits
+    guessed = parseInt(paddedBinaryString.split("").reverse().join(""), 2);
+    if (old_guessed != guessed) {
+      setImage();
+    }
+
+    if (guessed != 0b111) {
+      return;
     }
 
     gameOver = true;
@@ -350,5 +352,46 @@ combinedImage.onload = () => {
     timeToSolve = NaN;
     score = Infinity;
     document.getElementById("score").innerHTML = "00:00:00";
-}); 
+  });
+}
+
+var canvas = document.createElement("canvas");
+canvas.width = 900;
+canvas.height = 200;
+var context = canvas.getContext("2d");
+
+var imagesLoaded = 0;
+
+var onLoadImage = () => {
+  imagesLoaded++;
+  if (imagesLoaded === 6) {
+    for (let key = 0; key < 8; key++) {
+      combinedImages[key] = new Image();
+    }
+    combinedImages[0].onload = onCombined;
+    for (let key = 0; key < 8; key++) {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      let binaryKey = (parseInt(key) >>> 0).toString(2).padStart(3, "0");
+      for (let i = 0; i < binaryKey.length; i++) {
+        let image = i === 0 ? image1 : i === 1 ? image2 : image3;
+        let solvedImage =
+          i === 0 ? image1_solved : i === 1 ? image2_solved : image3_solved;
+        context.drawImage(
+          binaryKey[i] === "0" ? image : solvedImage,
+          i * 300,
+          0,
+          300,
+          200
+        );
+      }
+      combinedImages[key].src = canvas.toDataURL("image/png");
+    }
+  }
 };
+
+image1.onload = onLoadImage;
+image1_solved.onload = onLoadImage;
+image2.onload = onLoadImage;
+image2_solved.onload = onLoadImage;
+image3.onload = onLoadImage;
+image3_solved.onload = onLoadImage;
