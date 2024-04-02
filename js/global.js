@@ -13,10 +13,10 @@ const TIMER_RESET_EVENTS = [
 ];
 
 // Goes back to the index page after one minute of inactivity
-var time = 0;
-var interval = setInterval(function () {
-  time++;
-  if (time >= INACTIVITY_TIME) {
+var inactivity_timer = 0;
+setInterval(function () {
+  inactivity_timer++;
+  if (inactivity_timer >= INACTIVITY_TIME) {
     redirectToIndex();
   }
 }, 1000);
@@ -41,13 +41,13 @@ function redirectToIndex() {
   })();
 }
 
-function resetTimer() {
-  time = 0;
+function resetInactivityTimer() {
+  inactivity_timer = 0;
 }
 
 TIMER_RESET_EVENTS.forEach((event) => {
   document.addEventListener(event, function () {
-    resetTimer();
+    resetInactivityTimer();
   });
 });
 
