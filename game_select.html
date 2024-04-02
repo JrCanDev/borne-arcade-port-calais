@@ -92,7 +92,7 @@
             </div>
         </div>
 
-        <div class="game" onclick="redirectToPage(event, 'jeux/blindtest/game.html')">
+        <div class="game" onclick="chooseBetweenGames(event)">
             <img src="img/environnement.jpg">
             <div class="game-card">
                 <h1 data-i18n="game.blindtest.theme"></h1>
@@ -116,6 +116,25 @@
             </div>
         </div>
     </main>
+
+
+    <div class="modal" id="blindtest-pacman">
+        <span class="modal-close"
+            onclick="document.getElementById('blindtest-pacman').style.display = 'none'">&times;</span>
+        <div class="modal-content">
+            <h1 data-i18n="game.blindtest.theme"></h1>
+            <div class="modal-buttons">
+                <div class="modal-choice" onclick="redirectToPage(event, 'jeux/blindtest/game.html')">
+                    <button data-i18n="game.blindtest.name"></button>
+                    <p data-i18n="game.blindtest.description"></p>
+                </div>
+                <div class="modal-choice" onclick="redirectToPage(event, 'jeux/pacman/game.html')">
+                    <button data-i18n="game.pacman.name"></button>
+                    <p data-i18n="game.pacman.description"></p>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 <script>
@@ -131,6 +150,11 @@
             document.querySelector(`img[src="img/${locale}-flag.svg"]`).id = "selected-language";
         });
     });
+
+    function chooseBetweenGames(event) {
+        event.stopPropagation();
+        document.getElementById("blindtest-pacman").style.display = "block";
+    }
 </script>
 
 </html>
