@@ -55,9 +55,42 @@ class Flat {
   }
 }
 
-var jobImage = new Image();
-jobImage.src = "guesswho.png";
-jobImage.onload = () => {
+var canvas = document.createElement('canvas');
+canvas.width = 900;
+canvas.height = 200;
+var context = canvas.getContext('2d');
+
+var combinedImage = new Image();
+var image1 = new Image();
+var image2 = new Image();
+var image3 = new Image();
+
+image1.src = "guesswho1.png";
+image2.src = "guesswho2.png";
+image3.src = "guesswho3.png";
+
+var imagesLoaded = 0;
+
+var onLoadImage = () => {
+  console.log("Image loaded");
+  imagesLoaded++;
+  if (imagesLoaded === 3) {
+    context.drawImage(image1, 0, 0, 300, 200);
+    context.drawImage(image2, 300, 0, 300, 200);
+    context.drawImage(image3, 600, 0, 300, 200);
+    combinedImage.src = canvas.toDataURL("image/png");
+    console.log("Combined image loaded");
+    // append image to body
+    d
+  }
+};
+
+image1.onload = onLoadImage;
+image2.onload = onLoadImage;
+image3.onload = onLoadImage;
+
+combinedImage.onload = () => {
+  console.log("Image loaded");
   const guesswho = new headbreaker.Canvas("guesswho", {
     width: CANVAS_SIZE,
     height: CANVAS_SIZE,
@@ -66,7 +99,7 @@ jobImage.onload = () => {
     borderFill: PIECE_SIZE / 10 + 1,
     strokeWidth: 0,
     lineSoftness: 0,
-    image: jobImage,
+    image: combinedImage,
     maxPiecesCount: { x: 3, y: 2 },
     preventOffstageDrag: true,
     fixed: true,
