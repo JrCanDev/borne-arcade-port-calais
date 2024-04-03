@@ -62,16 +62,18 @@ span.fruits {
 #canvas-ghost-pinky,
 #canvas-ghost-inky,
 #canvas-ghost-clyde {
-	width: 550px;
-	height: 550px;
+	width: 100%;
+	height: 100%;
 	position: absolute;
+	left: 0px;
+	top: 0px;
 }
 
 #canvas-paths {
 	display: none;
 }
 
-#board {
+#game-container {
 	position: relative;
 }
 
