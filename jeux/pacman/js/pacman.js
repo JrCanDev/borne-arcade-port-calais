@@ -171,7 +171,7 @@ function movePacman(direction) {
 }
 
 function canMovePacman(direction) {
-
+	if (PAUSE || PACMAN_DEAD || LOCK) return false;
 	var positionX = PACMAN_POSITION_X;
 	var positionY = PACMAN_POSITION_Y;
 

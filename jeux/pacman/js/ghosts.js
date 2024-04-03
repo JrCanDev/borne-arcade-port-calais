@@ -240,9 +240,11 @@ function eatGhost(ghost) {
 		eval('GHOST_' + ghost.toUpperCase() + '_EAT_TIMER = new Timer("cancelEatGhost(\'' + ghost + '\')", GHOST_EAT_TIME)');
 		eval('GHOST_' + ghost.toUpperCase() + '_EAT_TIMER.pause()');
 	}
+	
+	LOCK = false;
+
 	resumeGhosts();
 	resumePacman();
-	LOCK = false;
 }
 function cancelEatGhost(ghost) { 
 	if (eval('GHOST_' + ghost.toUpperCase() + '_STATE === -1')) { 

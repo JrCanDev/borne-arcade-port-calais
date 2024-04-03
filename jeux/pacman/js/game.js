@@ -1,4 +1,3 @@
-var KEYDOWN = false;
 var PAUSE = false;
 var LOCK = false;
 
