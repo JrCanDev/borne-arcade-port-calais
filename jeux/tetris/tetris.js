@@ -513,10 +513,6 @@ function drawNext() {
   if (invalid.next) {
     let padding_l = (nu - next.type.size) / 2; // half-arsed attempt at centering next piece display
     let padding_u = padding_l;
-    if (next.type == x) {
-      padding_l = 1;
-      padding_u = 0.05;
-    }
     uctx.save();
     uctx.translate(0.5, 0.5);
     uctx.clearRect(0, 0, nu * dx, nu * dy);
