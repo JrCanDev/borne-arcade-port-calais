@@ -209,11 +209,11 @@
             }
         );
 
-        $("body").keyup(function (e) {
+        $(document).keyup(function (e) {
             KEYDOWN = false;
         });
 
-        $("body").keydown(function (e) {
+        $(document).keydown(function (e) {
             KEYDOWN = true;
             if (PACMAN_DEAD && !LOCK) {
                 erasePacman();
