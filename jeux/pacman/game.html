@@ -30,7 +30,6 @@
     <script type="text/javascript" src="js/fruits.js"></script>
     <script type="text/javascript" src="js/pacman.js"></script>
     <script type="text/javascript" src="js/ghosts.js"></script>
-    <script type="text/javascript" src="js/home.js"></script>
     <script type="text/javascript" src="js/sound.js"></script>
 </head>
 
@@ -43,41 +42,22 @@
         <button data-i18n="game.giveup" onclick="showGiveUp()"></button>
     </div>
     <div id="game-container">
-        <div id="home">
-            <canvas id="canvas-home-title-pacman"></canvas>
-            <div id="presentation">
-                <div id="presentation-titles">character &nbsp;/&nbsp; nickname</div>
-                <canvas id="canvas-presentation-blinky"></canvas>
-                <div id="presentation-character-blinky">- shadow</div>
-                <div id="presentation-name-blinky">"blinky"</div>
-                <canvas id="canvas-presentation-pinky"></canvas>
-                <div id="presentation-character-pinky">- speedy</div>
-                <div id="presentation-name-pinky">"pinky"</div>
-                <canvas id="canvas-presentation-inky"></canvas>
-                <div id="presentation-character-inky">- bashful</div>
-                <div id="presentation-name-inky">"inky"</div>
-                <canvas id="canvas-presentation-clyde"></canvas>
-                <div id="presentation-character-clyde">- pokey</div>
-                <div id="presentation-name-clyde">"clyde"</div>
-            </div>
-            <canvas id="trailer"></canvas>
-        </div>
         <div id="panel">
-          <canvas id="canvas-panel-title-pacman"></canvas>
-          <div id="board">
-            <canvas id="canvas-board"></canvas>
-            <canvas id="canvas-paths"></canvas>
-            <canvas id="canvas-bubbles"></canvas>
-            <canvas id="canvas-fruits"></canvas>
-            <canvas id="canvas-pacman"></canvas>
-            <canvas id="canvas-ghost-blinky"></canvas>
-            <canvas id="canvas-ghost-pinky"></canvas>
-            <canvas id="canvas-ghost-inky"></canvas>
-            <canvas id="canvas-ghost-clyde"></canvas>
-          </div>
-          <canvas id="canvas-lifes"></canvas>
-          <canvas id="canvas-level-fruits"></canvas>
-          <div id="message"></div>
+            <canvas id="canvas-panel-title-pacman"></canvas>
+            <div id="board">
+                <canvas id="canvas-board"></canvas>
+                <canvas id="canvas-paths"></canvas>
+                <canvas id="canvas-bubbles"></canvas>
+                <canvas id="canvas-fruits"></canvas>
+                <canvas id="canvas-pacman"></canvas>
+                <canvas id="canvas-ghost-blinky"></canvas>
+                <canvas id="canvas-ghost-pinky"></canvas>
+                <canvas id="canvas-ghost-inky"></canvas>
+                <canvas id="canvas-ghost-clyde"></canvas>
+            </div>
+            <canvas id="canvas-lifes"></canvas>
+            <canvas id="canvas-level-fruits"></canvas>
+            <div id="message"></div>
         </div>
     </div>
     <div id="right">
@@ -97,7 +77,7 @@
                 </li>
                 <li>
                     <img src="../../img/left-arrow.svg" ontouchstart="emulateArrowClick('left')">
-                    <span class="blank"></span>
+                    <img src="../../img/qr-pacman.svg" ontouchstart="initGame(true);"></img>
                     <img src="../../img/right-arrow.svg" ontouchstart="emulateArrowClick('right')">
                 </li>
                 <li>
@@ -172,12 +152,10 @@
 </script>
 
 <script type="text/javascript">
+    var GAMEOVER = true;
+
     $(document).ready(function () {
         loadAllSound();
-
-        HELP_TIMER = setInterval("blinkHelp()", HELP_DELAY);
-
-        initHome();
 
         $(".sound").click(function (e) {
             e.stopPropagation();
@@ -194,32 +172,10 @@
             }
         });
 
-        $(".help-button, #help").click(function (e) {
-            e.stopPropagation();
-            if (!PACMAN_DEAD && !LOCK && !GAMEOVER) {
-                if ($("#help").css("display") === "none") {
-                    $("#help").fadeIn("slow");
-                    $(".help-button").hide();
-                    if ($("#panel").css("display") !== "none") {
-                        pauseGame();
-                    }
-                } else {
-                    $("#help").fadeOut("slow");
-                    $(".help-button").show();
-                }
-            }
-        });
-
         $(".github,.putchu").click(function (e) {
             e.stopPropagation();
         });
 
-        $("#home").on("click touchstart", function (e) {
-            if ($("#help").css("display") === "none") {
-                e.preventDefault();
-                simulateKeydown(13);
-            }
-        });
         $("#control-up, #control-up-second, #control-up-big").on(
             "mousedown touchstart",
             function (e) {
@@ -258,55 +214,50 @@
         });
 
         $("body").keydown(function (e) {
-            if (HOME) {
-                initGame(true);
-            } else {
-                //if (!KEYDOWN) {
-                KEYDOWN = true;
-                if (PACMAN_DEAD && !LOCK) {
-                    erasePacman();
-                    resetPacman();
-                    drawPacman();
+            KEYDOWN = true;
+            if (PACMAN_DEAD && !LOCK) {
+                erasePacman();
+                resetPacman();
+                drawPacman();
 
-                    eraseGhosts();
-                    resetGhosts();
-                    drawGhosts();
-                    moveGhosts();
+                eraseGhosts();
+                resetGhosts();
+                drawGhosts();
+                moveGhosts();
 
-                    blinkSuperBubbles();
-                } else if (
-                    e.keyCode >= 37 &&
-                    e.keyCode <= 40 &&
-                    !PAUSE &&
-                    !PACMAN_DEAD &&
-                    !LOCK
-                ) {
-                    if (e.keyCode === 39) {
-                        movePacman(1);
-                    } else if (e.keyCode === 40) {
-                        movePacman(2);
-                    } else if (e.keyCode === 37) {
-                        movePacman(3);
-                    } else if (e.keyCode === 38) {
-                        movePacman(4);
-                    }
-                } else if (e.keyCode === 68 && !PAUSE) {
-                    /*if ( $("#canvas-paths").css("display") === "none" ) { 
-                                          $("#canvas-paths").show();
-                                      } else { 
-                                          $("#canvas-paths").hide();
-                                      }*/
-                } else if (e.keyCode === 80 && !PACMAN_DEAD && !LOCK) {
-                    if (PAUSE) {
-                        resumeGame();
-                    } else {
-                        pauseGame();
-                    }
-                } else if (GAMEOVER) {
-                    initHome();
+                blinkSuperBubbles();
+            } else if (
+                e.keyCode >= 37 &&
+                e.keyCode <= 40 &&
+                !PAUSE &&
+                !PACMAN_DEAD &&
+                !LOCK
+            ) {
+                if (e.keyCode === 39) {
+                    movePacman(1);
+                } else if (e.keyCode === 40) {
+                    movePacman(2);
+                } else if (e.keyCode === 37) {
+                    movePacman(3);
+                } else if (e.keyCode === 38) {
+                    movePacman(4);
                 }
-                //}
+            } else if (e.keyCode === 68 && !PAUSE) {
+                /*if ( $("#canvas-paths").css("display") === "none" ) { 
+                                      $("#canvas-paths").show();
+                                  } else { 
+                                      $("#canvas-paths").hide();
+                                  }*/
+            } else if (e.keyCode === 80 && !PACMAN_DEAD && !LOCK) {
+                if (PAUSE) {
+                    resumeGame();
+                } else {
+                    pauseGame();
+                }
+            } else if (GAMEOVER) {
+                initHome();
             }
+
         });
     });
 </script>

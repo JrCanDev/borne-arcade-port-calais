@@ -23,22 +23,9 @@ var TIME_FRUITS = 0;
 
 var HELP_DELAY = 1500;
 var HELP_TIMER = -1;
-			
-function blinkHelp() { 
-	if ( $('.help-button').attr("class").indexOf("yo") > -1 ) { 
-		$('.help-button').removeClass("yo");
-	} else { 
-		$('.help-button').addClass("yo");
-	}
-}
 
 function initGame(newgame) { 
-
 	if (newgame) { 
-		stopPresentation();
-		stopTrailer();
-	
-		HOME = false;
 		GAMEOVER = false;
 
 		$('#help').fadeOut("slow");
