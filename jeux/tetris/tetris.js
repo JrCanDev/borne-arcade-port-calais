@@ -279,7 +279,7 @@ function play() {
   playing = true;
 }
 function lose() {
-  document.getElementById("start").style.display = "block";
+  document.getElementById("start").style.display = "flex";
   setVisualScore();
   playing = false;
   if (score >= getHighScore("tetris")) {
