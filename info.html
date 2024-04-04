@@ -109,6 +109,7 @@
             const fullscreenimg = document.getElementById('fullscreenimg');
             if (fullscreenimg.style.display === 'none') {
                 fullscreenimg.style.display = 'flex';
+                resetMagnifier()
                 // For some reason, the fade-in class doesn't work if it's added immediately
                 setTimeout(() => {
                     fullscreenimg.classList.add('fade-in');
@@ -194,7 +195,8 @@
             document.addEventListener('touchend', onEnd);
 
             function onMove(event) {
-                const leeway = 64;
+                // leeway is half the magnifier's size
+                const leeway = magnifier.offsetWidth / 2;
                 let newLeft = (event.touches ? event.touches[0].clientX : event.clientX) - shiftX;
                 let newTop = (event.touches ? event.touches[0].clientY : event.clientY) - shiftY;
 

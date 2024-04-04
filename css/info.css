@@ -86,7 +86,7 @@ button:hover, button:active {
 
 #fullscreenimg {
     display: none;
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -126,7 +126,6 @@ button:hover, button:active {
     height: 384px;
     border: 8px solid var(--primary-color);
     background-repeat: no-repeat;
-    background-position: -9999px -9999px;
 }
 
 /* handle */
@@ -145,13 +144,16 @@ button:hover, button:active {
 }
 
 #magnifier-tutorial {
-    position: absolute;
-    bottom: 450px;
-    right: 110px;
+    position: relative;
+    left: 710px;
     font-size: 32px;
     color: var(--text-color-light);
     text-align: center;
     transition: opacity 0.5s;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 16px;
+    padding: 16px;
+    padding-bottom: 32px;
 }
 
 #magnifier-tutorial::after {
