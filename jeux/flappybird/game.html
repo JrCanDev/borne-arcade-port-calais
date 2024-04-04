@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/game.css">
+
+    <link rel="stylesheet" href="flappybird.css">
+
+    <script src="../../js/i18n.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script src="../../js/game.js"></script>
+    <script src="../../js/global.js"></script>
+
+	<script src="sprite.js"></script>
+
+    <meta charset="UTF-8">
+    <meta name="application-name" data-i18n="application-name" data-i18n-field="content" content="Borne Port Calais">
+    <meta name="author" content="Joshua Vandaële">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <div id="left">
+        <div class="rules">
+            <h1 data-i18n="game.rules"></h1>
+            <p data-i18n="game.flappybird.rules"></p>
+        </div>
+        <button data-i18n="game.giveup" onclick="showGiveUp()"></button>
+    </div>
+    <div id="game-container">
+        <canvas id="viewport" width="320" height="480"></canvas>
+    </div>
+    <div id="right">
+        <div class="score">
+            <h1 data-i18n="game.score"></h1>
+            <p id="score"></p>
+            <hr>
+            <h1 data-i18n="game.highscore"></h1>
+            <p id="highscore"></p>
+        </div>
+    </div>
+
+    <!-- Pop-up -->
+    <div id="giveup" class="modal" style="display: none;">
+        <h2 data-i18n="game.giveup.title"></h2>
+        <p data-i18n="game.giveup.text"></p>
+        <div class="buttons">
+            <button onclick="nextPage()" data-i18n="game.giveup.yes"></button>
+            <button onclick="hideGiveUp()" data-i18n="game.giveup.no"></button>
+        </div>
+    </div>
+
+    <div id="gameover" class="modal" style="display: none;">
+        <h2 data-i18n="game.gameover.title"></h2>
+        <p data-i18n="game.gameover.text"></p>
+        <div class="buttons">
+            <button onclick="nextPage()" data-i18n="game.gameover.next"></button>
+            <button onclick="hideGameOver()" data-i18n="game.gameover.retry"></button>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    function showGiveUp() {
+        document.getElementById("giveup").style.display = "block";
+    }
+
+    function hideGiveUp() {
+        document.getElementById("giveup").style.display = "none";
+    }
+
+    function showGameOver() {
+        let gameover_text = translations["game.gameover.text"] + " " + document.getElementById("score").innerHTML;
+        if (document.getElementById("score").innerHTML == document.getElementById("highscore").innerHTML) {
+            gameover_text += translations["game.gameover.newhighscore"];
+        }
+        document.querySelector("#gameover p").innerHTML = gameover_text
+        document.getElementById("gameover").style.display = "block";
+        hideGiveUp();
+    }
+
+    function hideGameOver() {
+        document.getElementById("gameover").style.display = "none";
+        initScore("flappybird");
+    }
+
+    function nextPage() {
+        redirectToPage(event, '../../info.html?&game=flappybird');
+    }
+
+    initScore("flappybird");
+</script>
+
+<script type="text/javascript" src="flappybird.js"></script>
+</html>
