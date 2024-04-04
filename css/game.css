@@ -126,6 +126,32 @@ button:hover, button:active {
     align-items: center;
 }
 
+#start {
+    width: 1025px;
+    height: 1025px;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+#start a {
+    text-decoration: none;
+    text-align: center;
+    color: var(--text-color-light);
+    font-size: 72px;
+    background-color: var(--primary-color);
+    border-radius: 15px;
+    width: 400px;
+    height: 100px;
+    box-shadow: var(--card-shadow);
+}
+
 .modal {
     position: fixed;
     z-index: 1;

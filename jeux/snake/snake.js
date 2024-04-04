@@ -420,12 +420,7 @@ window.onload = function () {
 
         // Game over
         if (gameover) {
-            context.fillStyle = "rgba(0, 0, 0, 0.5)";
-            context.fillRect(0, 0, canvas.width, canvas.height);
-
-            context.fillStyle = "#ffffff";
-            context.font = "24px Verdana";
-            drawCenterText(translations["game.snake.presstostart"], 0, canvas.height / 2, canvas.width);
+            document.getElementById("start").style.display = "flex";
             if (!startScreenDrew) {
                 showGameOver();
             }
@@ -608,4 +603,9 @@ window.onload = function () {
 
     // Call init to start the game
     init();
+
+    window.play = function() {
+        document.getElementById("start").style.display = "none";
+        tryNewGame();
+    }
 };
