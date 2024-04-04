@@ -81,18 +81,20 @@
             </div>
         </div>
 
-        <div class="game" onclick="redirectToPage(event, 'jeux/quiz/game.html')">
+        <div class="game" onclick="chooseBetweenGames(event, 'quiz', '7differences')">
             <img src="img/tourisme.jpg">
             <div class="game-card">
                 <h1 data-i18n="game.quiz.theme"></h1>
                 <div class="game-text">
-                    <h2 data-i18n="game.quiz.name"></h2>
+                    <h2><span data-i18n="game.quiz.name"></span> & <span data-i18n="game.7differences.name"></span></h2>
                     <p data-i18n="game.quiz.description"></p>
+                    <hr>
+                    <p data-i18n="game.7differences.description"></p>
                 </div>
             </div>
         </div>
 
-        <div class="game" onclick="chooseBetweenGames(event)">
+        <div class="game" onclick="chooseBetweenGames(event, 'blindtest', 'pacman')">
             <img src="img/environnement.jpg">
             <div class="game-card">
                 <h1 data-i18n="game.blindtest.theme"></h1>
@@ -135,6 +137,24 @@
             </div>
         </div>
     </div>
+    
+    <div class="modal" id="quiz-7differences">
+        <span class="modal-close"
+            onclick="document.getElementById('quiz-7differences').style.display = 'none'">&times;</span>
+        <div class="modal-content">
+            <h1 data-i18n="game.quiz.theme"></h1>
+            <div class="modal-buttons">
+                <div class="modal-choice" onclick="redirectToPage(event, 'jeux/quiz/game.html')">
+                    <button data-i18n="game.quiz.name"></button>
+                    <p data-i18n="game.quiz.description"></p>
+                </div>
+                <div class="modal-choice" onclick="redirectToPage(event, 'jeux/7differences/game.html')">
+                    <button data-i18n="game.7differences.name"></button>
+                    <p data-i18n="game.7differences.description"></p>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 <script>
@@ -151,9 +171,15 @@
         });
     });
 
-    function chooseBetweenGames(event) {
+    function chooseBetweenGames(event, game1, game2) {
         event.stopPropagation();
-        document.getElementById("blindtest-pacman").style.display = "block";
+
+        var element = document.getElementById(game1 + "-" + game2);
+        if (!element) {
+            element = document.getElementById(game2 + "-" + game1);
+        }
+
+        element.style.display = "block";
     }
 </script>
 

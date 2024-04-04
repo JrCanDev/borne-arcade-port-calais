@@ -192,7 +192,7 @@ main {
     font-size: 64px;
     padding: 16px;
     border-radius: 15px;
-    width: 400px;
+    min-width: 400px;
     background-color: var(--primary-color);
     color: var(--text-color-light);
     border: none;
