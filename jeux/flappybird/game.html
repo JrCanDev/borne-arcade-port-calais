@@ -12,7 +12,7 @@
     <script src="../../js/game.js"></script>
     <script src="../../js/global.js"></script>
 
-	<script src="sprite.js"></script>
+    <script src="sprite.js"></script>
 
     <meta charset="UTF-8">
     <meta name="application-name" data-i18n="application-name" data-i18n-field="content" content="Borne Port Calais">
@@ -82,6 +82,7 @@
     }
 
     function hideGameOver() {
+        restart();
         document.getElementById("gameover").style.display = "none";
         initScore("flappybird");
     }
@@ -94,4 +95,5 @@
 </script>
 
 <script type="text/javascript" src="flappybird.js"></script>
+
 </html>

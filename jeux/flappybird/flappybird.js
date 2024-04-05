@@ -126,6 +126,12 @@ var canvas,
     },
   };
 
+function restart() {
+  pipes.reset();
+  score = 0;
+  currentstate = states.Splash;
+}
+
 function onpress(evt) {
   switch (currentstate) {
     case states.Splash:
@@ -136,22 +142,7 @@ function onpress(evt) {
       bird.jump();
       break;
     case states.Score:
-      var mx = evt.offsetX,
-        my = evt.offsetY;
-      if (mx == null || my == null) {
-        mx = evt.touches[0].clientX;
-        my = evt.touches[0].clientY;
-      }
-      if (
-        okbtn.x < mx &&
-        mx < okbtn.x + okbtn.width &&
-        okbtn.y < my &&
-        my < okbtn.y + okbtn.height
-      ) {
-        pipes.reset();
-        score = 0;
-        currentstate = states.Splash;
-      }
+      restart();
       break;
   }
 }
@@ -226,12 +217,7 @@ function render() {
   }
 
   if (currentstate === states.Score) {
-    s_text.GameOver.draw(ctx, width2 - s_text.GameOver.width / 2, height - 400);
-    s_score.draw(ctx, width2 - s_score.width / 2, height - 340);
-    s_buttons.Ok.draw(ctx, okbtn.x, okbtn.y);
-
-    s_numberS.draw(ctx, width2 - 47, height - 304, score, null, 10);
-    s_numberS.draw(ctx, width2 - 47, height - 262, best, null, 10);
+    showGameOver();
   } else {
     s_numberB.draw(ctx, null, 20, score, width2, null);
   }
