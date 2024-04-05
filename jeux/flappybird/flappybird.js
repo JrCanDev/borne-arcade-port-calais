@@ -5,7 +5,6 @@ var canvas,
   fgpos = 0,
   frames = 0,
   score = 0,
-  best = 0,
   currentstate,
   states = {
     Splash: 0,
@@ -189,8 +188,6 @@ function update() {
   frames++;
   if (currentstate !== states.Score) {
     fgpos = (fgpos - 2) % 14;
-  } else {
-    best = Math.max(best, score);
   }
   if (currentstate === states.Game) {
     pipes.update();
@@ -219,7 +216,7 @@ function render() {
   if (currentstate === states.Score) {
     showGameOver();
   } else {
-    s_numberB.draw(ctx, null, 20, score, width2, null);
+    updateScore("flappybird", score);
   }
 }
 
