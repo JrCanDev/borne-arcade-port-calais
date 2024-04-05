@@ -162,9 +162,7 @@ function main() {
   width = canvas.width;
   height = canvas.height;
 
-  var evt = "touchstart";
-
-  document.addEventListener(evt, onpress);
+  canvas.addEventListener("touchstart", onpress);
 
   canvas.width = width;
   canvas.height = height;
