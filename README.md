@@ -7,6 +7,7 @@ Ce projet à été développé par Joshua Vandaële lors d'un stage se déroulan
     - [Installation de Debian](#installation-de-debian)
     - [Installation du serveur X](#installation-du-serveur-x)
     - [Installation de Firefox](#installation-de-firefox)
+    - [Installation de l'application](#installation-de-lapplication)
     - [Sortir de Firefox](#sortir-de-firefox)
   - [Remettre à zéro les scores](#remettre-à-zéro-les-scores)
   - [Liste des jeux](#liste-des-jeux)
@@ -107,6 +108,25 @@ Pour que le projet fonctionne correctement, vous devez changer certains paramèt
 3. Recherchez `browser.translations.automaticallyPopup` et assurez vous que cette valeur soit à `false`. Cela empêche la traduction automatique des pages web.
 4. Recherchez `dom.w3c_touch_events.enabled` et assurez vous que cette valeur soit à `1`. Cela permet de supporter les écrans tactiles.
 5. Exécutez la commande `echo export MOZ_USE_XINPUT2=1 | sudo tee /etc/profile.d/use-xinput2.sh` pour activer le support des écrans tactiles.
+
+### Installation de l'application
+
+Si vous souhaitez clonez le dépot sur l'ordinateur de la borne, installez Git en utilisant la commande suivante dans le terminal : `sudo apt-get install git`. Sinon, vous pouvez télécharger le dépot sur une clé USB et le copier sur l'ordinateur.
+
+1. Clonez ce dépôt en utilisant la commande suivante dans le terminal : `git clone https://github.com/JrCanDev/borne-arcade-port-calais.git` ou téléchargez le dépot avec le bouton "Code" en haut de la page.
+2. Décompressez et extrayez le fichier téléchargé si vous avez téléchargé le dépot.
+3. Si vous n'utilisez pas de clé USB, allez à l'étape 7. Sinon, branchez la clé USB sur l'ordinateur.
+4. Montez la clé USB en utilisant la commande suivante dans le terminal : `sudo mount /dev/sdX /mnt`, où `/dev/sdX` est le périphérique de la clé USB. Vous pouvez trouver le périphérique de la clé USB en utilisant la commande `lsblk`.
+5. Le contenu de la clé USB sera monté dans le répertoire `/mnt`. Copiez le dossier `borne-arcade-port-calais` dans le répertoire personnel de l'utilisateur non-root (`/home/borne`) en utilisant la commande suivante dans le terminal : `sudo cp -r /mnt/borne-arcade-port-calais /home/borne/borne-arcade-port-calais`.
+6. Démontez la clé USB en utilisant la commande suivante dans le terminal : `sudo umount /mnt` et retirez la clé USB.
+7. Changez le propriétaire du dossier `borne-arcade-port-calais` en utilisant la commande suivante dans le terminal : `sudo chown -R borne:borne /home/borne/borne-arcade-port-calais`.
+8. L'application est maintenant prête à être utilisée. Pour lancer l'application, modifiez votre `.xinitrc` pour lancer Firefox avec le chemin absolu vers le fichier `index.html` de l'application. Par exemple, si vous avez copié le dossier `borne-arcade-port-calais` dans le répertoire personnel de l'utilisateur non-root (`/home/borne`), vous pouvez utiliser la commande suivante dans le fichier `.xinitrc` :
+
+```sh
+# Lancer Firefox en mode kiosque
+exec firefox --disable-pinch --kiosk /home/borne/borne-arcade-port-calais/index.html &
+# ...
+```
 
 ### Sortir de Firefox
 
