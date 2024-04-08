@@ -7,6 +7,7 @@ Ce projet à été développé par Joshua Vandaële lors d'un stage se déroulan
     - [Installation de Debian](#installation-de-debian)
     - [Installation du serveur X](#installation-du-serveur-x)
     - [Installation de Firefox](#installation-de-firefox)
+    - [Sortir de Firefox](#sortir-de-firefox)
   - [Remettre à zéro les scores](#remettre-à-zéro-les-scores)
   - [Liste des jeux](#liste-des-jeux)
   - [Outil de traduction](#outil-de-traduction)
@@ -106,6 +107,14 @@ Pour que le projet fonctionne correctement, vous devez changer certains paramèt
 3. Recherchez `browser.translations.automaticallyPopup` et assurez vous que cette valeur soit à `false`. Cela empêche la traduction automatique des pages web.
 4. Recherchez `dom.w3c_touch_events.enabled` et assurez vous que cette valeur soit à `1`. Cela permet de supporter les écrans tactiles.
 5. Exécutez la commande `echo export MOZ_USE_XINPUT2=1 | sudo tee /etc/profile.d/use-xinput2.sh` pour activer le support des écrans tactiles.
+
+### Sortir de Firefox
+
+Afin de quitter Firefox et de revenir à l'interface en ligne de commande, vous pouvez utiliser le raccourci clavier `Ctrl + Shift + W`. Cela fermera Firefox et le serveur X, vous ramenant à l'interface en ligne de commande.
+
+Hors, vous pouvez également changer de terminal virtuel en utilisant les raccourcis clavier `Ctrl + Alt + F1` à `Ctrl + Alt + F6`. Par défaut, le serveur X est lancé sur le premier terminal virtuel, donc pour revenir à l'interface en ligne de commande, vous pouvez utiliser le raccourci clavier `Ctrl + Alt + F1`.
+
+Pour redémarrer le serveur X, vous pouvez utiliser la commande `startx -- -nocursor` dans le terminal, ou redémarrer l'ordinateur.
 
 ## Remettre à zéro les scores
 
