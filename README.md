@@ -39,8 +39,18 @@ ExecStart=-/sbin/agetty --autologin borne --noclear %I $TERM
 
 Cela permettra à l'utilisateur non-root de se connecter automatiquement et de lancer l'interface graphique sur le premier terminal virtuel.
 
-10. Suivez les étapes suivantes pour installer Firefox et le serveur X.
-11. Redémarrez votre ordinateur pour que les changements prennent effet.
+10. Cachez grub au démarrage en utilisant la commande suivante dans le terminal : `sudo nano /etc/default/grub`. Ajoutez les lignes suivantes dans le fichier et enregistrez-le :
+
+```conf
+GRUB_TIMEOUT=0
+GRUB_HIDDEN_TIMEOUT=0
+GRUB_HIDDEN_TIMEOUT_QUIET=true
+```
+
+Enregistrez et quittez le fichier, puis mettez à jour grub en utilisant la commande suivante dans le terminal : `sudo update-grub`.
+
+11. Suivez les étapes suivantes pour installer Firefox et le serveur X.
+12. Redémarrez votre ordinateur pour que les changements prennent effet.
 
 ### Installation du serveur X
 
