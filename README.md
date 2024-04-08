@@ -5,8 +5,8 @@ Ce projet à été développé par Joshua Vandaële lors d'un stage se déroulan
 - [Borne d'Arcade du Port de Calais](#borne-darcade-du-port-de-calais)
   - [Mise en marche](#mise-en-marche)
     - [Installation de Debian](#installation-de-debian)
-    - [Installation de Firefox](#installation-de-firefox)
     - [Installation du serveur X](#installation-du-serveur-x)
+    - [Installation de Firefox](#installation-de-firefox)
   - [Remettre à zéro les scores](#remettre-à-zéro-les-scores)
   - [Liste des jeux](#liste-des-jeux)
   - [Outil de traduction](#outil-de-traduction)
@@ -18,15 +18,18 @@ Ce projet nécessite l'installation de Debian avec une installation non graphiqu
 
 ### Installation de Debian
 
-1. Téléchargez l'image ISO netinstall de Debian sur le site officiel de Debian : [https://www.debian.org/distrib/](https://www.debian.org/distrib/).
+1. Téléchargez l'image ISO netinstall de Debian **standard** (Sans Desktop Environment) sur le site officiel de Debian : [https://www.debian.org/distrib/](https://www.debian.org/distrib/).
 2. Flasher l'image ISO sur une clé USB en utilisant un logiciel tel que Rufus ou Etcher.
 3. Démarrez votre ordinateur sur la clé USB.
-4. Suivez les instructions d'installation de Debian. Lorsque vous arrivez à l'étape de sélection des paquets, décochez toutes les cases pour n'installer aucun paquet. Cela installera une installation minimale de Debian sans interface graphique.
-5. Une fois l'installation terminée, redémarrez votre ordinateur, retirez la clé USB et connectez-vous en tant que root.
-6. Installez les mises à jour en utilisant la commande suivante dans le terminal : `sudo apt-get update && sudo apt-get upgrade`.
-7. Créez un utilisateur non-root en utilisant la commande suivante dans le terminal : `sudo adduser borne`. Cet utilisateur sera utilisé pour se connecter automatiquement et lancer l'interface graphique.
+4. Suivez les instructions d'installation de Debian.
+   1. Lors de l'étape de sélection du nom de l'ordinateur, choisissez `borne`.
+   2. Lors de l'étape de sélection du nom de l'utilisateur, choisissez `borne`.
+   3. Lors de l'étape de sélection du mot de passe, choisissez `borne`.
+5. Une fois l'installation terminée, redémarrez votre ordinateur, retirez la clé USB et connectez-vous en tant que l'utilisateur borne.
+6. Retirez le mot de passe de l'utilisateur borne en utilisant la commande suivante dans le terminal : `sudo passwd -d borne`.
+7. Installez les mises à jour en utilisant la commande suivante dans le terminal : `sudo apt-get update && sudo apt-get upgrade`.
 8. Faite que l'utilisateur non-root se connecte automatiquement en utilisant la commande suivante dans le terminal : `sudo nano /etc/systemd/logind.conf`. Recherchez la ligne `#NAutoVTs=6` et remplacez-la par `NAutoVTs=1`. Enregistrez et quittez le fichier.
-9.  Créez un fichier override pour le service `getty@tty1` en utilisant la commande suivante dans le terminal : `sudo systemctl edit getty@tty1`. Ajoutez les lignes suivantes dans le fichier et enregistrez-le :
+9. Créez un fichier override pour le service `getty@tty1` en utilisant la commande suivante dans le terminal : `sudo systemctl edit getty@tty1`. Ajoutez les lignes suivantes dans le fichier et enregistrez-le :
 
 ```conf
 [Service]
@@ -39,25 +42,48 @@ Cela permettra à l'utilisateur non-root de se connecter automatiquement et de l
 10. Suivez les étapes suivantes pour installer Firefox et le serveur X.
 11. Redémarrez votre ordinateur pour que les changements prennent effet.
 
+### Installation du serveur X
+
+1. Installez le serveur X et les outils que l'on utilisera en utilisant la commande suivante dans le terminal : `sudo apt-get install xorg xdotool`.
+2. Créez un fichier `.xinitrc` dans le répertoire personnel de l'utilisateur non-root (`/home/borne/.xinitrc`) et ajoutez-y les lignes suivante :
+
+```sh
+exec firefox --disable-pinch --kiosk /chemin/absolut/vers/index.html &
+for win in $(xdotool search --sync "Firefox"); do
+  xdotool windowsize $win 1920 1080 &
+  xdotool windowmove $win 0 0 &
+done
+
+while pgrep "firefox"; do sleep 1; done
+```
+
+Cela permettra de lancer Firefox en mode kiosque au démarrage du serveur X, de redimensionner la fenêtre de Firefox à la taille de l'écran, et d'attendre que Firefox se ferme avant de fermer le serveur X.
+
+`--disable-pinch` est utilisé pour désactiver le zoom sur les écrans tactiles.
+
+`--kiosk` est utilisé pour ouvrir Firefox en mode kiosque, ce qui signifie que Firefox s'ouvrira en plein écran sans barre d'adresse ni barre d'onglets.
+
+3. Rendez le fichier `.xinitrc` exécutable avec la commande : `sudo chmod +x .xinitrc`.
+
+4. Ajoutez les lignes suivantes a la fin du fichier `.bashrc` de l'utilisateur non-root (`/home/borne/.bashrc`) pour lancer le serveur X au démarrage :
+
+```bash
+if [ -z "$DISPLAY" ] && [ $(tty) == /dev/tty1 ]; then
+  startx -- -nocursor
+fi
+```
+
 ### Installation de Firefox
 
-1. Installez Firefox en utilisant la commande suivante dans le terminal : `sudo apt-get install firefox`.
+1. Installez Firefox en utilisant la commande suivante dans le terminal : `sudo apt-get install firefox-esr`.
 
 Pour que le projet fonctionne correctement, vous devez changer certains paramètres de Firefox. Pour ce faire, suivez les étapes suivantes une fois que vous avez ouvert Firefox pour la première fois depuis le serveur X :
 
 1. Accéder à l'URL `about:config`. Si vous êtes en mode kiosque, vous pouvez appuyer sur `Ctrl + L` pour accéder à la barre d'adresse.
 2. Recherchez `security.fileuri.strict_origin_policy` et assurez vous que cette valeur soit à `false`. Cela permet à Firefox d'accéder aux fichiers locaux.
 3. Recherchez `browser.translations.automaticallyPopup` et assurez vous que cette valeur soit à `false`. Cela empêche la traduction automatique des pages web.
-
-### Installation du serveur X
-
-1. Installez le serveur X en utilisant la commande suivante dans le terminal : `sudo apt-get install xorg`.
-2. Créez un fichier `.xinitrc` dans le répertoire personnel de l'utilisateur non-root (`/home/borne/.xinitrc`) et ajoutez la ligne suivante : `exec firefox --disable-pinch --kiosk /chemin/absolut/vers/index.html`. Cela permettra de lancer Firefox en mode kiosque au démarrage du serveur X.
-3. Rendez le fichier `.xinitrc` exécutable avec la commande : `chmod +x ~/.xinitrc`.
-
-`--disable-pinch` est utilisé pour désactiver le zoom sur les écrans tactiles.
-  
-`--kiosk` est utilisé pour ouvrir Firefox en mode kiosque, ce qui signifie que Firefox s'ouvrira en plein écran sans barre d'adresse ni barre d'onglets.
+4. Recherchez `dom.w3c_touch_events.enabled` et assurez vous que cette valeur soit à `1`. Cela permet de supporter les écrans tactiles.
+5. Exécutez la commande `echo export MOZ_USE_XINPUT2=1 | sudo tee /etc/profile.d/use-xinput2.sh` pour activer le support des écrans tactiles.
 
 ## Remettre à zéro les scores
 
