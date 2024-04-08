@@ -48,13 +48,21 @@ Cela permettra à l'utilisateur non-root de se connecter automatiquement et de l
 2. Créez un fichier `.xinitrc` dans le répertoire personnel de l'utilisateur non-root (`/home/borne/.xinitrc`) et ajoutez-y les lignes suivante :
 
 ```sh
+# Lancer Firefox en mode kiosque
 exec firefox --disable-pinch --kiosk /chemin/absolut/vers/index.html &
+# Redimensionner et déplacer la fenêtre de Firefox
 for win in $(xdotool search --sync "Firefox"); do
   xdotool windowsize $win 1920 1080 &
   xdotool windowmove $win 0 0 &
 done
-
-while pgrep "firefox"; do sleep 1; done
+# Désactiver l'économiseur d'écran et l'extinction de l'écran
+xset s off
+xset s noblank
+xset -dpms
+# Attendre que Firefox se ferme
+while pgrep "firefox" > /dev/null; do
+  sleep 1
+done
 ```
 
 Cela permettra de lancer Firefox en mode kiosque au démarrage du serveur X, de redimensionner la fenêtre de Firefox à la taille de l'écran, et d'attendre que Firefox se ferme avant de fermer le serveur X.
