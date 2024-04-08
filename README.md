@@ -50,7 +50,11 @@ GRUB_HIDDEN_TIMEOUT_QUIET=true
 Enregistrez et quittez le fichier, puis mettez à jour grub en utilisant la commande suivante dans le terminal : `sudo update-grub`.
 
 11. Suivez les étapes suivantes pour installer Firefox et le serveur X.
-12. Redémarrez votre ordinateur pour que les changements prennent effet.
+12. (Optionel): Désactivez les services inutiles afin d'accélerer le temps pour boot en utilisant la commande suivante dans le terminal : `sudo systemctl mask <service>`. Remplacez `<service>` par le nom du service que vous souhaitez désactiver. Par exemple, pour désactiver le service `bluetooth`, utilisez la commande suivante : `sudo systemctl mask bluetooth`. Quelques services que vous pouvez désactiver sont:
+    - `bluetooth` - Si vous n'utilisez pas le Bluetooth.
+    - `cups` - Si vous n'utilisez pas d'imprimante.
+    - `exim4` - Si vous n'utilisez pas de serveur de messagerie.
+13. Redémarrez votre ordinateur pour que les changements prennent effet.
 
 ### Installation du serveur X
 
