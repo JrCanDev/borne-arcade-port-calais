@@ -162,8 +162,8 @@
             const rendered = getObjectFitSize(img);
             const magnifierRect = magnifier.getBoundingClientRect();
 
-            let relativeX = (magnifierRect.left - rendered.x + magnifierRect.width / 2) / rendered.width;
-            let relativeY = (magnifierRect.top - rendered.y + magnifierRect.height / 2) / rendered.height;
+            let relativeX = (magnifierRect.left - rendered.x + magnifierRect.width / 3) / rendered.width;
+            let relativeY = (magnifierRect.top - rendered.y + magnifierRect.height / 3) / rendered.height;
 
             magnifier.style.backgroundPositionX = (relativeX * 100) + "%";
             magnifier.style.backgroundPositionY = (relativeY * 100) + "%";

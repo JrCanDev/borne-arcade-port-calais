@@ -110,7 +110,7 @@ button:hover, button:active {
 
 #img-zoom {
     object-fit: contain;
-    width: 100%;
+    width: 92%;
     height: 94%;
     position: absolute;
     top: 50%;
