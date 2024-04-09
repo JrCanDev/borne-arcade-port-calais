@@ -4,10 +4,11 @@ Ce projet à été développé par Joshua Vandaële lors d'un stage se déroulan
 
 - [Borne d'Arcade du Port de Calais](#borne-darcade-du-port-de-calais)
   - [Mise en marche](#mise-en-marche)
+    - [Préambule](#préambule)
     - [Installation de Debian](#installation-de-debian)
-    - [Installation du serveur X](#installation-du-serveur-x)
     - [Installation de Firefox](#installation-de-firefox)
     - [Installation de l'application](#installation-de-lapplication)
+    - [Installation du serveur X](#installation-du-serveur-x)
     - [Sortir de Firefox](#sortir-de-firefox)
   - [Remettre à zéro les scores](#remettre-à-zéro-les-scores)
   - [Liste des jeux](#liste-des-jeux)
@@ -17,6 +18,14 @@ Ce projet à été développé par Joshua Vandaële lors d'un stage se déroulan
 ## Mise en marche
 
 Ce projet nécessite l'installation de Debian avec une installation non graphique (sans DE tels que GNOME), de Firefox, et d'un serveur X minimal. Pour la première mise en marche, certains paramètres ont besoin d'être changé.
+
+### Préambule
+
+Pour les étapes suivantes, vous aurez besoin d'un clavier et d'une souris USB, d'un écran, d'une connexion Internet, et d'une clé USB pour l'installation de Debian. Vous aurez également besoin d'un ordinateur pour télécharger l'image ISO de Debian et la flasher sur la clé USB.
+
+Pour éditer les fichiers de configuration, vous pouvez utiliser l'éditeur de texte `nano` en utilisant la commande suivante dans le terminal : `nano <fichier>`, où `<fichier>` est le fichier que vous souhaitez éditer. Vous pouvez également utiliser un autre éditeur de texte si vous le préférez. Pour enregistrer et quitter le fichier dans `nano`, appuyez sur `Ctrl + O`, puis sur `Entrée`, puis sur `Ctrl + X` pour quitter.
+
+Pour exécuter des commandes en tant que superutilisateur, vous pouvez utiliser la commande `sudo` suivi de la commande que vous souhaitez exécuter. Cela permet d'exécuter la commande en tant que l'utilisateur `root`, qui a les permissions nécessaires pour effectuer des tâches d'administration.
 
 ### Installation de Debian
 
@@ -30,8 +39,8 @@ Ce projet nécessite l'installation de Debian avec une installation non graphiqu
 5. Une fois l'installation terminée, redémarrez votre ordinateur, retirez la clé USB et connectez-vous en tant que l'utilisateur borne.
 6. Retirez le mot de passe de l'utilisateur borne en utilisant la commande suivante dans le terminal : `sudo passwd -d borne`.
 7. Installez les mises à jour en utilisant la commande suivante dans le terminal : `sudo apt-get update && sudo apt-get upgrade`.
-8. Faite que l'utilisateur non-root se connecte automatiquement en utilisant la commande suivante dans le terminal : `sudo nano /etc/systemd/logind.conf`. Recherchez la ligne `#NAutoVTs=6` et remplacez-la par `NAutoVTs=1`. Enregistrez et quittez le fichier.
-9. Créez un fichier override pour le service `getty@tty1` en utilisant la commande suivante dans le terminal : `sudo systemctl edit getty@tty1`. Ajoutez les lignes suivantes dans le fichier et enregistrez-le :
+8. Pour activer la connexion automatique de l'utilisateur borne et le lancement de l'interface graphique au démarrage, vous devez modifier certains fichiers de configuration. Ouvrez le fichier `/etc/systemd/logind.conf` en utilisant la commande suivante dans le terminal : `sudo nano /etc/systemd/logind.conf`. Recherchez la ligne `#NAutoVTs=6` et remplacez-la par `NAutoVTs=1`. Enregistrez et quittez le fichier.
+9.  Créez un fichier override pour le service `getty@tty1` en utilisant la commande suivante dans le terminal : `sudo systemctl edit getty@tty1`. Ajoutez les lignes suivantes dans le fichier et enregistrez-le :
 
 ```conf
 [Service]
@@ -41,7 +50,7 @@ ExecStart=-/sbin/agetty --autologin borne --noclear %I $TERM
 
 Cela permettra à l'utilisateur non-root de se connecter automatiquement et de lancer l'interface graphique sur le premier terminal virtuel.
 
-10. Cachez grub au démarrage en utilisant la commande suivante dans le terminal : `sudo nano /etc/default/grub`. Ajoutez les lignes suivantes dans le fichier et enregistrez-le :
+10. Cachez grub au démarrage en modifiant le fichier de configuration `/etc/default/grub` en utilisant la commande `sudo nano /etc/default/grub`. Ajoutez et modifiez les lignes suivantes dans le fichier et enregistrez-le :
 
 ```conf
 GRUB_TIMEOUT=0
@@ -49,19 +58,41 @@ GRUB_HIDDEN_TIMEOUT=0
 GRUB_HIDDEN_TIMEOUT_QUIET=true
 ```
 
-Enregistrez et quittez le fichier, puis mettez à jour grub en utilisant la commande suivante dans le terminal : `sudo update-grub`.
+Enregistrez et quittez le fichier, puis mettez à jour la configuration de grub en utilisant la commande suivante dans le terminal : `sudo update-grub`.
 
-11. Suivez les étapes suivantes pour installer Firefox et le serveur X.
-12. (Optionel): Désactivez les services inutiles afin d'accélerer le temps pour boot en utilisant la commande suivante dans le terminal : `sudo systemctl mask <service>`. Remplacez `<service>` par le nom du service que vous souhaitez désactiver. Par exemple, pour désactiver le service `bluetooth`, utilisez la commande suivante : `sudo systemctl mask bluetooth`. Quelques services que vous pouvez désactiver sont:
+11.  (Optionel): Désactivez les services inutiles afin d'accélerer le temps pour boot en utilisant la commande suivante dans le terminal : `sudo systemctl mask <service>`. Remplacez `<service>` par le nom du service que vous souhaitez désactiver. Par exemple, pour désactiver le service `bluetooth`, utilisez la commande suivante : `sudo systemctl mask bluetooth`. Quelques services que vous pouvez désactiver sont:
     - `bluetooth` - Si vous n'utilisez pas le Bluetooth.
     - `cups` - Si vous n'utilisez pas d'imprimante.
     - `exim4` - Si vous n'utilisez pas de serveur de messagerie.
-13. Redémarrez votre ordinateur pour que les changements prennent effet.
+
+### Installation de Firefox
+
+1. Installez Firefox en utilisant la commande suivante dans le terminal : `sudo apt-get install firefox-esr`.
+2. Exécutez la commande `echo export MOZ_USE_XINPUT2=1 | sudo tee /etc/profile.d/use-xinput2.sh` pour activer le support des écrans tactiles.
+
+Pour que le projet fonctionne correctement, vous devez changer certains paramètres de Firefox. Pour ce faire, suivez les étapes suivantes une fois que vous avez ouvert Firefox pour la première fois depuis le serveur X :
+
+1. Accéder à l'URL `about:config`. Si vous êtes en mode kiosque, vous pouvez appuyer sur `Ctrl + L` pour accéder à la barre d'adresse.
+2. Recherchez `security.fileuri.strict_origin_policy` et assurez vous que cette valeur soit à `false`. Cela permet à Firefox d'accéder aux fichiers locaux.
+3. Recherchez `browser.translations.automaticallyPopup` et assurez vous que cette valeur soit à `false`. Cela empêche la traduction automatique des pages web.
+4. Recherchez `dom.w3c_touch_events.enabled` et assurez vous que cette valeur soit à `1`. Cela permet de supporter les écrans tactiles.
+
+### Installation de l'application
+
+Si vous souhaitez clonez le dépot sur l'ordinateur de la borne, installez Git en utilisant la commande suivante dans le terminal : `sudo apt-get install git`. Sinon, vous pouvez télécharger le dépot sur une clé USB et le copier sur l'ordinateur.
+
+1. Clonez ce dépôt en utilisant la commande suivante dans le terminal : `git clone https://github.com/JrCanDev/borne-arcade-port-calais.git` ou téléchargez le dépot avec le bouton "Code" en haut de la page.
+2. Décompressez et extrayez le fichier téléchargé si vous avez téléchargé le dépot.
+3. Si vous n'utilisez pas de clé USB, allez à l'étape 7. Sinon, branchez la clé USB sur l'ordinateur.
+4. Montez la clé USB en utilisant la commande suivante dans le terminal : `sudo mount /dev/sdX /mnt`, où `/dev/sdX` est le périphérique de la clé USB. Vous pouvez trouver le périphérique de la clé USB en utilisant la commande `lsblk`.
+5. Le contenu de la clé USB sera monté dans le répertoire `/mnt`. Copiez le dossier `borne-arcade-port-calais` dans le répertoire personnel de l'utilisateur non-root (`/home/borne`) en utilisant la commande suivante dans le terminal : `sudo cp -r /mnt/borne-arcade-port-calais /home/borne/borne-arcade-port-calais`.
+6. Démontez la clé USB en utilisant la commande suivante dans le terminal : `sudo umount /mnt` et retirez la clé USB.
+7. Changez le propriétaire du dossier `borne-arcade-port-calais` en utilisant la commande suivante dans le terminal : `sudo chown -R borne:borne /home/borne/borne-arcade-port-calais` ou `borne` est le nom de l'utilisateur non-root et `/home/borne/borne-arcade-port-calais` est le chemin absolu vers le dossier contenant l'application.
 
 ### Installation du serveur X
 
 1. Installez le serveur X et les outils que l'on utilisera en utilisant la commande suivante dans le terminal : `sudo apt-get install xorg xdotool`.
-2. Créez un fichier `.xinitrc` dans le répertoire personnel de l'utilisateur non-root (`/home/borne/.xinitrc`) et ajoutez-y les lignes suivante :
+2. Créez un fichier `.xinitrc` dans le répertoire personnel de l'utilisateur non-root (`/home/borne/.xinitrc`) et ajoutez-y les lignes suivante en utilisant un editeur de texte tel que `nano` :
 
 ```sh
 # Lancer Firefox en mode kiosque
@@ -97,36 +128,7 @@ if [ -z "$DISPLAY" ] && [ $(tty) == /dev/tty1 ]; then
 fi
 ```
 
-### Installation de Firefox
-
-1. Installez Firefox en utilisant la commande suivante dans le terminal : `sudo apt-get install firefox-esr`.
-
-Pour que le projet fonctionne correctement, vous devez changer certains paramètres de Firefox. Pour ce faire, suivez les étapes suivantes une fois que vous avez ouvert Firefox pour la première fois depuis le serveur X :
-
-1. Accéder à l'URL `about:config`. Si vous êtes en mode kiosque, vous pouvez appuyer sur `Ctrl + L` pour accéder à la barre d'adresse.
-2. Recherchez `security.fileuri.strict_origin_policy` et assurez vous que cette valeur soit à `false`. Cela permet à Firefox d'accéder aux fichiers locaux.
-3. Recherchez `browser.translations.automaticallyPopup` et assurez vous que cette valeur soit à `false`. Cela empêche la traduction automatique des pages web.
-4. Recherchez `dom.w3c_touch_events.enabled` et assurez vous que cette valeur soit à `1`. Cela permet de supporter les écrans tactiles.
-5. Exécutez la commande `echo export MOZ_USE_XINPUT2=1 | sudo tee /etc/profile.d/use-xinput2.sh` pour activer le support des écrans tactiles.
-
-### Installation de l'application
-
-Si vous souhaitez clonez le dépot sur l'ordinateur de la borne, installez Git en utilisant la commande suivante dans le terminal : `sudo apt-get install git`. Sinon, vous pouvez télécharger le dépot sur une clé USB et le copier sur l'ordinateur.
-
-1. Clonez ce dépôt en utilisant la commande suivante dans le terminal : `git clone https://github.com/JrCanDev/borne-arcade-port-calais.git` ou téléchargez le dépot avec le bouton "Code" en haut de la page.
-2. Décompressez et extrayez le fichier téléchargé si vous avez téléchargé le dépot.
-3. Si vous n'utilisez pas de clé USB, allez à l'étape 7. Sinon, branchez la clé USB sur l'ordinateur.
-4. Montez la clé USB en utilisant la commande suivante dans le terminal : `sudo mount /dev/sdX /mnt`, où `/dev/sdX` est le périphérique de la clé USB. Vous pouvez trouver le périphérique de la clé USB en utilisant la commande `lsblk`.
-5. Le contenu de la clé USB sera monté dans le répertoire `/mnt`. Copiez le dossier `borne-arcade-port-calais` dans le répertoire personnel de l'utilisateur non-root (`/home/borne`) en utilisant la commande suivante dans le terminal : `sudo cp -r /mnt/borne-arcade-port-calais /home/borne/borne-arcade-port-calais`.
-6. Démontez la clé USB en utilisant la commande suivante dans le terminal : `sudo umount /mnt` et retirez la clé USB.
-7. Changez le propriétaire du dossier `borne-arcade-port-calais` en utilisant la commande suivante dans le terminal : `sudo chown -R borne:borne /home/borne/borne-arcade-port-calais`.
-8. L'application est maintenant prête à être utilisée. Pour lancer l'application, modifiez votre `.xinitrc` pour lancer Firefox avec le chemin absolu vers le fichier `index.html` de l'application. Par exemple, si vous avez copié le dossier `borne-arcade-port-calais` dans le répertoire personnel de l'utilisateur non-root (`/home/borne`), vous pouvez utiliser la commande suivante dans le fichier `.xinitrc` :
-
-```sh
-# Lancer Firefox en mode kiosque
-exec firefox --disable-pinch --kiosk /home/borne/borne-arcade-port-calais/index.html &
-# ...
-```
+Le fichier `.bashrc` est exécuté à chaque connexion de l'utilisateur.
 
 ### Sortir de Firefox
 
