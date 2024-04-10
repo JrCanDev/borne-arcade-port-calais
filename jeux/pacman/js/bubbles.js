@@ -128,7 +128,7 @@ function blinkSuperBubbles() {
         } else {
           var ctx = getBubblesCanvasContext();
           ctx.drawImage(
-            BUBBLE_IMAGE,
+            SUPER_BUBBLE_IMAGE,
             sx - SUPER_BUBBLES_SIZE / 2,
             sy - SUPER_BUBBLES_SIZE / 2,
             SUPER_BUBBLES_SIZE,
