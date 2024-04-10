@@ -421,8 +421,7 @@ screen and (min-device-height : 480px) and (max-device-height : 640px) and (-web
 		display: none;
 	}
 
-	h1,
-	#canvas-panel-title-pacman {
+	h1 {
 		visibility: hidden;
 	}
 }
@@ -443,7 +442,6 @@ screen and (min-device-height : 320px) and (max-device-height : 480px) {
 	}
 
 	h1,
-	#canvas-panel-title-pacman,
 	#control-up-second,
 	#control-down-second,
 	#home .help-button,
