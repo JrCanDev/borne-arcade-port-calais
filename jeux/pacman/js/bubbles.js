@@ -27,13 +27,13 @@ function initBubbles() {
 	}
 }
 
-function getBubblesCanevasContext() { 
+function getBubblesCanvasContext() { 
 	return BUBBLES_CANVAS_CONTEXT;
 }
 
 function drawBubbles() { 
 
-	var ctx = getBubblesCanevasContext();
+	var ctx = getBubblesCanvasContext();
 	ctx.fillStyle = "#dca5be";
 	
 	for (var line = 1, linemax = 29, i = 0, s = 0; line <= linemax; line ++) { 
@@ -52,10 +52,6 @@ function drawBubbles() {
 					size = BUBBLES_SIZE;
 				}
 				BUBBLES_COUNTER ++;
-				/*ctx.beginPath();
-				ctx.arc(correctionX(x, bubble), y, size, 0, 2 * Math.PI, false);
-				ctx.fill();
-				ctx.closePath();*/
 
 				if(type=="s"){
 					ctx.drawImage(SUPER_BUBBLE_IMAGE, x-size/2, y-size/2, size, size);
@@ -77,8 +73,7 @@ function stopBlinkSuperBubbles() {
 	SUPER_BUBBLES_BLINK = false;
 }
 
-function blinkSuperBubbles() { 
-
+function blinkSuperBubbles() {
 	if (SUPER_BUBBLES_BLINK === false) { 
 		SUPER_BUBBLES_BLINK = true;
 		SUPER_BUBBLES_BLINK_TIMER = setInterval('blinkSuperBubbles()', SUPER_BUBBLES_BLINK_SPEED);
@@ -104,12 +99,7 @@ function blinkSuperBubbles() {
 				if (SUPER_BUBBLES_BLINK_STATE === 1) { 
 					eraseBubble("s", sx, sy);
 				} else { 
-					var ctx = getBubblesCanevasContext();
-					/*ctx.fillStyle = "#dca5be";
-					ctx.beginPath();
-					ctx.arc(sx, sy, SUPER_BUBBLES_SIZE, 0, 2 * Math.PI, false);
-					ctx.fill();
-					ctx.closePath();*/
+					var ctx = getBubblesCanvasContext();
 					ctx.drawImage(BUBBLE_IMAGE, sx-SUPER_BUBBLES_SIZE/2, sy-SUPER_BUBBLES_SIZE/2, SUPER_BUBBLES_SIZE, SUPER_BUBBLES_SIZE);
 				}
 
@@ -148,7 +138,7 @@ function getBubbleOnXY( x, y ) {
 
 function eraseBubble(t, x, y) { 
 
-	var ctx = getBubblesCanevasContext();
+	var ctx = getBubblesCanvasContext();
 
 	var size = "";
 	if (t === "s") { 

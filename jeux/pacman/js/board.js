@@ -1,5 +1,5 @@
 var BOARD_CANVAS_CONTEXT = null;
-var WALLs_COLOR = "#EAEAEA"; //"#193fff"; BY DEFAULT
+var WALL_COLOR = "#EAEAEA"; //"#193fff"; BY DEFAULT
 
 function initBoard() { 
 	var canvas = document.getElementById('canvas-board');
@@ -10,22 +10,19 @@ function initBoard() {
 	}
 
 	BOARD_CANVAS_CONTEXT.drawImage(BACKGROUND_IMAGE,0,0, 550, 550);
-	//loadImage("img/background.png").then(image => BOARD_CANVAS_CONTEXT.drawImage(backgroundImage,0,0, 550, 550)); // Will loaded the image AFTER the walls, and will hide everything
-	//Workarround in image-loader to pre-load images
-
 }
 
-function getBoardCanevasContext() { 
+function getBoardCanvasContext() { 
 	return BOARD_CANVAS_CONTEXT;
 }
 
 function drawBoard(alternate) { 
-	var ctx = getBoardCanevasContext();
+	var ctx = getBoardCanvasContext();
 	
 	if (alternate && alternate === true) { 
 		ctx.strokeStyle = "#fff";
 	} else { 
-		ctx.strokeStyle = WALLs_COLOR;
+		ctx.strokeStyle = WALL_COLOR;
 	}
 	
 	ctx.lineWidth = "2";
@@ -344,7 +341,7 @@ function drawBoard(alternate) {
 }
 
 function drawBoardDoor() { 
-	var ctx = getBoardCanevasContext();
+	var ctx = getBoardCanvasContext();
 	
 	ctx.strokeStyle = "white";
 	ctx.lineWidth = "5";
@@ -357,16 +354,6 @@ function drawBoardDoor() {
 	ctx.closePath();
 }
 function eraseBoardDoor() { 
-	var ctx = getBoardCanevasContext();
-	//ctx.translate(FRUITS_POSITION_X - (FRUITS_SIZE / 2), FRUITS_POSITION_Y - (FRUITS_SIZE / 2));
-	//ctx.save();
-	//ctx.globalCompositeOperation = "destination-out";
-	
-	//ctx.beginPath();
-	//ctx.translate(FRUITS_POSITION_X - (FRUITS_SIZE / 2), FRUITS_POSITION_Y - (FRUITS_SIZE / 2));
+	var ctx = getBoardCanvasContext();
 	ctx.clearRect(255, 220, 40, 10);
-	//ctx.fill();
-	//ctx.closePath();
-	
-	//ctx.restore();
 }

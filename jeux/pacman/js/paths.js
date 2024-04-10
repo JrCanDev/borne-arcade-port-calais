@@ -64,12 +64,12 @@ function initPaths() {
 	
 }
 
-function getPathsCanevasContext() { 
+function getPathsCanvasContext() { 
 	return PATHS_CANVAS_CONTEXT;
 }
 
 function drawPaths() { 
-	var ctx = getPathsCanevasContext();
+	var ctx = getPathsCanvasContext();
 	
 	ctx.strokeStyle = "red";
 	

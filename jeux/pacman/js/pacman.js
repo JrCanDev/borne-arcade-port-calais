@@ -43,7 +43,7 @@ function resetPacman() {
 	PACMAN_DEAD = false;
 	PACMAN_SUPER = false;
 }
-function getPacmanCanevasContext() {
+function getPacmanCanvasContext() {
 	return PACMAN_CANVAS_CONTEXT;
 }
 
@@ -90,7 +90,7 @@ function tryMovePacman(direction) {
 }
 
 function movePacman(direction) {
-
+	if (GAMEOVER) return;
 	if (PACMAN_MOVING === false) {
 		PACMAN_MOVING = true;
 		drawPacman();
@@ -208,44 +208,13 @@ function canMovePacman(direction) {
 }
 
 function drawPacman() {
-	var ctx = getPacmanCanevasContext();
-	var startAngle = 0;
-	var endAngle = 2 * Math.PI;
+	var ctx = getPacmanCanvasContext();
 	ctx.drawImage(PACMAN_IMAGE[PACMAN_DIRECTION-1], PACMAN_POSITION_X - PACMAN_SIZE, PACMAN_POSITION_Y - PACMAN_SIZE, PACMAN_SIZE * 2, PACMAN_SIZE * 2);
-
-	// ctx.fillStyle = "#fff200";
-	// ctx.beginPath();
-
-	// var startAngle = 0;
-	// var endAngle = 2 * Math.PI;
-	// var lineToX = PACMAN_POSITION_X;
-	// var lineToY = PACMAN_POSITION_Y;
-	// if (PACMAN_DIRECTION === 1) { 
-	// 	startAngle = (0.35 - (PACMAN_MOUNTH_STATE * 0.05)) * Math.PI;
-	// 	endAngle = (1.65 + (PACMAN_MOUNTH_STATE * 0.05)) * Math.PI;
-	// 	lineToX -= 8;
-	// } else if (PACMAN_DIRECTION === 2) { 
-	// 	startAngle = (0.85 - (PACMAN_MOUNTH_STATE * 0.05)) * Math.PI;
-	// 	endAngle = (0.15 + (PACMAN_MOUNTH_STATE * 0.05)) * Math.PI;
-	// 	lineToY -= 8;
-	// } else if (PACMAN_DIRECTION === 3) { 
-	// 	startAngle = (1.35 - (PACMAN_MOUNTH_STATE * 0.05)) * Math.PI;
-	// 	endAngle = (0.65 + (PACMAN_MOUNTH_STATE * 0.05)) * Math.PI;
-	// 	lineToX += 8;
-	// } else if (PACMAN_DIRECTION === 4) { 
-	// 	startAngle = (1.85 - (PACMAN_MOUNTH_STATE * 0.05)) * Math.PI;
-	// 	endAngle = (1.15 + (PACMAN_MOUNTH_STATE * 0.05)) * Math.PI;
-	// 	lineToY += 8;
-	// }
-	// ctx.arc(PACMAN_POSITION_X, PACMAN_POSITION_Y, PACMAN_SIZE, startAngle, endAngle, false);
-	// ctx.lineTo(lineToX, lineToY);
-	// ctx.fill();
-	// ctx.closePath();
 }
 
 function erasePacman() {
 
-	var ctx = getPacmanCanevasContext();
+	var ctx = getPacmanCanvasContext();
 	ctx.clearRect((PACMAN_POSITION_X - 2) - PACMAN_SIZE, (PACMAN_POSITION_Y - 2) - PACMAN_SIZE, (PACMAN_SIZE * 2) + 5, (PACMAN_SIZE * 2) + 5);
 }
 

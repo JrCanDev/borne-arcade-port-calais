@@ -126,7 +126,7 @@ function resetGhosts() {
 	GHOST_CLYDE_AFFRAID_TIMER = null;
 	GHOST_CLYDE_AFFRAID_STATE = 0;
 }
-function getGhostCanevasContext(ghost) { 
+function getGhostCanvasContext(ghost) { 
 	return eval('GHOST_' + ghost.toUpperCase() + '_CANVAS_CONTEXT');
 }
 
@@ -137,23 +137,8 @@ function drawGhosts() {
 	drawGhost("clyde");
 }
 function drawGhost(ghost) { 
-
-	var ctx = getGhostCanevasContext(ghost);
-	
-	/*if (eval('GHOST_' + ghost.toUpperCase() + '_STATE === 0')) { 
-		eval('ctx.fillStyle = GHOST_' + ghost.toUpperCase() + '_COLOR');
-	} else { 
-		if (eval('GHOST_' + ghost.toUpperCase() + '_AFFRAID_STATE === 1')) { 
-			eval('ctx.fillStyle = GHOST_AFFRAID_FINISH_COLOR');
-		} else { 
-			eval('ctx.fillStyle = GHOST_AFFRAID_COLOR');
-		}
-	}*/
+	var ctx = getGhostCanvasContext(ghost);
 	eval('drawHelperGhost(ctx, GHOST_' + ghost.toUpperCase() + '_POSITION_X, GHOST_' + ghost.toUpperCase() + '_POSITION_Y, GHOST_' + ghost.toUpperCase() + '_DIRECTION, GHOST_' + ghost.toUpperCase() + '_BODY_STATE, GHOST_' + ghost.toUpperCase() + '_STATE, GHOST_' + ghost.toUpperCase() + '_AFFRAID_STATE, GHOST_' + ghost.toUpperCase() + '_COLOR)');
-	
-	//ctx.closePath();
-	
-	
 }
 
 function affraidGhosts() { 
@@ -473,7 +458,7 @@ function reverseDirection(direction) {
 
 function eraseGhost(ghost) { 
 
-	var ctx = getGhostCanevasContext(ghost);
+	var ctx = getGhostCanvasContext(ghost);
 	
 	eval('ctx.clearRect(GHOST_' + ghost.toUpperCase() + '_POSITION_X - 17, GHOST_' + ghost.toUpperCase() + '_POSITION_Y - 17, 34, 34)');
 }

@@ -26,7 +26,7 @@ function initFruits() {
 		LEVEL_FRUITS_CANVAS_CONTEXT = levelCanvas.getContext('2d');
 	}
 	
-	var ctx = getLevelFruitsCanevasContext();
+	var ctx = getLevelFruitsCanvasContext();
 	ctx.clearRect(0, 0, 265, 30);
 	
 	var x = 245;
@@ -92,10 +92,10 @@ function initFruits() {
 	}
 }
 
-function getFruitsCanevasContext() { 
+function getFruitsCanvasContext() { 
 	return FRUITS_CANVAS_CONTEXT;
 }
-function getLevelFruitsCanevasContext() { 
+function getLevelFruitsCanvasContext() { 
 	return LEVEL_FRUITS_CANVAS_CONTEXT;
 }
 
@@ -129,7 +129,7 @@ function fruit() {
 }
 function oneFruit() { 
 	if ( FRUIT_CANCEL_TIMER === null ) { 
-		var ctx = getFruitsCanevasContext();
+		var ctx = getFruitsCanvasContext();
 		
 		if (LEVEL === 1) FRUIT = "cherry";
 		else if (LEVEL === 2) FRUIT = "strawberry";
@@ -152,19 +152,8 @@ function cancelFruit() {
 }
 
 function eraseFruit() { 
-
-	var ctx = getFruitsCanevasContext();
-	//ctx.translate(FRUITS_POSITION_X - (FRUITS_SIZE / 2), FRUITS_POSITION_Y - (FRUITS_SIZE / 2));
-	//ctx.save();
-	//ctx.globalCompositeOperation = "destination-out";
-	
-	//ctx.beginPath();
-	//ctx.translate(FRUITS_POSITION_X - (FRUITS_SIZE / 2), FRUITS_POSITION_Y - (FRUITS_SIZE / 2));
+	var ctx = getFruitsCanvasContext();
 	ctx.clearRect(FRUITS_POSITION_X - (FRUITS_SIZE), FRUITS_POSITION_Y - (FRUITS_SIZE), FRUITS_SIZE * 2, FRUITS_SIZE * 2);
-	//ctx.fill();
-	//ctx.closePath();
-	
-	//ctx.restore();
 }
 
 function drawFruit(ctx, f, x, y, size) {  
@@ -173,7 +162,6 @@ function drawFruit(ctx, f, x, y, size) {
 	//Loads CHERRY_IMAGE, STRAWBERRY_IMAGE, ... See image-loader.js
 	ctx.drawImage(eval(f.toUpperCase()+"_IMAGE"), x-size/2, y-size/2, size, size);
 
-	
 	ctx.restore();
 }
 
