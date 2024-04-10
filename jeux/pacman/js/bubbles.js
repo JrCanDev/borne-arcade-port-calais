@@ -110,9 +110,7 @@ function blinkSuperBubbles() {
 					ctx.arc(sx, sy, SUPER_BUBBLES_SIZE, 0, 2 * Math.PI, false);
 					ctx.fill();
 					ctx.closePath();*/
-					var bubbleImage = new Image();
-					bubbleImage.src = "img/bubbles/superbubble.png";
-					ctx.drawImage(bubbleImage, sx-SUPER_BUBBLES_SIZE/2, sy-SUPER_BUBBLES_SIZE/2, SUPER_BUBBLES_SIZE, SUPER_BUBBLES_SIZE);
+					ctx.drawImage(BUBBLE_IMAGE, sx-SUPER_BUBBLES_SIZE/2, sy-SUPER_BUBBLES_SIZE/2, SUPER_BUBBLES_SIZE, SUPER_BUBBLES_SIZE);
 				}
 
 			}

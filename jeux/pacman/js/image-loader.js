@@ -13,6 +13,8 @@ async function loadImage(imageUrl) {
 
 // In order to solve some bugs related to slow image loading due to re-building the Image object each time we add something in the canva,
 // I decided that custom Images are loaded once here, then used everywhere needed, as a global var
+let PACMAN_IMAGE = new Array();
+
 let BUBBLE_IMAGE;
 let SUPER_BUBBLE_IMAGE;
 let BACKGROUND_IMAGE;
@@ -54,6 +56,12 @@ let GHOST_AFFRAID_LEFT_IMAGE;
 //Yes, that's a lot of variables, that I would prefer to avoid, but I'm following what the original creator did ¯\_(ツ)_/¯
 
 async function preloadRequiredImages(){
+    for (let i = 1; i < 5; i++) {
+        PACMAN_IMAGE.push(await loadImage("img/pacman/" + i + ".png"));
+    }
+
+    console.log(PACMAN_IMAGE)
+
     BACKGROUND_IMAGE = await loadImage("img/background.png");
     SUPER_BUBBLE_IMAGE = await loadImage("img/bubbles/superbubble.png");
     BUBBLE_IMAGE = await loadImage("img/bubbles/bubble.png");

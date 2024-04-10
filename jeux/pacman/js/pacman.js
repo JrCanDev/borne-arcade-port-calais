@@ -208,26 +208,10 @@ function canMovePacman(direction) {
 }
 
 function drawPacman() {
-
-
-	var pacmanImage = new Image();
 	var ctx = getPacmanCanevasContext();
 	var startAngle = 0;
 	var endAngle = 2 * Math.PI;
-
-	if (PACMAN_DIRECTION === 1) {
-		pacmanImage.src = "img/pacman1.png";
-	}
-	else if (PACMAN_DIRECTION === 2) {
-		pacmanImage.src = "img/pacman2.png";
-	}
-	else if (PACMAN_DIRECTION === 3) {
-		pacmanImage.src = "img/pacman3.png";
-	}
-	else if (PACMAN_DIRECTION === 4) {
-		pacmanImage.src = "img/pacman4.png";
-	}
-	ctx.drawImage(pacmanImage, PACMAN_POSITION_X - PACMAN_SIZE, PACMAN_POSITION_Y - PACMAN_SIZE, PACMAN_SIZE * 2, PACMAN_SIZE * 2);
+	ctx.drawImage(PACMAN_IMAGE[PACMAN_DIRECTION-1], PACMAN_POSITION_X - PACMAN_SIZE, PACMAN_POSITION_Y - PACMAN_SIZE, PACMAN_SIZE * 2, PACMAN_SIZE * 2);
 
 	// ctx.fillStyle = "#fff200";
 	// ctx.beginPath();

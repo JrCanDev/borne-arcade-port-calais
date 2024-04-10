@@ -155,55 +155,7 @@
 
     $(document).ready(function () {
         loadAllSound();
-
-        $(".sound").click(function (e) {
-            e.stopPropagation();
-
-            var sound = $(this).attr("data-sound");
-            if (sound === "on") {
-                $(".sound").attr("data-sound", "off");
-                $(".sound").find("img").attr("src", "img/sound-off.png");
-                GROUP_SOUND.mute();
-            } else {
-                $(".sound").attr("data-sound", "on");
-                $(".sound").find("img").attr("src", "img/sound-on.png");
-                GROUP_SOUND.unmute();
-            }
-        });
-
-        $("#control-up, #control-up-second, #control-up-big").on(
-            "mousedown touchstart",
-            function (e) {
-                e.preventDefault();
-                simulateKeydown(38);
-                simulateKeyup(13);
-            }
-        );
-        $("#control-down, #control-down-second, #control-down-big").on(
-            "mousedown touchstart",
-            function (e) {
-                e.preventDefault();
-                simulateKeydown(40);
-                simulateKeyup(13);
-            }
-        );
-        $("#control-left, #control-left-big").on(
-            "mousedown touchstart",
-            function (e) {
-                e.preventDefault();
-                simulateKeydown(37);
-                simulateKeyup(13);
-            }
-        );
-        $("#control-right, #control-right-big").on(
-            "mousedown touchstart",
-            function (e) {
-                e.preventDefault();
-                simulateKeydown(39);
-                simulateKeyup(13);
-            }
-        );
-
+        
         $(document).keydown(function (e) {
             if (PACMAN_DEAD && !LOCK) {
                 erasePacman();
