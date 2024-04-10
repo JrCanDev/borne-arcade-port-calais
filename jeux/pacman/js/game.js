@@ -23,292 +23,306 @@ var TIME_FRUITS = 0;
 var HELP_DELAY = 1500;
 var HELP_TIMER = -1;
 
-function initGame(newgame) { 
-	if (newgame) { 
-		GAMEOVER = false;
+function initGame(newgame) {
+  if (newgame) {
+    GAMEOVER = false;
 
-		$('#help').fadeOut("slow");
-		
-		score(0);
-		clearMessage();
-		$("#home").hide();
-		$("#panel").show();
-		document.getElementById("start").style.display = "none";
-	}
+    $("#help").fadeOut("slow");
 
-	initBoard();
-	drawBoard();
-	drawBoardDoor();
-	
-	initPaths();
-	drawPaths();
-	
-	initBubbles();
-	drawBubbles();
-	
-	initFruits();
-	
-	initPacman();
-	drawPacman();
-	
-	initGhosts();
-	drawGhosts();
-	
-	lifes();
-	
-	ready();
+    score(0);
+    clearMessage();
+    $("#home").hide();
+    $("#panel").show();
+    document.getElementById("start").style.display = "none";
+  }
+
+  initBoard();
+  drawBoard();
+  drawBoardDoor();
+
+  initPaths();
+  drawPaths();
+
+  initBubbles();
+  drawBubbles();
+
+  initFruits();
+
+  initPacman();
+  drawPacman();
+
+  initGhosts();
+  drawGhosts();
+
+  lifes();
+
+  ready();
 }
 
-function win() { 
-	stopAllSound();
+function win() {
+  stopAllSound();
 
-	LOCK = true;
-	stopPacman();
-	stopGhosts();
-	stopBlinkSuperBubbles();
-	stopTimes();
-	
-	eraseGhosts();
+  LOCK = true;
+  stopPacman();
+  stopGhosts();
+  stopBlinkSuperBubbles();
+  stopTimes();
 
-	setTimeout("prepareNextLevel()", 1000);
+  eraseGhosts();
 
+  setTimeout("prepareNextLevel()", 1000);
 }
-function prepareNextLevel(i) { 
-	if ( LEVEL_NEXT_TIMER === -1 ) { 
-		eraseBoardDoor();
-		LEVEL_NEXT_TIMER = setInterval("prepareNextLevel()", 250);
-	} else { 
-		LEVEL_NEXT_STATE ++;
-		drawBoard( ((LEVEL_NEXT_STATE % 2) === 0) );
-		
-		if ( LEVEL_NEXT_STATE > 6) { 
-			LEVEL_NEXT_STATE = 0;
-			clearInterval(LEVEL_NEXT_TIMER);
-			LEVEL_NEXT_TIMER = -1;
-			nextLevel();
-		}
-	}
+function prepareNextLevel(i) {
+  if (LEVEL_NEXT_TIMER === -1) {
+    eraseBoardDoor();
+    LEVEL_NEXT_TIMER = setInterval("prepareNextLevel()", 250);
+  } else {
+    LEVEL_NEXT_STATE++;
+    drawBoard(LEVEL_NEXT_STATE % 2 === 0);
+
+    if (LEVEL_NEXT_STATE > 6) {
+      LEVEL_NEXT_STATE = 0;
+      clearInterval(LEVEL_NEXT_TIMER);
+      LEVEL_NEXT_TIMER = -1;
+      nextLevel();
+    }
+  }
 }
-function nextLevel() { 
-	LOCK = false;
-	
-	LEVEL ++;
-	
-	erasePacman();
-	eraseGhosts();
-	
-	resetPacman();
-	resetGhosts();
+function nextLevel() {
+  LOCK = false;
 
-	initGame();
-	
-	TIME_LEVEL = 0;
-	TIME_LIFE = 0;
-	TIME_FRUITS = 0;
-}
+  LEVEL++;
 
+  erasePacman();
+  eraseGhosts();
 
-function retry() { 
-	stopTimes();
+  resetPacman();
+  resetGhosts();
 
-	erasePacman();
-	eraseGhosts();
-	
-	resetPacman();
-	resetGhosts();
-	
-	drawPacman();
-	drawGhosts();
-	
-	TIME_LIFE = 0;
-	TIME_FRUITS = 0;
-	
-	ready();
+  initGame();
+
+  TIME_LEVEL = 0;
+  TIME_LIFE = 0;
+  TIME_FRUITS = 0;
 }
 
-function ready() { 
-	LOCK = true;
-	message("ready!");
-	
-	playReadySound();
-	setTimeout("go()", "4100");
-}
-function go() { 
-	playSirenSound();
+function retry() {
+  stopTimes();
 
-	LOCK = false;
-	
-	startTimes();
-	
-	clearMessage();
-	blinkSuperBubbles();
+  erasePacman();
+  eraseGhosts();
 
-	movePacman();
+  resetPacman();
+  resetGhosts();
 
-	moveGhosts();
-}
-function startTimes() { 
-	if (TIME_GENERAL_TIMER === -1) { 
-		TIME_GENERAL_TIMER = setInterval("times()", 1000);
-	}
-}
-function times() { 
-	TIME_GAME ++;
-	TIME_LEVEL ++;
-	TIME_LIFE ++;
-	TIME_FRUITS ++;
-	
-	fruit();
-}
-function pauseTimes() { 
-	if (TIME_GENERAL_TIMER != -1) { 
-		clearInterval(TIME_GENERAL_TIMER);
-		TIME_GENERAL_TIMER = -1;
-	}
-	if (FRUIT_CANCEL_TIMER != null) FRUIT_CANCEL_TIMER.pause();
-}
-function resumeTimes() { 
-	startTimes();
-	if (FRUIT_CANCEL_TIMER != null) FRUIT_CANCEL_TIMER.resume();
-}
-function stopTimes() { 
-	if (TIME_GENERAL_TIMER != -1) { 
-		clearInterval(TIME_GENERAL_TIMER);
-		TIME_GENERAL_TIMER = -1;
-	}
-	if (FRUIT_CANCEL_TIMER != null) { 
-		FRUIT_CANCEL_TIMER.cancel();
-		FRUIT_CANCEL_TIMER = null;
-		eraseFruit();
-	}
+  drawPacman();
+  drawGhosts();
+
+  TIME_LIFE = 0;
+  TIME_FRUITS = 0;
+
+  ready();
 }
 
-function pauseGame() { 
+function ready() {
+  LOCK = true;
+  message("ready!");
 
-	if (!PAUSE) { 
-		stopAllSound();
-		PAUSE = true;
-		
-		message("pause");
-		
-		pauseTimes();
-		pausePacman();
-		pauseGhosts();
-		stopBlinkSuperBubbles();
-	}
+  playReadySound();
+  setTimeout("go()", "4100");
 }
-function resumeGame() { 
-	if (PAUSE) { 
-		testStateGhosts();
+function go() {
+  playSirenSound();
 
-		PAUSE = false;
-		
-		clearMessage();
-		
-		resumeTimes();
-		resumePacman();
-		resumeGhosts();
-		blinkSuperBubbles();
-	}
+  LOCK = false;
+
+  startTimes();
+
+  clearMessage();
+  blinkSuperBubbles();
+
+  movePacman();
+
+  moveGhosts();
 }
+function startTimes() {
+  if (TIME_GENERAL_TIMER === -1) {
+    TIME_GENERAL_TIMER = setInterval("times()", 1000);
+  }
+}
+function times() {
+  TIME_GAME++;
+  TIME_LEVEL++;
+  TIME_LIFE++;
+  TIME_FRUITS++;
 
-function lifes(l) { 
-	if (l) { 
-		if ( l > 0 ) { 
-			playExtraLifeSound();
-		}
-		LIFES += l;
-	}
-	
-	var canvas = document.getElementById('canvas-lifes');
-	canvas.setAttribute('width', '120');
-	canvas.setAttribute('height', '30');
-	if (canvas.getContext) { 
-		var ctx = canvas.getContext('2d');
-		
-		ctx.clearRect(0, 0, 120, 30);
-		ctx.fillStyle = "#fff200";
-		for (var i = 0, imax = LIFES; (i < imax && i < 4); i ++) { 
-			ctx.beginPath();
-			
-			var lineToX = 13;
-			var lineToY = 15;
-			
-			ctx.arc(lineToX + (i * 30), lineToY, 13, (1.35 - (3 * 0.05)) * Math.PI, (0.65 + (3 * 0.05)) * Math.PI, false);
-			ctx.lineTo(lineToX + (i * 30) + 4, lineToY);
-			ctx.fill();
-			ctx.closePath();
-		}
-	}
+  fruit();
+}
+function pauseTimes() {
+  if (TIME_GENERAL_TIMER != -1) {
+    clearInterval(TIME_GENERAL_TIMER);
+    TIME_GENERAL_TIMER = -1;
+  }
+  if (FRUIT_CANCEL_TIMER != null) FRUIT_CANCEL_TIMER.pause();
+}
+function resumeTimes() {
+  startTimes();
+  if (FRUIT_CANCEL_TIMER != null) FRUIT_CANCEL_TIMER.resume();
+}
+function stopTimes() {
+  if (TIME_GENERAL_TIMER != -1) {
+    clearInterval(TIME_GENERAL_TIMER);
+    TIME_GENERAL_TIMER = -1;
+  }
+  if (FRUIT_CANCEL_TIMER != null) {
+    FRUIT_CANCEL_TIMER.cancel();
+    FRUIT_CANCEL_TIMER = null;
+    eraseFruit();
+  }
 }
 
-function gameover() { 
-	GAMEOVER = true;
-	document.getElementById("start").style.display = "flex";
-	message("game over");
-	stopTimes();
+function pauseGame() {
+  if (!PAUSE) {
+    stopAllSound();
+    PAUSE = true;
 
-	erasePacman();
-	eraseGhosts();
-	
-	resetPacman();
-	resetGhosts();
-	
-	TIME_GAME = 0;
-	TIME_LEVEL = 0;
-	TIME_LIFE = 0;
-	TIME_FRUITS = 0;
+    message("pause");
 
-	LIFES = 2;
-	LEVEL = 1;
-	SCORE = 0;
+    pauseTimes();
+    pausePacman();
+    pauseGhosts();
+    stopBlinkSuperBubbles();
+  }
+}
+function resumeGame() {
+  if (PAUSE) {
+    testStateGhosts();
+
+    PAUSE = false;
+
+    clearMessage();
+
+    resumeTimes();
+    resumePacman();
+    resumeGhosts();
+    blinkSuperBubbles();
+  }
 }
 
-function message(m) { 
-	$("#message").html(m);
-	if (m === "game over") $("#message").addClass("red");
+function lifes(l) {
+  if (l) {
+    if (l > 0) {
+      playExtraLifeSound();
+    }
+    LIFES += l;
+  }
+
+  var canvas = document.getElementById("canvas-lifes");
+  canvas.setAttribute("width", "120");
+  canvas.setAttribute("height", "30");
+  if (canvas.getContext) {
+    var ctx = canvas.getContext("2d");
+
+    ctx.clearRect(0, 0, 120, 30);
+    ctx.fillStyle = "#fff200";
+    for (var i = 0, imax = LIFES; i < imax && i < 4; i++) {
+      ctx.beginPath();
+
+      var lineToX = 13;
+      var lineToY = 15;
+
+      ctx.arc(
+        lineToX + i * 30,
+        lineToY,
+        13,
+        (1.35 - 3 * 0.05) * Math.PI,
+        (0.65 + 3 * 0.05) * Math.PI,
+        false
+      );
+      ctx.lineTo(lineToX + i * 30 + 4, lineToY);
+      ctx.fill();
+      ctx.closePath();
+    }
+  }
 }
-function clearMessage() { 
-	$("#message").html("");
-	$("#message").removeClass("red");
+
+function gameover() {
+  GAMEOVER = true;
+  document.getElementById("start").style.display = "flex";
+  message("game over");
+  stopTimes();
+
+  erasePacman();
+  eraseGhosts();
+
+  resetPacman();
+  resetGhosts();
+
+  TIME_GAME = 0;
+  TIME_LEVEL = 0;
+  TIME_LIFE = 0;
+  TIME_FRUITS = 0;
+
+  LIFES = 2;
+  LEVEL = 1;
+  SCORE = 0;
 }
 
-function score(s, type) { 
+function message(m) {
+  $("#message").html(m);
+  if (m === "game over") $("#message").addClass("red");
+}
+function clearMessage() {
+  $("#message").html("");
+  $("#message").removeClass("red");
+}
 
-	var scoreBefore = (SCORE / 10000) | 0;
-	
-	SCORE += s;
-	if (SCORE === 0) { 
-		$('#score span').html("00");
-	} else { 
-		$('#score span').html(SCORE);
-	}
-	
-	var scoreAfter = (SCORE / 10000) | 0;
-	if (scoreAfter > scoreBefore) { 
-		lifes( +1 );
-	}
+function score(s, type) {
+  var scoreBefore = (SCORE / 10000) | 0;
 
-	
-	if (SCORE > HIGHSCORE) { 
-		HIGHSCORE = SCORE;
-		if (HIGHSCORE === 0) { 
-			$('#highscore span').html("00");
-		} else { 
-			$('#highscore span').html(HIGHSCORE);
-		}
-	}
-	
-	if (type && (type === "clyde" || type === "pinky" || type === "inky" || type === "blinky") ) { 
-		erasePacman(); 
-		eraseGhost(type); 
-		$("#board").append('<span class="combo">' + SCORE_GHOST_COMBO + '</span>');
-		$("#board span.combo").css('top', eval('GHOST_' + type.toUpperCase() + '_POSITION_Y - 10') + 'px');
-		$("#board span.combo").css('left', eval('GHOST_' + type.toUpperCase() + '_POSITION_X - 10') + 'px');
-		SCORE_GHOST_COMBO = SCORE_GHOST_COMBO * 2;
-	} else if (type && type === "fruit") { 
-		$("#board").append('<span class="fruits">' + s + '</span>');
-		$("#board span.fruits").css('top', (FRUITS_POSITION_Y - 14) + 'px');
-		$("#board span.fruits").css('left', (FRUITS_POSITION_X - 14) + 'px');
-	}
+  SCORE += s;
+  if (SCORE === 0) {
+    $("#score span").html("00");
+  } else {
+    $("#score span").html(SCORE);
+  }
+
+  var scoreAfter = (SCORE / 10000) | 0;
+  if (scoreAfter > scoreBefore) {
+    lifes(+1);
+  }
+
+  if (SCORE > HIGHSCORE) {
+    HIGHSCORE = SCORE;
+    if (HIGHSCORE === 0) {
+      $("#highscore span").html("00");
+    } else {
+      $("#highscore span").html(HIGHSCORE);
+    }
+  }
+
+  if (
+    type &&
+    (type === "clyde" ||
+      type === "pinky" ||
+      type === "inky" ||
+      type === "blinky")
+  ) {
+    erasePacman();
+    eraseGhost(type);
+    $("#board").append('<span class="combo">' + SCORE_GHOST_COMBO + "</span>");
+    $("#board span.combo").css(
+      "top",
+      eval("GHOST_" + type.toUpperCase() + "_POSITION_Y - 10") + "px"
+    );
+    $("#board span.combo").css(
+      "left",
+      eval("GHOST_" + type.toUpperCase() + "_POSITION_X - 10") + "px"
+    );
+    SCORE_GHOST_COMBO = SCORE_GHOST_COMBO * 2;
+  } else if (type && type === "fruit") {
+    $("#board").append('<span class="fruits">' + s + "</span>");
+    $("#board span.fruits").css("top", FRUITS_POSITION_Y - 14 + "px");
+    $("#board span.fruits").css("left", FRUITS_POSITION_X - 14 + "px");
+  }
 }
