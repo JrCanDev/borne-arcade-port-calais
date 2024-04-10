@@ -16,7 +16,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" type="text/css" href="css/pacman.css" />
-    <link rel="stylesheet" type="text/css" href="css/pacman-home.css" />
 
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/jquery-buzz.js"></script>
@@ -170,10 +169,6 @@
                 $(".sound").find("img").attr("src", "img/sound-on.png");
                 GROUP_SOUND.unmute();
             }
-        });
-
-        $(".github,.putchu").click(function (e) {
-            e.stopPropagation();
         });
 
         $("#control-up, #control-up-second, #control-up-big").on(
