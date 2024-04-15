@@ -1,7 +1,7 @@
 var PAUSE = false;
 var LOCK = false;
 
-var HIGHSCORE = 0;
+var HIGHSCORE = getHighScore("pacman");
 var SCORE = 0;
 var SCORE_BUBBLE = 10;
 var SCORE_SUPER_BUBBLE = 50;
@@ -281,11 +281,7 @@ function score(s, type) {
   var scoreBefore = (SCORE / 10000) | 0;
 
   SCORE += s;
-  if (SCORE === 0) {
-    $("#score span").html("00");
-  } else {
-    $("#score span").html(SCORE);
-  }
+  document.getElementById("score").innerHTML = SCORE;
 
   var scoreAfter = (SCORE / 10000) | 0;
   if (scoreAfter > scoreBefore) {
@@ -294,11 +290,8 @@ function score(s, type) {
 
   if (SCORE > HIGHSCORE) {
     HIGHSCORE = SCORE;
-    if (HIGHSCORE === 0) {
-      $("#highscore span").html("00");
-    } else {
-      $("#highscore span").html(HIGHSCORE);
-    }
+    setHighScore("pacman", HIGHSCORE);
+    document.getElementById("highscore").innerHTML = HIGHSCORE;
   }
 
   if (
