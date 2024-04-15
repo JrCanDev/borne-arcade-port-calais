@@ -15,7 +15,7 @@ function initFruits() {
   canvas.setAttribute("width", "550");
   canvas.setAttribute("height", "550");
   if (canvas.getContext) {
-    FRUITS_CANVAS_CONTEXT = canvas.getContext("2d");
+       canvas.getContext("2d");
   }
 
   var levelCanvas = document.getElementById("canvas-level-fruits");
@@ -24,9 +24,18 @@ function initFruits() {
   }
 
   var ctx = getLevelFruitsCanvasContext();
-  const FRUITS = ["cherry", "strawberry", "orange", "apple", "melon", "galboss", "bell", "key"];
+  const FRUITS = {
+    "cherry": {points: 100, upTo: 1},
+    "strawberry": {points: 300, upTo: 2},
+    "orange": {points: 500, upTo: 4},
+    "apple": {points: 700, upTo: 6},
+    "melon": {points: 1000, upTo: 8},
+    "galboss": {points: 2000, upTo: 10},
+    "bell": {points: 3000, upTo: 12},
+    "key": {points: 5000, upTo: Infinity},
+}
   const FRUIT_CANVAS_HEIGHT = 60;
-  const FRUIT_CANVAS_WIDTH = FRUIT_CANVAS_HEIGHT * FRUITS.length;
+  const FRUIT_CANVAS_WIDTH = FRUIT_CANVAS_HEIGHT * Object.keys(FRUITS).length;
   const FRUIT_CANVAS_SIZE = 50;
   const FRUIT_CANVAS_GAP = 8;
 
@@ -34,10 +43,20 @@ function initFruits() {
   
   var x = FRUIT_CANVAS_WIDTH - FRUIT_CANVAS_SIZE;
   var y = FRUIT_CANVAS_HEIGHT/2;
-  
+
+  let level_fruits = []
+
+  // draw the level indicator fruits
   for (let i = 0; i < LEVEL; i++) {
-    const fruit = FRUITS[i] || FRUITS[FRUITS.length - 1];
-    drawFruit(ctx, fruit, x - (i + 0.5) % 7 * (FRUIT_CANVAS_SIZE + FRUIT_CANVAS_GAP), y, FRUIT_CANVAS_SIZE);
+    let fruit = Object.keys(FRUITS).find(fruit => FRUITS[fruit].upTo > i);
+    level_fruits.push(fruit);
+    if (level_fruits.length > 7) {
+      level_fruits.shift();
+    }
+  }
+  
+  for (let i = 0; i < level_fruits.length; i++) {
+    drawFruit(ctx, level_fruits[i], x - (i + 0.5) % 7 * (FRUIT_CANVAS_SIZE + FRUIT_CANVAS_GAP), y, FRUIT_CANVAS_SIZE);
   }
 }
 
@@ -51,15 +70,7 @@ function getLevelFruitsCanvasContext() {
 function eatFruit() {
   playEatFruitSound();
 
-  var s = 0;
-  if (FRUIT === "cherry") s = 100;
-  else if (FRUIT === "strawberry") s = 300;
-  else if (FRUIT === "orange") s = 500;
-  else if (FRUIT === "apple") s = 700;
-  else if (FRUIT === "melon") s = 1000;
-  else if (FRUIT === "galboss") s = 2000;
-  else if (FRUIT === "bell") s = 3000;
-  else if (FRUIT === "key") s = 5000;
+  var s = FRUITS[FRUIT] ? FRUITS[FRUIT].points : 0;
 
   score(s, "fruit");
   cancelFruit();
