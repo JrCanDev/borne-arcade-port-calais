@@ -15,7 +15,7 @@ function initFruits() {
   canvas.setAttribute("width", "550");
   canvas.setAttribute("height", "550");
   if (canvas.getContext) {
-       canvas.getContext("2d");
+    FRUITS_CANVAS_CONTEXT = canvas.getContext("2d");
   }
 
   var levelCanvas = document.getElementById("canvas-level-fruits");
