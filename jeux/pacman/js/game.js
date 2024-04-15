@@ -7,6 +7,7 @@ var SCORE_BUBBLE = 10;
 var SCORE_SUPER_BUBBLE = 50;
 var SCORE_GHOST_COMBO = 200;
 
+const MAX_LIFES = 4;
 var LIFES = 2;
 var GAMEOVER = false;
 
@@ -218,30 +219,14 @@ function lifes(l) {
   }
 
   var canvas = document.getElementById("canvas-lifes");
-  canvas.setAttribute("width", "120");
-  canvas.setAttribute("height", "30");
   if (canvas.getContext) {
     var ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    ctx.clearRect(0, 0, 120, 30);
-    ctx.fillStyle = "#fff200";
-    for (var i = 0, imax = LIFES; i < imax && i < 4; i++) {
-      ctx.beginPath();
+    image_size = canvas.width / MAX_LIFES;
 
-      var lineToX = 13;
-      var lineToY = 15;
-
-      ctx.arc(
-        lineToX + i * 30,
-        lineToY,
-        13,
-        (1.35 - 3 * 0.05) * Math.PI,
-        (0.65 + 3 * 0.05) * Math.PI,
-        false
-      );
-      ctx.lineTo(lineToX + i * 30 + 4, lineToY);
-      ctx.fill();
-      ctx.closePath();
+    for (var i = 0, imax = LIFES; i < imax && i < MAX_LIFES; i++) {
+      ctx.drawImage(PACMAN_IMAGE[0], i * image_size, 0, image_size, image_size);
     }
   }
 }

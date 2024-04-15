@@ -19,75 +19,25 @@ function initFruits() {
   }
 
   var levelCanvas = document.getElementById("canvas-level-fruits");
-  levelCanvas.setAttribute("width", "265");
-  levelCanvas.setAttribute("height", "30");
   if (levelCanvas.getContext) {
     LEVEL_FRUITS_CANVAS_CONTEXT = levelCanvas.getContext("2d");
   }
 
   var ctx = getLevelFruitsCanvasContext();
-  ctx.clearRect(0, 0, 265, 30);
+  const FRUITS = ["cherry", "strawberry", "orange", "apple", "melon", "galboss", "bell", "key"];
+  const FRUIT_CANVAS_HEIGHT = 60;
+  const FRUIT_CANVAS_WIDTH = FRUIT_CANVAS_HEIGHT * FRUITS.length;
+  const FRUIT_CANVAS_SIZE = 50;
+  const FRUIT_CANVAS_GAP = 8;
 
-  var x = 245;
-  var y = 14;
-  var i = 0;
-
-  if (LEVEL > 7) {
-    var l = LEVEL;
-    if (l > 13) l = 13;
-    i = -(l - 7);
-  }
-
-  drawFruit(ctx, "cherry", x - i * 37, y, 27);
-  i++;
-
-  if (LEVEL > 1) {
-    drawFruit(ctx, "strawberry", x - i * 37, y, 27);
-    i++;
-  }
-  if (LEVEL > 2) {
-    drawFruit(ctx, "orange", x - i * 37, y, 27);
-    i++;
-  }
-  if (LEVEL > 3) {
-    drawFruit(ctx, "orange", x - i * 37, y, 27);
-    i++;
-  }
-  if (LEVEL > 4) {
-    drawFruit(ctx, "apple", x - i * 37, y, 27);
-    i++;
-  }
-  if (LEVEL > 5) {
-    drawFruit(ctx, "apple", x - i * 37, y, 27);
-    i++;
-  }
-  if (LEVEL > 6) {
-    drawFruit(ctx, "melon", x - i * 37, y, 27);
-    i++;
-  }
-  if (LEVEL > 7) {
-    drawFruit(ctx, "melon", x - i * 37, y, 27);
-    i++;
-  }
-  if (LEVEL > 8) {
-    drawFruit(ctx, "galboss", x - i * 37, y, 27);
-    i++;
-  }
-  if (LEVEL > 9) {
-    drawFruit(ctx, "galboss", x - i * 37, y, 27);
-    i++;
-  }
-  if (LEVEL > 10) {
-    drawFruit(ctx, "bell", x - i * 37, y, 27);
-    i++;
-  }
-  if (LEVEL > 11) {
-    drawFruit(ctx, "bell", x - i * 37, y, 27);
-    i++;
-  }
-  if (LEVEL > 12) {
-    drawFruit(ctx, "key", x - i * 37, y, 27);
-    i++;
+  ctx.clearRect(0, 0, FRUIT_CANVAS_WIDTH, FRUIT_CANVAS_HEIGHT);
+  
+  var x = FRUIT_CANVAS_WIDTH - FRUIT_CANVAS_SIZE;
+  var y = FRUIT_CANVAS_HEIGHT/2;
+  
+  for (let i = 0; i < LEVEL; i++) {
+    const fruit = FRUITS[i] || FRUITS[FRUITS.length - 1];
+    drawFruit(ctx, fruit, x - (i + 0.5) % 7 * (FRUIT_CANVAS_SIZE + FRUIT_CANVAS_GAP), y, FRUIT_CANVAS_SIZE);
   }
 }
 
