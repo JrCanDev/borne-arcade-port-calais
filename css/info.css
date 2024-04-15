@@ -36,7 +36,7 @@ p {
 
 .card img {
     height: 100%;
-    border-radius: 89px;
+    border-radius: 48px;
     max-width: 36%;
     object-fit: cover;
 }
@@ -50,7 +50,7 @@ p {
     gap: 16px;
     height: 36%;
     background-color: var(--text-color-light);
-    border-radius: 90px;
+    border-radius: 48px;
     box-shadow: var(--card-shadow);
 }
 
