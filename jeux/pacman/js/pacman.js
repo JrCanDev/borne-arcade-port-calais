@@ -1,23 +1,19 @@
 var PACMAN_DIRECTION = 3;
 var PACMAN_DIRECTION_TRY = -1;
 var PACMAN_DIRECTION_TRY_TIMER = null;
-var PACMAN_DIRECTION_TRY_CANCEL = 1000;
+const PACMAN_DIRECTION_TRY_CANCEL = 1000;
 var PACMAN_POSITION_X = 276;
 var PACMAN_POSITION_Y = 416;
-var PACMAN_POSITION_STEP = 2;
-var PACMAN_MOUNTH_STATE = 3;
-var PACMAN_MOUNTH_STATE_MAX = 6;
-var PACMAN_SIZE = 16;
+const PACMAN_POSITION_STEP = 2;
+const PACMAN_SIZE = 16;
 var PACMAN_MOVING = false;
 var PACMAN_MOVING_TIMER = -1;
-var PACMAN_MOVING_SPEED = 15;
+const PACMAN_MOVING_SPEED = 15;
 var PACMAN_CANVAS_CONTEXT = null;
-var PACMAN_EAT_GAP = 15;
-var PACMAN_GHOST_GAP = 20;
-var PACMAN_FRUITS_GAP = 15;
-var PACMAN_KILLING_TIMER = -1;
-var PACMAN_KILLING_SPEED = 70;
-var PACMAN_RETRY_SPEED = 2100;
+const PACMAN_EAT_GAP = 15;
+const PACMAN_GHOST_GAP = 20;
+const PACMAN_FRUITS_GAP = 15;
+const PACMAN_RETRY_SPEED = 2100;
 var PACMAN_DEAD = false;
 
 function initPacman() {
@@ -36,10 +32,8 @@ function resetPacman() {
   PACMAN_DIRECTION_TRY_TIMER = null;
   PACMAN_POSITION_X = 276;
   PACMAN_POSITION_Y = 416;
-  PACMAN_MOUNTH_STATE = 3;
   PACMAN_MOVING = false;
   PACMAN_MOVING_TIMER = -1;
-  PACMAN_KILLING_TIMER = -1;
   PACMAN_DEAD = false;
   PACMAN_SUPER = false;
 }
@@ -52,10 +46,6 @@ function stopPacman() {
     clearInterval(PACMAN_MOVING_TIMER);
     PACMAN_MOVING_TIMER = -1;
     PACMAN_MOVING = false;
-  }
-  if (PACMAN_KILLING_TIMER != -1) {
-    clearInterval(PACMAN_KILLING_TIMER);
-    PACMAN_KILLING_TIMER = -1;
   }
 }
 
@@ -134,12 +124,6 @@ function movePacman(direction) {
     if (canMovePacman(PACMAN_DIRECTION)) {
       erasePacman();
 
-      if (PACMAN_MOUNTH_STATE < PACMAN_MOUNTH_STATE_MAX) {
-        PACMAN_MOUNTH_STATE++;
-      } else {
-        PACMAN_MOUNTH_STATE = 0;
-      }
-
       var speedUp = 0;
       if (quarterChangeDirection) {
         speedUp = 6;
@@ -165,11 +149,9 @@ function movePacman(direction) {
 
       drawPacman();
 
-      if (PACMAN_MOUNTH_STATE === 0 || PACMAN_MOUNTH_STATE === 3) {
-        testBubblesPacman();
-        testGhostsPacman();
-        testFruitsPacman();
-      }
+      testBubblesPacman();
+      testGhostsPacman();
+      testFruitsPacman();
     } else {
       stopPacman();
     }
@@ -249,23 +231,13 @@ function killPacman() {
   stopGhosts();
   pauseTimes();
   stopBlinkSuperBubbles();
-  PACMAN_KILLING_TIMER = setInterval("killingPacman()", PACMAN_KILLING_SPEED);
-}
-function killingPacman() {
-  if (PACMAN_MOUNTH_STATE > -12) {
-    erasePacman();
-    PACMAN_MOUNTH_STATE--;
-    drawPacman();
+
+  erasePacman();
+  if (LIFES > 0) {
+    lifes(-1);
+    setTimeout("retry()", PACMAN_RETRY_SPEED);
   } else {
-    clearInterval(PACMAN_KILLING_TIMER);
-    PACMAN_KILLING_TIMER = -1;
-    erasePacman();
-    if (LIFES > 0) {
-      lifes(-1);
-      setTimeout("retry()", PACMAN_RETRY_SPEED);
-    } else {
-      gameover();
-    }
+    gameover();
   }
 }
 
