@@ -309,15 +309,15 @@ function score(s, type) {
       type === "blinky")
   ) {
     erasePacman();
-    eraseGhost(type);
+    GHOSTS[type].erase()
     $("#board").append('<span class="combo">' + SCORE_GHOST_COMBO + "</span>");
     $("#board span.combo").css(
       "top",
-      eval("GHOST_" + type.toUpperCase() + "_POSITION_Y - 10") + "px"
+      GHOSTS[type].positionY - 10 + "px"
     );
     $("#board span.combo").css(
       "left",
-      eval("GHOST_" + type.toUpperCase() + "_POSITION_X - 10") + "px"
+      GHOSTS[type].positionX - 10 + "px"
     );
     SCORE_GHOST_COMBO = SCORE_GHOST_COMBO * 2;
   } else if (type && type === "fruit") {

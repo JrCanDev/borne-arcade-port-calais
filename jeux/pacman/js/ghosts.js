@@ -1,164 +1,487 @@
-var GHOST_BLINKY_CANVAS_CONTEXT = null;
-var GHOST_BLINKY_POSITION_X = 276;
-var GHOST_BLINKY_POSITION_Y = 204;
-var GHOST_BLINKY_DIRECTION = 1;
-var GHOST_BLINKY_COLOR = 1; //"#ed1b24";
-var GHOST_BLINKY_MOVING_TIMER = -1;
-var GHOST_BLINKY_MOVING = false;
-var GHOST_BLINKY_BODY_STATE = 0;
-var GHOST_BLINKY_STATE = 0;
-var GHOST_BLINKY_EAT_TIMER = null;
-var GHOST_BLINKY_AFFRAID_TIMER = null;
-var GHOST_BLINKY_AFFRAID_STATE = 0;
-var GHOST_BLINKY_TUNNEL = false;
+const GHOST_POSITION_STEP = 2;
+const GHOST_MOVING_SPEED = 15;
+const GHOST_TUNNEL_MOVING_SPEED = 35;
+const GHOST_AFFRAID_MOVING_SPEED = 40;
+const GHOST_EAT_MOVING_SPEED = 6;
+const GHOST_AFFRAID_TIME = 8500;
+const GHOST_EAT_TIME = 5500;
+const GHOST_BODY_STATE_MAX = 6;
 
-var GHOST_PINKY_CANVAS_CONTEXT = null;
-var GHOST_PINKY_POSITION_X = 276;
-var GHOST_PINKY_POSITION_Y = 258;
-var GHOST_PINKY_DIRECTION = 2;
-var GHOST_PINKY_COLOR = 2; //"#feaec9";
-var GHOST_PINKY_MOVING_TIMER = -1;
-var GHOST_PINKY_MOVING = false;
-var GHOST_PINKY_BODY_STATE = 1;
-var GHOST_PINKY_STATE = 0;
-var GHOST_PINKY_EAT_TIMER = null;
-var GHOST_PINKY_AFFRAID_TIMER = null;
-var GHOST_PINKY_AFFRAID_STATE = 0;
-var GHOST_PINKY_TUNNEL = false;
+class Ghost {
+  constructor(name, positionX, positionY, direction, bodyState) {
+    this.name = name;
+    this.canvasContext = null;
+    this.positionX = positionX;
+    this.positionY = positionY;
+    this.direction = direction;
+    this.movingTimer = -1;
+    this.moving = false;
+    this.bodyState = bodyState;
+    this.state = 0;
+    this.eatTimer = null;
+    this.afraidTimer = null;
+    this.afraidState = 0;
+    this.tunnel = false;
 
-var GHOST_INKY_CANVAS_CONTEXT = null;
-var GHOST_INKY_POSITION_X = 238;
-var GHOST_INKY_POSITION_Y = 258;
-var GHOST_INKY_DIRECTION = 3;
-var GHOST_INKY_COLOR = 3; //"#4adecb";
-var GHOST_INKY_MOVING_TIMER = -1;
-var GHOST_INKY_MOVING = false;
-var GHOST_INKY_BODY_STATE = 2;
-var GHOST_INKY_STATE = 0;
-var GHOST_INKY_EAT_TIMER = null;
-var GHOST_INKY_AFFRAID_TIMER = null;
-var GHOST_INKY_AFFRAID_STATE = 0;
-var GHOST_INKY_TUNNEL = false;
+    this.initialPositionX = positionX;
+    this.initialPositionY = positionY;
+    this.initialDirection = direction;
+    this.initialBodyState = bodyState;
+  }
 
-var GHOST_CLYDE_CANVAS_CONTEXT = null;
-var GHOST_CLYDE_POSITION_X = 314;
-var GHOST_CLYDE_POSITION_Y = 258;
-var GHOST_CLYDE_DIRECTION = 4;
-var GHOST_CLYDE_COLOR = 4; //"#f99c00";
-var GHOST_CLYDE_MOVING_TIMER = -1;
-var GHOST_CLYDE_MOVING = false;
-var GHOST_CLYDE_BODY_STATE = 3;
-var GHOST_CLYDE_STATE = 0;
-var GHOST_CLYDE_EAT_TIMER = null;
-var GHOST_CLYDE_AFFRAID_TIMER = null;
-var GHOST_CLYDE_AFFRAID_STATE = 0;
-var GHOST_CLYDE_TUNNEL = false;
+  init() {
+    var canvas = document.getElementById("canvas-ghost-" + this.name);
+    canvas.setAttribute("width", "550");
+    canvas.setAttribute("height", "550");
+    if (canvas.getContext) {
+      this.canvasContext = canvas.getContext("2d");
+    }
+  }
 
-var GHOST_AFFRAID_COLOR = "Affraid"; //"#2d3eff";
-var GHOST_AFFRAID_FINISH_COLOR = "#fff";
-var GHOST_POSITION_STEP = 2;
-var GHOST_MOVING_SPEED = 15;
-var GHOST_TUNNEL_MOVING_SPEED = 35;
-var GHOST_AFFRAID_MOVING_SPEED = 40;
-var GHOST_EAT_MOVING_SPEED = 6;
-var GHOST_AFFRAID_TIME = 8500;
-var GHOST_EAT_TIME = 5500;
-var GHOST_BODY_STATE_MAX = 6;
+  reset() {
+    this.stop();
 
-function initGhosts() {
-  initGhost("blinky");
-  initGhost("pinky");
-  initGhost("inky");
-  initGhost("clyde");
-}
-function initGhost(ghost) {
-  var canvas = document.getElementById("canvas-ghost-" + ghost);
-  canvas.setAttribute("width", "550");
-  canvas.setAttribute("height", "550");
-  if (canvas.getContext) {
-    eval(
-      "GHOST_" +
-        ghost.toUpperCase() +
-        '_CANVAS_CONTEXT = canvas.getContext("2d")'
-    );
+    this.positionX = this.initialPositionX;
+    this.positionY = this.initialPositionY;
+    this.direction = this.initialDirection;
+    this.moving = false;
+    this.bodyState = this.initialBodyState;
+    this.state = 0;
+    this.eatTimer = null;
+    this.afraidTimer = null;
+    this.afraidState = 0;
+    this.tunnel = false;
+  }
+
+  draw() {
+    let name = this.name;
+    if (this.afraidTimer) name = "affraid";
+
+    this.canvasContext.drawImage(GHOSTS_IMAGES[name][this.direction], this.positionX - 16, this.positionY - 16, 32, 32);
+  }
+
+  stop() {
+    if (this.state === 1) {
+      if (this.afraidTimer) this.afraidTimer.cancel();
+      this.afraidTimer = null;
+      this.afraidState = 0;
+    } else if (this.state === -1) {
+      if (this.eatTimer) this.eatTimer.cancel();
+      this.eatTimer = null;
+    }
+
+    this.state = 0;
+
+    if (this.movingTimer !== -1) {
+      clearInterval(this.movingTimer);
+      this.movingTimer = -1;
+      this.moving = false;
+    }
+  }
+
+  affraid() {
+    if (this.afraidTimer) this.afraidTimer.cancel();
+    this.afraidState = 0;
+    if (this.state === 0 || this.state === 1) {
+      this.stop();
+      this.state = 1;
+      this.move();
+      this.afraidTimer = new Timer(
+        () => this.cancelAffraid(),
+        GHOST_AFFRAID_TIME
+      );
+    }
+  }
+
+  cancelAffraid() {
+    if (this.state === 1) {
+      this.afraidTimer.cancel();
+      this.afraidTimer = null;
+      this.stop();
+      this.state = 0;
+      this.move();
+      testStateGhosts()
+    }
+  }
+  
+  startEat() {
+    if (!LOCK) {
+      playEatGhostSound();
+
+      LOCK = true;
+
+      if (this.afraidTimer) {
+        this.afraidTimer.cancel();
+        this.afraidTimer = null;
+      }
+
+      score(SCORE_GHOST_COMBO, this.name);
+
+      pauseGhosts();
+      pausePacman();
+
+      setTimeout(() => this.eat(), 600);
+    }
+  }
+
+  eat() {
+    playGhostEatenSound();
+
+    if (this.state === 1) {
+      $("#board span.combo").remove();
+      this.state = -1;
+      this.eatTimer = new Timer(() => this.cancelEat(), GHOST_EAT_TIME);
+      this.eatTimer.pause();
+    }
+
+    LOCK = false;
+
+    resumeGhosts();
+    resumePacman();
+  } 
+
+  cancelEat() {
+    if (this.state === -1) {
+      this.eatTimer.cancel();
+      this.eatTimer = null;
+      this.stop();
+      this.state = 0;
+      this.move();
+      testStateGhosts();
+    }
+  }
+
+  move() {
+    if (!this.moving) {
+      this.moving = true;
+
+      var speed = -1;
+      if (this.state === 1) {
+        speed = GHOST_AFFRAID_MOVING_SPEED;
+      } else if (this.state === 0) {
+        if (!this.tunnel) {
+          speed = GHOST_MOVING_SPEED;
+        } else {
+          speed = GHOST_TUNNEL_MOVING_SPEED;
+        }
+      } else {
+        speed = GHOST_EAT_MOVING_SPEED;
+      }
+
+      this.movingTimer = setInterval(() => {this.move()}, speed);
+    } else {
+      this.changeDirection();
+
+      if (this.afraidTimer) {
+        var remain = this.afraidTimer.remain();
+        if (
+          (remain >= 2500 && remain < 3000) ||
+          (remain >= 1500 && remain <= 2000) ||
+          (remain >= 500 && remain <= 1000) ||
+          remain < 0
+        ) {
+          this.afraidState = 1;
+        } else if (
+          (remain > 2000 && remain < 2500) ||
+          (remain > 1000 && remain < 1500) ||
+          (remain >= 0 && remain < 500)
+        ) {
+          this.afraidState = 0;
+        }
+      }
+
+      if (this.canMove()) {
+        this.erase();
+
+        if (this.bodyState < GHOST_BODY_STATE_MAX) {
+          this.bodyState++;
+        } else {
+          this.bodyState = 0;
+        }
+
+        if (this.direction === 1) {
+          this.positionX += GHOST_POSITION_STEP;
+        } else if (this.direction === 2) {
+          this.positionY += GHOST_POSITION_STEP;
+        } else if (this.direction === 3) {
+          this.positionX -= GHOST_POSITION_STEP;
+        } else if (this.direction === 4) {
+          this.positionY -= GHOST_POSITION_STEP;
+        }
+
+        if (this.positionX === 2 && this.positionY === 258) {
+          this.positionX = 548;
+          this.positionY = 258;
+        } else if (this.positionX === 548 && this.positionY === 258) {
+          this.positionX = 2;
+          this.positionY = 258;
+        }
+
+        this.draw();
+
+        if (this.bodyState === 3 && this.state != -1) {
+          if (!PACMAN_MOVING) {
+            this.testPacman();
+          }
+          this.testTunnel();
+        }
+      } else {
+        this.direction = oneDirection();
+      }
+    }
+  }
+
+  testTunnel() {
+    if (this.state === 0) {
+      if (this.isInTunnel() && !this.tunnel) {
+        this.stop();
+        this.tunnel = true;
+        this.move();
+      } else if (!this.isInTunnel() && this.tunnel) {
+        this.stop();
+        this.tunnel = false;
+        this.move();
+      }
+    }
+  }
+
+  isInTunnel() {
+    return (
+      this.positionX >= 2 &&
+      this.positionX <= 106 &&
+      this.positionY === 258
+    ) || (
+      this.positionX >= 462 &&
+      this.positionX <= 548 &&
+      this.positionY === 258
+    ) 
+  }
+
+  changeDirection() {
+    let tryDirection = oneDirection();
+
+    if (this.state === 0 || this.state === 1) {
+      if (this.positionX != 276 && this.positionY != 258) {
+        var pacmanX = PACMAN_POSITION_X;
+        var pacmanY = PACMAN_POSITION_Y;
+        var axe = oneAxe();
+        if (this.name === "blinky") {
+          var nothing = whatsYourProblem();
+          if (nothing < 6) {
+            tryDirection = getRightDirection(
+              axe,
+              this.positionX,
+              this.positionY,
+              pacmanX,
+              pacmanY
+            );
+            if (
+              !(
+                this.canMove(tryDirection) &&
+                this.direction != tryDirection - 2 &&
+                this.direction != tryDirection + 2
+              )
+            ) {
+              axe++;
+              if (axe > 2) axe = 1;
+              tryDirection = getRightDirection(
+                axe,
+                this.positionX,
+                this.positionY,
+                pacmanX,
+                pacmanY
+              );
+            }
+          }
+        } else if (this.name === "pinky") {
+          var nothing = whatsYourProblem();
+          if (nothing < 3) {
+            tryDirection = getRightDirection(
+              axe,
+              this.positionX,
+              this.positionY,
+              pacmanX,
+              pacmanY
+            );
+            if (
+              !(
+                this.canMove(tryDirection) &&
+                this.direction != tryDirection - 2 &&
+                this.direction != tryDirection + 2
+              )
+            ) {
+              axe++;
+              if (axe > 2) axe = 1;
+              tryDirection = getRightDirection(
+                axe,
+                this.positionX,
+                this.positionY,
+                pacmanX,
+                pacmanY
+              );
+            }
+            tryDirection = reverseDirection(tryDirection);
+          }
+        } else if (this.name === "inky") {
+          var good = anyGoodIdea();
+          if (good < 3) {
+            tryDirection = getRightDirection(
+              axe,
+              this.positionX,
+              this.positionY,
+              pacmanX,
+              pacmanY
+            );
+            if (
+              !(
+                this.canMove(tryDirection) &&
+                this.direction != tryDirection - 2 &&
+                this.direction != tryDirection + 2
+              )
+            ) {
+              axe++;
+              if (axe > 2) axe = 1;
+              tryDirection = getRightDirection(
+                axe,
+                this.positionX,
+                this.positionY,
+                pacmanX,
+                pacmanY
+              );
+            }
+          }
+        }
+      }
+      if (this.state === 1) {
+        tryDirection = reverseDirection(tryDirection);
+      }
+    } else {
+      var axe = oneAxe();
+      tryDirection = getRightDirectionForHome(axe, this.positionX, this.positionY);
+      if (
+        this.canMove(tryDirection) &&
+        this.direction != tryDirection - 2 &&
+        this.direction != tryDirection + 2
+      ) {
+      } else {
+        axe++;
+        if (axe > 2) axe = 1;
+        tryDirection = getRightDirectionForHome(axe, this.positionX, this.positionY);
+      }
+    }
+
+    if (
+      this.canMove(tryDirection) &&
+      this.direction != tryDirection - 2 &&
+      this.direction != tryDirection + 2
+    ) {
+      this.direction = tryDirection;
+    }
+  }
+
+  erase() {
+    this.canvasContext.clearRect(this.positionX - 17, this.positionY - 17, 34, 34);
+  }
+
+  canMove(direction) {
+    if (!direction) direction = this.direction;
+
+    if (this.positionX === 276 && this.positionY === 204 && direction === 2 && this.state === 0)
+      return false;
+
+    let testPositionX = this.positionX;
+    let testPositionY = this.positionY;
+
+    if (direction === 1) {
+      testPositionX += GHOST_POSITION_STEP;
+    } else if (direction === 2) {
+      testPositionY += GHOST_POSITION_STEP;
+    } else if (direction === 3) {
+      testPositionX -= GHOST_POSITION_STEP;
+    } else if (direction === 4) {
+      testPositionY -= GHOST_POSITION_STEP;
+    }
+
+    for (var i = 0, imax = PATHS.length; i < imax; i++) {
+      var p = PATHS[i];
+
+      var startX = p.split("-")[0].split(",")[0];
+      var startY = p.split("-")[0].split(",")[1];
+      var endX = p.split("-")[1].split(",")[0];
+      var endY = p.split("-")[1].split(",")[1];
+
+      if (
+        testPositionX >= startX &&
+        testPositionX <= endX &&
+        testPositionY >= startY &&
+        testPositionY <= endY
+      ) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  pause() {
+    if (this.state === 1) {
+      if (this.afraidTimer) this.afraidTimer.pause();
+    } else if (this.state === -1) {
+      if (this.eatTimer) this.eatTimer.pause();
+    }
+
+    if (this.movingTimer !== -1) {
+      clearInterval(this.movingTimer);
+      this.movingTimer = -1;
+      this.moving = false;
+    }
+  }
+
+  resume() {
+    if (this.state === 1) {
+      if (this.afraidTimer) this.afraidTimer.resume();
+    } else if (this.state === -1) {
+      if (this.eatTimer) this.eatTimer.resume();
+    }
+
+    if (this.movingTimer === -1) {
+      this.moving = false;
+      this.move();
+    }
+  }
+
+  testPacman() {
+    if (
+      this.positionX <= PACMAN_POSITION_X + PACMAN_GHOST_GAP &&
+      this.positionX >= PACMAN_POSITION_X - PACMAN_GHOST_GAP &&
+      this.positionY <= PACMAN_POSITION_Y + PACMAN_GHOST_GAP &&
+      this.positionY >= PACMAN_POSITION_Y - PACMAN_GHOST_GAP
+    ) {
+      if (this.state === 0) {
+        killPacman();
+      } else if (this.state === 1) {
+        this.startEat();
+      }
+    }
   }
 }
+
+const GHOSTS = {
+  blinky: new Ghost('blinky', 276, 204, 1, 0),
+  pinky: new Ghost('pinky', 276, 258, 2, 1),
+  inky: new Ghost('inky', 238, 258, 3, 2),
+  clyde: new Ghost('clyde', 314, 258, 4, 3)
+};
+
+function initGhosts() {
+  Object.values(GHOSTS).forEach((ghost) => ghost.init());
+}
+
 function resetGhosts() {
-  stopGhosts();
-
-  GHOST_BLINKY_POSITION_X = 276;
-  GHOST_BLINKY_POSITION_Y = 204;
-  GHOST_BLINKY_DIRECTION = 1;
-  GHOST_BLINKY_MOVING_TIMER = -1;
-  GHOST_BLINKY_MOVING = false;
-  GHOST_BLINKY_BODY_STATE = 0;
-  GHOST_BLINKY_STATE = 0;
-  GHOST_BLINKY_EAT_TIMER = null;
-  GHOST_BLINKY_AFFRAID_TIMER = null;
-  GHOST_BLINKY_AFFRAID_STATE = 0;
-
-  GHOST_PINKY_POSITION_X = 276;
-  GHOST_PINKY_POSITION_Y = 258;
-  GHOST_PINKY_DIRECTION = 2;
-  GHOST_PINKY_MOVING_TIMER = -1;
-  GHOST_PINKY_MOVING = false;
-  GHOST_PINKY_BODY_STATE = 1;
-  GHOST_PINKY_STATE = 0;
-  GHOST_PINKY_EAT_TIMER = null;
-  GHOST_PINKY_AFFRAID_TIMER = null;
-  GHOST_PINKY_AFFRAID_STATE = 0;
-
-  GHOST_INKY_POSITION_X = 238;
-  GHOST_INKY_POSITION_Y = 258;
-  GHOST_INKY_DIRECTION = 3;
-  GHOST_INKY_MOVING_TIMER = -1;
-  GHOST_INKY_MOVING = false;
-  GHOST_INKY_BODY_STATE = 2;
-  GHOST_INKY_STATE = 0;
-  GHOST_INKY_EAT_TIMER = null;
-  GHOST_INKY_AFFRAID_TIMER = null;
-  GHOST_INKY_AFFRAID_STATE = 0;
-
-  GHOST_CLYDE_POSITION_X = 314;
-  GHOST_CLYDE_POSITION_Y = 258;
-  GHOST_CLYDE_DIRECTION = 4;
-  GHOST_CLYDE_MOVING_TIMER = -1;
-  GHOST_CLYDE_MOVING = false;
-  GHOST_CLYDE_BODY_STATE = 3;
-  GHOST_CLYDE_STATE = 0;
-  GHOST_CLYDE_EAT_TIMER = null;
-  GHOST_CLYDE_AFFRAID_TIMER = null;
-  GHOST_CLYDE_AFFRAID_STATE = 0;
+  Object.values(GHOSTS).forEach((ghost) => ghost.reset());
 }
-function getGhostCanvasContext(ghost) {
-  return eval("GHOST_" + ghost.toUpperCase() + "_CANVAS_CONTEXT");
-}
-
 function drawGhosts() {
-  drawGhost("blinky");
-  drawGhost("pinky");
-  drawGhost("inky");
-  drawGhost("clyde");
-}
-function drawGhost(ghost) {
-  var ctx = getGhostCanvasContext(ghost);
-  eval(
-    "drawHelperGhost(ctx, GHOST_" +
-      ghost.toUpperCase() +
-      "_POSITION_X, GHOST_" +
-      ghost.toUpperCase() +
-      "_POSITION_Y, GHOST_" +
-      ghost.toUpperCase() +
-      "_DIRECTION, GHOST_" +
-      ghost.toUpperCase() +
-      "_BODY_STATE, GHOST_" +
-      ghost.toUpperCase() +
-      "_STATE, GHOST_" +
-      ghost.toUpperCase() +
-      "_AFFRAID_STATE, GHOST_" +
-      ghost.toUpperCase() +
-      "_COLOR)"
-  );
+  Object.values(GHOSTS).forEach((ghost) => ghost.draw());
 }
 
 function affraidGhosts() {
@@ -166,56 +489,16 @@ function affraidGhosts() {
 
   SCORE_GHOST_COMBO = 200;
 
-  affraidGhost("blinky");
-  affraidGhost("pinky");
-  affraidGhost("inky");
-  affraidGhost("clyde");
+  Object.values(GHOSTS).forEach((ghost) => ghost.affraid());
 }
-function affraidGhost(ghost) {
-  if (eval("GHOST_" + ghost.toUpperCase() + "_AFFRAID_TIMER !== null")) {
-    eval("GHOST_" + ghost.toUpperCase() + "_AFFRAID_TIMER.cancel()");
-    eval("GHOST_" + ghost.toUpperCase() + "_AFFRAID_TIMER = null");
-  }
-  eval("GHOST_" + ghost.toUpperCase() + "_AFFRAID_STATE = 0");
-  if (
-    eval("GHOST_" + ghost.toUpperCase() + "_STATE === 0") ||
-    eval("GHOST_" + ghost.toUpperCase() + "_STATE === 1")
-  ) {
-    stopGhost(ghost);
-    eval("GHOST_" + ghost.toUpperCase() + "_STATE = 1");
-    moveGhost(ghost);
-    eval(
-      "GHOST_" +
-        ghost.toUpperCase() +
-        "_AFFRAID_TIMER = new Timer(\"cancelAffraidGhost('" +
-        ghost +
-        "')\", GHOST_AFFRAID_TIME)"
-    );
-  }
-}
-function cancelAffraidGhost(ghost) {
-  if (eval("GHOST_" + ghost.toUpperCase() + "_STATE === 1")) {
-    eval("GHOST_" + ghost.toUpperCase() + "_AFFRAID_TIMER.cancel()");
-    eval("GHOST_" + ghost.toUpperCase() + "_AFFRAID_TIMER = null");
-    stopGhost(ghost);
-    eval("GHOST_" + ghost.toUpperCase() + "_STATE = 0");
-    moveGhost(ghost);
-    testStateGhosts();
-  }
-}
+
 function testStateGhosts() {
   if (
-    GHOST_BLINKY_STATE === 1 ||
-    GHOST_PINKY_STATE === 1 ||
-    GHOST_INKY_STATE === 1 ||
-    GHOST_CLYDE_STATE === 1
+    Object.values(GHOSTS).some((ghost) => ghost.state === 1)
   ) {
     playWazaSound();
   } else if (
-    GHOST_BLINKY_STATE === -1 ||
-    GHOST_PINKY_STATE === -1 ||
-    GHOST_INKY_STATE === -1 ||
-    GHOST_CLYDE_STATE === -1
+    Object.values(GHOSTS).some((ghost) => ghost.state === -1)
   ) {
     playGhostEatenSound();
   } else {
@@ -223,333 +506,8 @@ function testStateGhosts() {
   }
 }
 
-function startEatGhost(ghost) {
-  if (!LOCK) {
-    playEatGhostSound();
-
-    LOCK = true;
-
-    if (eval("GHOST_" + ghost.toUpperCase() + "_AFFRAID_TIMER !== null")) {
-      eval("GHOST_" + ghost.toUpperCase() + "_AFFRAID_TIMER.cancel()");
-      eval("GHOST_" + ghost.toUpperCase() + "_AFFRAID_TIMER = null");
-    }
-
-    score(SCORE_GHOST_COMBO, ghost);
-
-    pauseGhosts();
-    pausePacman();
-
-    setTimeout("eatGhost('" + ghost + "')", 600);
-  }
-}
-
-function eatGhost(ghost) {
-  playGhostEatenSound();
-
-  if (eval("GHOST_" + ghost.toUpperCase() + "_STATE === 1")) {
-    $("#board span.combo").remove();
-    eval("GHOST_" + ghost.toUpperCase() + "_STATE = -1");
-    eval(
-      "GHOST_" +
-        ghost.toUpperCase() +
-        "_EAT_TIMER = new Timer(\"cancelEatGhost('" +
-        ghost +
-        "')\", GHOST_EAT_TIME)"
-    );
-    eval("GHOST_" + ghost.toUpperCase() + "_EAT_TIMER.pause()");
-  }
-
-  LOCK = false;
-
-  resumeGhosts();
-  resumePacman();
-}
-function cancelEatGhost(ghost) {
-  if (eval("GHOST_" + ghost.toUpperCase() + "_STATE === -1")) {
-    eval("GHOST_" + ghost.toUpperCase() + "_EAT_TIMER = null");
-    stopGhost(ghost);
-    eval("GHOST_" + ghost.toUpperCase() + "_STATE = 0");
-    moveGhost(ghost);
-    testStateGhosts();
-  }
-}
-
 function moveGhosts() {
-  moveGhost("blinky");
-  moveGhost("pinky");
-  moveGhost("inky");
-  moveGhost("clyde");
-}
-function moveGhost(ghost) {
-  if (eval("GHOST_" + ghost.toUpperCase() + "_MOVING === false")) {
-    eval("GHOST_" + ghost.toUpperCase() + "_MOVING = true;");
-
-    var speed = -1;
-    if (eval("GHOST_" + ghost.toUpperCase() + "_STATE === 1")) {
-      speed = GHOST_AFFRAID_MOVING_SPEED;
-    } else if (eval("GHOST_" + ghost.toUpperCase() + "_STATE === 0")) {
-      if (eval("GHOST_" + ghost.toUpperCase() + "_TUNNEL === false")) {
-        speed = GHOST_MOVING_SPEED;
-      } else {
-        speed = GHOST_TUNNEL_MOVING_SPEED;
-      }
-    } else {
-      speed = GHOST_EAT_MOVING_SPEED;
-    }
-    eval(
-      "GHOST_" +
-        ghost.toUpperCase() +
-        "_MOVING_TIMER = setInterval(\"moveGhost('" +
-        ghost +
-        "')\", " +
-        speed +
-        ");"
-    );
-  } else {
-    changeDirection(ghost);
-
-    if (eval("GHOST_" + ghost.toUpperCase() + "_AFFRAID_TIMER !== null")) {
-      var remain = eval(
-        "GHOST_" + ghost.toUpperCase() + "_AFFRAID_TIMER.remain();"
-      );
-      if (
-        (remain >= 2500 && remain < 3000) ||
-        (remain >= 1500 && remain <= 2000) ||
-        (remain >= 500 && remain <= 1000) ||
-        remain < 0
-      ) {
-        eval("GHOST_" + ghost.toUpperCase() + "_AFFRAID_STATE = 1;");
-      } else if (
-        (remain > 2000 && remain < 2500) ||
-        (remain > 1000 && remain < 1500) ||
-        (remain >= 0 && remain < 500)
-      ) {
-        eval("GHOST_" + ghost.toUpperCase() + "_AFFRAID_STATE = 0;");
-      }
-    }
-
-    if (canMoveGhost(ghost)) {
-      eraseGhost(ghost);
-
-      if (
-        eval(
-          "GHOST_" + ghost.toUpperCase() + "_BODY_STATE < GHOST_BODY_STATE_MAX"
-        )
-      ) {
-        eval("GHOST_" + ghost.toUpperCase() + "_BODY_STATE ++;");
-      } else {
-        eval("GHOST_" + ghost.toUpperCase() + "_BODY_STATE = 0;");
-      }
-
-      if (eval("GHOST_" + ghost.toUpperCase() + "_DIRECTION === 1")) {
-        eval(
-          "GHOST_" + ghost.toUpperCase() + "_POSITION_X += GHOST_POSITION_STEP;"
-        );
-      } else if (eval("GHOST_" + ghost.toUpperCase() + "_DIRECTION === 2")) {
-        eval(
-          "GHOST_" + ghost.toUpperCase() + "_POSITION_Y += GHOST_POSITION_STEP;"
-        );
-      } else if (eval("GHOST_" + ghost.toUpperCase() + "_DIRECTION === 3")) {
-        eval(
-          "GHOST_" + ghost.toUpperCase() + "_POSITION_X -= GHOST_POSITION_STEP;"
-        );
-      } else if (eval("GHOST_" + ghost.toUpperCase() + "_DIRECTION === 4")) {
-        eval(
-          "GHOST_" + ghost.toUpperCase() + "_POSITION_Y -= GHOST_POSITION_STEP;"
-        );
-      }
-
-      if (
-        eval("GHOST_" + ghost.toUpperCase() + "_POSITION_X === 2") &&
-        eval("GHOST_" + ghost.toUpperCase() + "_POSITION_Y === 258")
-      ) {
-        eval("GHOST_" + ghost.toUpperCase() + "_POSITION_X = 548;");
-        eval("GHOST_" + ghost.toUpperCase() + "_POSITION_Y = 258;");
-      } else if (
-        eval("GHOST_" + ghost.toUpperCase() + "_POSITION_X === 548") &&
-        eval("GHOST_" + ghost.toUpperCase() + "_POSITION_Y === 258")
-      ) {
-        eval("GHOST_" + ghost.toUpperCase() + "_POSITION_X = 2;");
-        eval("GHOST_" + ghost.toUpperCase() + "_POSITION_Y = 258;");
-      }
-
-      drawGhost(ghost);
-
-      if (
-        eval("GHOST_" + ghost.toUpperCase() + "_BODY_STATE === 3") &&
-        eval("GHOST_" + ghost.toUpperCase() + "_STATE != -1")
-      ) {
-        if (!PACMAN_MOVING) {
-          testGhostPacman(ghost);
-        }
-        testGhostTunnel(ghost);
-      }
-    } else {
-      eval("GHOST_" + ghost.toUpperCase() + "_DIRECTION = oneDirection();");
-    }
-  }
-}
-
-function testGhostTunnel(ghost) {
-  if (eval("GHOST_" + ghost.toUpperCase() + "_STATE === 0")) {
-    if (
-      isInTunnel(ghost) &&
-      eval("GHOST_" + ghost.toUpperCase() + "_TUNNEL === false")
-    ) {
-      stopGhost(ghost);
-      eval("GHOST_" + ghost.toUpperCase() + "_TUNNEL = true");
-      moveGhost(ghost);
-    } else if (
-      !isInTunnel(ghost) &&
-      eval("GHOST_" + ghost.toUpperCase() + "_TUNNEL === true")
-    ) {
-      stopGhost(ghost);
-      eval("GHOST_" + ghost.toUpperCase() + "_TUNNEL = false");
-      moveGhost(ghost);
-    }
-  }
-}
-function isInTunnel(ghost) {
-  if (
-    eval("GHOST_" + ghost.toUpperCase() + "_POSITION_X >= 2") &&
-    eval("GHOST_" + ghost.toUpperCase() + "_POSITION_X <= 106") &&
-    eval("GHOST_" + ghost.toUpperCase() + "_POSITION_Y === 258")
-  ) {
-    return true;
-  } else if (
-    eval("GHOST_" + ghost.toUpperCase() + "_POSITION_X >= 462") &&
-    eval("GHOST_" + ghost.toUpperCase() + "_POSITION_X <= 548") &&
-    eval("GHOST_" + ghost.toUpperCase() + "_POSITION_Y === 258")
-  ) {
-    return true;
-  }
-}
-
-function changeDirection(ghost) {
-  eval("var direction = GHOST_" + ghost.toUpperCase() + "_DIRECTION");
-  eval("var state = GHOST_" + ghost.toUpperCase() + "_STATE");
-  eval("var ghostX = GHOST_" + ghost.toUpperCase() + "_POSITION_X");
-  eval("var ghostY = GHOST_" + ghost.toUpperCase() + "_POSITION_Y");
-
-  var tryDirection = oneDirection();
-
-  if (state === 0 || state === 1) {
-    if (ghostX != 276 && ghostY != 258) {
-      var pacmanX = PACMAN_POSITION_X;
-      var pacmanY = PACMAN_POSITION_Y;
-      var axe = oneAxe();
-      if (ghost === "blinky") {
-        var nothing = whatsYourProblem();
-        if (nothing < 6) {
-          tryDirection = getRightDirection(
-            axe,
-            ghostX,
-            ghostY,
-            pacmanX,
-            pacmanY
-          );
-          if (
-            !(
-              canMoveGhost(ghost, tryDirection) &&
-              direction != tryDirection - 2 &&
-              direction != tryDirection + 2
-            )
-          ) {
-            axe++;
-            if (axe > 2) axe = 1;
-            tryDirection = getRightDirection(
-              axe,
-              ghostX,
-              ghostY,
-              pacmanX,
-              pacmanY
-            );
-          }
-        }
-      } else if (ghost === "pinky") {
-        var nothing = whatsYourProblem();
-        if (nothing < 3) {
-          tryDirection = getRightDirection(
-            axe,
-            ghostX,
-            ghostY,
-            pacmanX,
-            pacmanY
-          );
-          if (
-            !(
-              canMoveGhost(ghost, tryDirection) &&
-              direction != tryDirection - 2 &&
-              direction != tryDirection + 2
-            )
-          ) {
-            axe++;
-            if (axe > 2) axe = 1;
-            tryDirection = getRightDirection(
-              axe,
-              ghostX,
-              ghostY,
-              pacmanX,
-              pacmanY
-            );
-          }
-          tryDirection = reverseDirection(tryDirection);
-        }
-      } else if (ghost === "inky") {
-        var good = anyGoodIdea();
-        if (good < 3) {
-          tryDirection = getRightDirection(
-            axe,
-            ghostX,
-            ghostY,
-            pacmanX,
-            pacmanY
-          );
-          if (
-            !(
-              canMoveGhost(ghost, tryDirection) &&
-              direction != tryDirection - 2 &&
-              direction != tryDirection + 2
-            )
-          ) {
-            axe++;
-            if (axe > 2) axe = 1;
-            tryDirection = getRightDirection(
-              axe,
-              ghostX,
-              ghostY,
-              pacmanX,
-              pacmanY
-            );
-          }
-        }
-      }
-    }
-    if (state === 1) {
-      tryDirection = reverseDirection(tryDirection);
-    }
-  } else {
-    var axe = oneAxe();
-    tryDirection = getRightDirectionForHome(axe, ghostX, ghostY);
-    if (
-      canMoveGhost(ghost, tryDirection) &&
-      direction != tryDirection - 2 &&
-      direction != tryDirection + 2
-    ) {
-    } else {
-      axe++;
-      if (axe > 2) axe = 1;
-      tryDirection = getRightDirectionForHome(axe, ghostX, ghostY);
-    }
-  }
-
-  if (
-    canMoveGhost(ghost, tryDirection) &&
-    direction != tryDirection - 2 &&
-    direction != tryDirection + 2
-  ) {
-    eval("GHOST_" + ghost.toUpperCase() + "_DIRECTION = tryDirection");
-  }
+  Object.values(GHOSTS).forEach((ghost) => ghost.move());
 }
 
 function getRightDirectionForHome(axe, ghostX, ghostY) {
@@ -596,64 +554,8 @@ function reverseDirection(direction) {
   else return direction + 2;
 }
 
-function eraseGhost(ghost) {
-  var ctx = getGhostCanvasContext(ghost);
-
-  eval(
-    "ctx.clearRect(GHOST_" +
-      ghost.toUpperCase() +
-      "_POSITION_X - 17, GHOST_" +
-      ghost.toUpperCase() +
-      "_POSITION_Y - 17, 34, 34)"
-  );
-}
 function eraseGhosts() {
-  eraseGhost("blinky");
-  eraseGhost("pinky");
-  eraseGhost("inky");
-  eraseGhost("clyde");
-}
-
-function canMoveGhost(ghost, direction) {
-  if (!direction) {
-    eval("var direction = GHOST_" + ghost.toUpperCase() + "_DIRECTION");
-  }
-  eval("var positionX = GHOST_" + ghost.toUpperCase() + "_POSITION_X");
-  eval("var positionY = GHOST_" + ghost.toUpperCase() + "_POSITION_Y");
-  eval("var state = GHOST_" + ghost.toUpperCase() + "_STATE");
-
-  if (positionX === 276 && positionY === 204 && direction === 2 && state === 0)
-    return false;
-
-  if (direction === 1) {
-    positionX += GHOST_POSITION_STEP;
-  } else if (direction === 2) {
-    positionY += GHOST_POSITION_STEP;
-  } else if (direction === 3) {
-    positionX -= GHOST_POSITION_STEP;
-  } else if (direction === 4) {
-    positionY -= GHOST_POSITION_STEP;
-  }
-
-  for (var i = 0, imax = PATHS.length; i < imax; i++) {
-    var p = PATHS[i];
-
-    var startX = p.split("-")[0].split(",")[0];
-    var startY = p.split("-")[0].split(",")[1];
-    var endX = p.split("-")[1].split(",")[0];
-    var endY = p.split("-")[1].split(",")[1];
-
-    if (
-      positionX >= startX &&
-      positionX <= endX &&
-      positionY >= startY &&
-      positionY <= endY
-    ) {
-      return true;
-    }
-  }
-
-  return false;
+  Object.values(GHOSTS).forEach((ghost) => ghost.erase());
 }
 
 function oneDirection() {
@@ -670,130 +572,14 @@ function oneDirectionY() {
   return direction;
 }
 
-function stopGhost(ghost) {
-  if (eval("GHOST_" + ghost.toUpperCase() + "_STATE === 1")) {
-    eval(
-      "if(GHOST_" +
-        ghost.toUpperCase() +
-        "_AFFRAID_TIMER !== null) GHOST_" +
-        ghost.toUpperCase() +
-        "_AFFRAID_TIMER.cancel()"
-    );
-    eval("GHOST_" + ghost.toUpperCase() + "_AFFRAID_TIMER = null");
-    eval("GHOST_" + ghost.toUpperCase() + "_STATE = 0");
-  } else if (eval("GHOST_" + ghost.toUpperCase() + "_STATE === -1")) {
-    eval(
-      "if(GHOST_" +
-        ghost.toUpperCase() +
-        "_EAT_TIMER !== null) GHOST_" +
-        ghost.toUpperCase() +
-        "_EAT_TIMER.cancel()"
-    );
-    eval("GHOST_" + ghost.toUpperCase() + "_EAT_TIMER = null");
-    eval("GHOST_" + ghost.toUpperCase() + "_STATE = 0");
-  }
-
-  if (eval("GHOST_" + ghost.toUpperCase() + "_MOVING_TIMER != -1")) {
-    eval("clearInterval(GHOST_" + ghost.toUpperCase() + "_MOVING_TIMER)");
-    eval("GHOST_" + ghost.toUpperCase() + "_MOVING_TIMER = -1");
-    eval("GHOST_" + ghost.toUpperCase() + "_MOVING = false");
-  }
-}
 function stopGhosts() {
-  stopGhost("blinky");
-  stopGhost("pinky");
-  stopGhost("inky");
-  stopGhost("clyde");
+  Object.values(GHOSTS).forEach((ghost) => ghost.stop());
 }
 
-function pauseGhost(ghost) {
-  if (eval("GHOST_" + ghost.toUpperCase() + "_STATE === 1")) {
-    eval(
-      "if(GHOST_" +
-        ghost.toUpperCase() +
-        "_AFFRAID_TIMER !== null) GHOST_" +
-        ghost.toUpperCase() +
-        "_AFFRAID_TIMER.pause()"
-    );
-  } else if (eval("GHOST_" + ghost.toUpperCase() + "_STATE === -1")) {
-    eval(
-      "if(GHOST_" +
-        ghost.toUpperCase() +
-        "_EAT_TIMER !== null) GHOST_" +
-        ghost.toUpperCase() +
-        "_EAT_TIMER.pause()"
-    );
-  }
-
-  if (eval("GHOST_" + ghost.toUpperCase() + "_MOVING_TIMER != -1")) {
-    eval("clearInterval(GHOST_" + ghost.toUpperCase() + "_MOVING_TIMER)");
-    eval("GHOST_" + ghost.toUpperCase() + "_MOVING_TIMER = -1");
-    eval("GHOST_" + ghost.toUpperCase() + "_MOVING = false");
-  }
-}
 function pauseGhosts() {
-  pauseGhost("blinky");
-  pauseGhost("pinky");
-  pauseGhost("inky");
-  pauseGhost("clyde");
+  Object.values(GHOSTS).forEach((ghost) => ghost.pause());
 }
 
-function resumeGhost(ghost) {
-  if (eval("GHOST_" + ghost.toUpperCase() + "_STATE === 1")) {
-    eval(
-      "if(GHOST_" +
-        ghost.toUpperCase() +
-        "_AFFRAID_TIMER !== null) GHOST_" +
-        ghost.toUpperCase() +
-        "_AFFRAID_TIMER.resume()"
-    );
-  } else if (eval("GHOST_" + ghost.toUpperCase() + "_STATE === -1")) {
-    eval(
-      "if(GHOST_" +
-        ghost.toUpperCase() +
-        "_EAT_TIMER !== null) GHOST_" +
-        ghost.toUpperCase() +
-        "_EAT_TIMER.resume()"
-    );
-  }
-  moveGhost(ghost);
-}
 function resumeGhosts() {
-  resumeGhost("blinky");
-  resumeGhost("pinky");
-  resumeGhost("inky");
-  resumeGhost("clyde");
-}
-
-function drawHelperGhost(
-  ctx,
-  x,
-  y,
-  direction,
-  body_state,
-  state,
-  affraid,
-  color
-) {
-  let usedImage = "GHOST_";
-
-  //Starting screen, color isn't available
-  //I don't know why for the moment, but lost too many time on it to figure out
-  if (!color) return; //On menu
-
-  if (state == 1) color = "AFFRAID";
-
-  usedImage = usedImage + color;
-
-  if (direction == 4) {
-    usedImage = usedImage + "_UP";
-  } else if (direction == 1) {
-    usedImage = usedImage + "_RIGHT";
-  } else if (direction == 2) {
-    usedImage = usedImage + "_DOWN";
-  } else if (direction == 3) {
-    usedImage = usedImage + "_LEFT";
-  }
-
-  eval("ctx.drawImage(" + usedImage + "_IMAGE, x-16, y-16, 32, 32);");
+  Object.values(GHOSTS).forEach((ghost) => ghost.resume());
 }

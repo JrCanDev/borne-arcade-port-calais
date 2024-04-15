@@ -270,28 +270,7 @@ function killingPacman() {
 }
 
 function testGhostsPacman() {
-  testGhostPacman("blinky");
-  testGhostPacman("pinky");
-  testGhostPacman("inky");
-  testGhostPacman("clyde");
-}
-function testGhostPacman(ghost) {
-  eval("var positionX = GHOST_" + ghost.toUpperCase() + "_POSITION_X");
-  eval("var positionY = GHOST_" + ghost.toUpperCase() + "_POSITION_Y");
-
-  if (
-    positionX <= PACMAN_POSITION_X + PACMAN_GHOST_GAP &&
-    positionX >= PACMAN_POSITION_X - PACMAN_GHOST_GAP &&
-    positionY <= PACMAN_POSITION_Y + PACMAN_GHOST_GAP &&
-    positionY >= PACMAN_POSITION_Y - PACMAN_GHOST_GAP
-  ) {
-    eval("var state = GHOST_" + ghost.toUpperCase() + "_STATE");
-    if (state === 0) {
-      killPacman();
-    } else if (state === 1) {
-      startEatGhost(ghost);
-    }
-  }
+  Object.values(GHOSTS).forEach((ghost) => ghost.testPacman());
 }
 function testFruitsPacman() {
   if (FRUIT_CANCEL_TIMER != null) {

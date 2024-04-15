@@ -162,9 +162,8 @@ function eraseFruit() {
 function drawFruit(ctx, f, x, y, size) {
   ctx.save();
 
-  //Loads CHERRY_IMAGE, STRAWBERRY_IMAGE, ... See image-loader.js
   ctx.drawImage(
-    eval(f.toUpperCase() + "_IMAGE"),
+    FRUIT_IMAGES[f],
     x - size / 2,
     y - size / 2,
     size,
