@@ -4,22 +4,17 @@
 }
 
 #message {
-	position: absolute;
+	position: relative;
 	display: inline;
-	top: 413px;
-	left: 180px;
 	margin: 0px;
 	padding: 0px;
-	width: 210px;
-	height: 30px;
+	top: 70px;
 	text-transform: uppercase;
-	font-weight: normal;
 	letter-spacing: 2px;
-	font-size: 20px;
 	color: #fff200;
 	text-align: center;
 	font-family: Quadrit, sans-serif;
-	font-size: 20px;
+	font-size: 40px;
 }
 
 #message.red {
