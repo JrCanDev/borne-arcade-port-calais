@@ -296,7 +296,6 @@ class Pacman {
         } else {
           stopEatingSound();
         }
-        return;
       }
     }
   }
