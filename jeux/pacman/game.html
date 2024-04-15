@@ -71,17 +71,17 @@
             <ul>
                 <li>
                     <span class="blank"></span>
-                    <img src="../../img/up-arrow.svg" ontouchstart="movePacman(4)">
+                    <img src="../../img/up-arrow.svg" ontouchstart="PACMAN.move(4)">
                     <span class="blank"></span>
                 </li>
                 <li>
-                    <img src="../../img/left-arrow.svg" ontouchstart="movePacman(3)">
+                    <img src="../../img/left-arrow.svg" ontouchstart="PACMAN.move(3)">
                     <span class="blank"></span>
-                    <img src="../../img/right-arrow.svg" ontouchstart="movePacman(1)">
+                    <img src="../../img/right-arrow.svg" ontouchstart="PACMAN.move(1)">
                 </li>
                 <li>
                     <span class="blank"></span>
-                    <img src="../../img/down-arrow.svg" ontouchstart="movePacman(2)">
+                    <img src="../../img/down-arrow.svg" ontouchstart="PACMAN.move(2)">
                     <span class="blank"></span>
                 </li>
             </ul>
@@ -147,10 +147,10 @@
         loadAllSound();
         
         $(document).keydown(function (e) {
-            if (PACMAN_DEAD && !LOCK) {
-                erasePacman();
-                resetPacman();
-                drawPacman();
+            if (PACMAN.dead && !LOCK) {
+                PACMAN.erase();
+                PACMAN.reset();
+                PACMAN.draw();
 
                 eraseGhosts();
                 resetGhosts();

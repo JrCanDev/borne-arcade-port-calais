@@ -1,301 +1,305 @@
-var PACMAN_DIRECTION = 3;
-var PACMAN_DIRECTION_TRY = -1;
-var PACMAN_DIRECTION_TRY_TIMER = null;
-const PACMAN_DIRECTION_TRY_CANCEL = 1000;
-var PACMAN_POSITION_X = 276;
-var PACMAN_POSITION_Y = 416;
-const PACMAN_POSITION_STEP = 2;
-const PACMAN_SIZE = 16;
-var PACMAN_MOVING = false;
-var PACMAN_MOVING_TIMER = -1;
-const PACMAN_MOVING_SPEED = 15;
-var PACMAN_CANVAS_CONTEXT = null;
-const PACMAN_EAT_GAP = 15;
-const PACMAN_GHOST_GAP = 20;
-const PACMAN_FRUITS_GAP = 15;
-const PACMAN_RETRY_SPEED = 2100;
-var PACMAN_DEAD = false;
-
-function initPacman() {
-  var canvas = document.getElementById("canvas-pacman");
-  canvas.setAttribute("width", "550");
-  canvas.setAttribute("height", "550");
-  if (canvas.getContext) {
-    PACMAN_CANVAS_CONTEXT = canvas.getContext("2d");
-  }
-}
-function resetPacman() {
-  stopPacman();
-
-  PACMAN_DIRECTION = 3;
-  PACMAN_DIRECTION_TRY = -1;
-  PACMAN_DIRECTION_TRY_TIMER = null;
-  PACMAN_POSITION_X = 276;
-  PACMAN_POSITION_Y = 416;
-  PACMAN_MOVING = false;
-  PACMAN_MOVING_TIMER = -1;
-  PACMAN_DEAD = false;
-  PACMAN_SUPER = false;
-}
-function getPacmanCanvasContext() {
-  return PACMAN_CANVAS_CONTEXT;
-}
-
-function stopPacman() {
-  if (PACMAN_MOVING_TIMER != -1) {
-    clearInterval(PACMAN_MOVING_TIMER);
-    PACMAN_MOVING_TIMER = -1;
-    PACMAN_MOVING = false;
-  }
-}
-
-function pausePacman() {
-  if (PACMAN_DIRECTION_TRY_TIMER != null) {
-    PACMAN_DIRECTION_TRY_TIMER.pause();
+class Pacman {
+  constructor() {
+      this.direction = 3;
+      this.directionTry = -1;
+      this.directionTryTimer = null;
+      this.directionTryCancel = 1000;
+      this.positionX = 276;
+      this.positionY = 416;
+      this.positionStep = 2;
+      this.size = 16;
+      this.moving = false;
+      this.movingTimer = null;
+      this.movingSpeed = 15;
+      this.canvasContext = null;
+      this.eatGap = 15;
+      this.ghostGap = 20;
+      this.fruitsGap = 15;
+      this.retrySpeed = 2100;
+      this.dead = false;
   }
 
-  if (PACMAN_MOVING_TIMER != -1) {
-    clearInterval(PACMAN_MOVING_TIMER);
-    PACMAN_MOVING_TIMER = -1;
-    PACMAN_MOVING = false;
-  }
-}
-function resumePacman() {
-  if (PACMAN_DIRECTION_TRY_TIMER != null) {
-    PACMAN_DIRECTION_TRY_TIMER.resume();
-  }
-  movePacman();
-}
-
-function tryMovePacmanCancel() {
-  if (PACMAN_DIRECTION_TRY_TIMER != null) {
-    PACMAN_DIRECTION_TRY_TIMER.cancel();
-    PACMAN_DIRECTION_TRY = -1;
-    PACMAN_DIRECTION_TRY_TIMER = null;
-  }
-}
-function tryMovePacman(direction) {
-  PACMAN_DIRECTION_TRY = direction;
-  PACMAN_DIRECTION_TRY_TIMER = new Timer(
-    "tryMovePacmanCancel()",
-    PACMAN_DIRECTION_TRY_CANCEL
-  );
-}
-
-function movePacman(direction) {
-  if (GAMEOVER) return;
-  if (PACMAN_MOVING === false) {
-    PACMAN_MOVING = true;
-    drawPacman();
-    PACMAN_MOVING_TIMER = setInterval("movePacman()", PACMAN_MOVING_SPEED);
-  }
-
-  var directionTry = direction;
-  var quarterChangeDirection = false;
-
-  if (!directionTry && PACMAN_DIRECTION_TRY != -1) {
-    directionTry = PACMAN_DIRECTION_TRY;
-  }
-
-  if (!directionTry || PACMAN_DIRECTION !== directionTry) {
-    if (directionTry) {
-      if (canMovePacman(directionTry)) {
-        if (
-          PACMAN_DIRECTION + 1 === directionTry ||
-          PACMAN_DIRECTION - 1 === directionTry ||
-          PACMAN_DIRECTION + 1 === directionTry ||
-          (PACMAN_DIRECTION === 4 && directionTry === 1) ||
-          (PACMAN_DIRECTION === 1 && directionTry === 4)
-        ) {
-          quarterChangeDirection = true;
-        }
-        PACMAN_DIRECTION = directionTry;
-        tryMovePacmanCancel();
-      } else {
-        if (directionTry !== PACMAN_DIRECTION_TRY) {
-          tryMovePacmanCancel();
-        }
-        if (PACMAN_DIRECTION_TRY === -1) {
-          tryMovePacman(directionTry);
-        }
-      }
-    }
-
-    if (canMovePacman(PACMAN_DIRECTION)) {
-      erasePacman();
-
-      var speedUp = 0;
-      if (quarterChangeDirection) {
-        speedUp = 6;
-      }
-
-      if (PACMAN_DIRECTION === 1) {
-        PACMAN_POSITION_X += PACMAN_POSITION_STEP + speedUp;
-      } else if (PACMAN_DIRECTION === 2) {
-        PACMAN_POSITION_Y += PACMAN_POSITION_STEP + speedUp;
-      } else if (PACMAN_DIRECTION === 3) {
-        PACMAN_POSITION_X -= PACMAN_POSITION_STEP + speedUp;
-      } else if (PACMAN_DIRECTION === 4) {
-        PACMAN_POSITION_Y -= PACMAN_POSITION_STEP + speedUp;
-      }
-
-      if (PACMAN_POSITION_X === 2 && PACMAN_POSITION_Y === 258) {
-        PACMAN_POSITION_X = 548;
-        PACMAN_POSITION_Y = 258;
-      } else if (PACMAN_POSITION_X === 548 && PACMAN_POSITION_Y === 258) {
-        PACMAN_POSITION_X = 2;
-        PACMAN_POSITION_Y = 258;
-      }
-
-      drawPacman();
-
-      testBubblesPacman();
-      testGhostsPacman();
-      testFruitsPacman();
-    } else {
-      stopPacman();
-    }
-  } else if (direction && PACMAN_DIRECTION === direction) {
-    tryMovePacmanCancel();
-  }
-}
-
-function canMovePacman(direction) {
-  if (PAUSE || PACMAN_DEAD || LOCK) return false;
-  var positionX = PACMAN_POSITION_X;
-  var positionY = PACMAN_POSITION_Y;
-
-  if (positionX === 276 && positionY === 204 && direction === 2) return false;
-
-  if (direction === 1) {
-    positionX += PACMAN_POSITION_STEP;
-  } else if (direction === 2) {
-    positionY += PACMAN_POSITION_STEP;
-  } else if (direction === 3) {
-    positionX -= PACMAN_POSITION_STEP;
-  } else if (direction === 4) {
-    positionY -= PACMAN_POSITION_STEP;
-  }
-
-  for (var i = 0, imax = PATHS.length; i < imax; i++) {
-    var p = PATHS[i];
-    var c = p.split("-");
-    var cx = c[0].split(",");
-    var cy = c[1].split(",");
-
-    var startX = cx[0];
-    var startY = cx[1];
-    var endX = cy[0];
-    var endY = cy[1];
-
-    if (
-      positionX >= startX &&
-      positionX <= endX &&
-      positionY >= startY &&
-      positionY <= endY
-    ) {
-      return true;
+  init() {
+    var canvas = document.getElementById("canvas-pacman");
+    canvas.setAttribute("width", "550");
+    canvas.setAttribute("height", "550");
+    if (canvas.getContext) {
+      this.canvasContext = canvas.getContext("2d");
     }
   }
 
-  return false;
-}
+  reset() {
+    this.stop();
 
-function drawPacman() {
-  var ctx = getPacmanCanvasContext();
-  ctx.drawImage(
-    PACMAN_IMAGE[PACMAN_DIRECTION - 1],
-    PACMAN_POSITION_X - PACMAN_SIZE,
-    PACMAN_POSITION_Y - PACMAN_SIZE,
-    PACMAN_SIZE * 2,
-    PACMAN_SIZE * 2
-  );
-}
-
-function erasePacman() {
-  var ctx = getPacmanCanvasContext();
-  ctx.clearRect(
-    PACMAN_POSITION_X - 2 - PACMAN_SIZE,
-    PACMAN_POSITION_Y - 2 - PACMAN_SIZE,
-    PACMAN_SIZE * 2 + 5,
-    PACMAN_SIZE * 2 + 5
-  );
-}
-
-function killPacman() {
-  playDieSound();
-
-  LOCK = true;
-  PACMAN_DEAD = true;
-  stopPacman();
-  stopGhosts();
-  pauseTimes();
-  stopBlinkSuperBubbles();
-
-  erasePacman();
-  if (LIFES > 0) {
-    lifes(-1);
-    setTimeout("retry()", PACMAN_RETRY_SPEED);
-  } else {
-    gameover();
+    this.direction = 3;
+    this.directionTry = -1;
+    this.directionTryTimer = null;
+    this.positionX = 276;
+    this.positionY = 416;
+    this.moving = false;
+    this.movingTimer = null;
+    this.dead = false;
+    this.super = false;
   }
-}
 
-function testGhostsPacman() {
-  Object.values(GHOSTS).forEach((ghost) => ghost.testPacman());
-}
-function testFruitsPacman() {
-  if (FRUIT_CANCEL_TIMER != null) {
-    if (
-      FRUITS_POSITION_X <= PACMAN_POSITION_X + PACMAN_FRUITS_GAP &&
-      FRUITS_POSITION_X >= PACMAN_POSITION_X - PACMAN_FRUITS_GAP &&
-      FRUITS_POSITION_Y <= PACMAN_POSITION_Y + PACMAN_FRUITS_GAP &&
-      FRUITS_POSITION_Y >= PACMAN_POSITION_Y - PACMAN_FRUITS_GAP
-    ) {
-      eatFruit();
+  stop() {
+    if (this.movingTimer) {
+      clearInterval(this.movingTimer);
+      this.movingTimer = null;
+      this.moving = false;
     }
   }
-}
-function testBubblesPacman() {
-  var r = {
-    x: PACMAN_POSITION_X - PACMAN_SIZE / 2,
-    y: PACMAN_POSITION_Y - PACMAN_SIZE / 2,
-    width: PACMAN_SIZE * 2,
-    height: PACMAN_SIZE * 2,
-  };
 
-  for (var i = 0, imax = BUBBLES_ARRAY.length; i < imax; i++) {
-    var bubble = BUBBLES_ARRAY[i];
+  pause() {
+    if (this.directionTryTimer != null) {
+      this.directionTryTimer.pause();
+    }
 
-    var bubbleParams = bubble.split(";");
-    var testX = parseInt(bubbleParams[0].split(",")[0]);
-    var testY = parseInt(bubbleParams[0].split(",")[1]);
-    var p = { x: testX, y: testY };
+    this.stop();  
+  }
 
-    if (isPointInRect(p, r)) {
-      if (bubbleParams[4] === "0") {
-        var type = bubbleParams[3];
+  resume() {
+    if (this.directionTryTimer != null) {
+      this.directionTryTimer.resume();
+    }
 
-        eraseBubble(type, testX, testY);
-        BUBBLES_ARRAY[i] = bubble.substr(0, bubble.length - 1) + "1";
+    this.move();
+  }
 
-        if (type === "s") {
-          setSuperBubbleOnXY(testX, testY, "1");
-          score(SCORE_SUPER_BUBBLE);
-          playEatPillSound();
-          affraidGhosts();
+  tryMoveCancel() {
+    if (this.directionTryTimer != null) {
+      this.directionTryTimer.cancel();
+      this.directionTry = -1;
+      this.directionTryTimer = null;
+    }
+  }
+
+  tryMove(direction) {
+    this.directionTry = direction;
+    this.directionTryTimer = new Timer(
+      () => this.tryMoveCancel(),
+      this.directionTryCancel
+    );
+  }
+
+  move(direction) {
+    if (GAMEOVER) return;
+
+    if (!this.moving) {
+      this.moving = true;
+      this.draw();
+      this.movingTimer = setInterval(() => this.move(), this.movingSpeed);
+    }
+
+    var directionTry = direction;
+    var quarterChangeDirection = false;
+
+    if (!directionTry && this.directionTry != -1) {
+      directionTry = this.directionTry;
+    }
+
+    if (!directionTry || this.direction !== directionTry) {
+      if (directionTry) {
+        if (this.canMove(directionTry)) {
+          if (
+            this.direction + 1 === directionTry ||
+            this.direction - 1 === directionTry ||
+            this.direction + 1 === directionTry ||
+            (this.direction === 4 && directionTry === 1) ||
+            (this.direction === 1 && directionTry === 4)
+          ) {
+            quarterChangeDirection = true;
+          }
+          this.direction = directionTry;
+          this.tryMoveCancel();
         } else {
-          score(SCORE_BUBBLE);
-          playEatingSound();
+          if (directionTry !== this.directionTry) {
+            this.tryMoveCancel();
+          }
+          if (this.directionTry === -1) {
+            this.tryMove(directionTry);
+          }
         }
-        BUBBLES_COUNTER--;
-        if (BUBBLES_COUNTER === 0) {
-          win();
-        }
-      } else {
-        stopEatingSound();
       }
-      return;
+
+      if (this.canMove(this.direction)) {
+        this.erase();
+
+        var speedUp = 0;
+        if (quarterChangeDirection) {
+          speedUp = 6;
+        }
+
+        if (this.direction === 1) {
+          this.positionX += this.positionStep + speedUp;
+        } else if (this.direction === 2) {
+          this.positionY += this.positionStep + speedUp;
+        } else if (this.direction === 3) {
+          this.positionX -= this.positionStep + speedUp;
+        } else if (this.direction === 4) {
+          this.positionY -= this.positionStep + speedUp;
+        }
+
+        if (this.positionX === 2 && this.positionY === 258) {
+          this.positionX = 548;
+          this.positionY = 258;
+        } else if (this.positionX === 548 && this.positionY === 258) {
+          this.positionX = 2;
+          this.positionY = 258;
+        }
+
+        this.draw();
+
+        this.testBubbles();
+        this.testGhosts();
+        this.testFruits();
+      } else {
+        this.stop();
+      }
+    } else if (direction && this.direction === direction) {
+      this.tryMoveCancel();
+    }
+  }
+
+  canMove(direction) {
+    if (PAUSE || PACMAN.dead || LOCK) return false;
+    var positionX = this.positionX;
+    var positionY = this.positionY;
+
+    if (positionX === 276 && positionY === 204 && direction === 2) return false;
+
+    if (direction === 1) {
+      positionX += this.positionStep;
+    } else if (direction === 2) {
+      positionY += this.positionStep;
+    } else if (direction === 3) {
+      positionX -= this.positionStep;
+    } else if (direction === 4) {
+      positionY -= this.positionStep;
+    }
+
+    for (var i = 0, imax = PATHS.length; i < imax; i++) {
+      var p = PATHS[i];
+      var c = p.split("-");
+      var cx = c[0].split(",");
+      var cy = c[1].split(",");
+
+      var startX = cx[0];
+      var startY = cx[1];
+      var endX = cy[0];
+      var endY = cy[1];
+
+      if (
+        positionX >= startX &&
+        positionX <= endX &&
+        positionY >= startY &&
+        positionY <= endY
+      ) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  draw() {
+    this.canvasContext.drawImage(
+      PACMAN_IMAGE[this.direction - 1],
+      this.positionX - this.size,
+      this.positionY - this.size,
+      this.size * 2,
+      this.size * 2
+    );
+  }
+
+  erase() {
+    this.canvasContext.clearRect(
+      this.positionX - 2 - this.size,
+      this.positionY - 2 - this.size,
+      this.size * 2 + 5,
+      this.size * 2 + 5
+    );
+  }
+
+  kill() {
+    playDieSound();
+
+    LOCK = true;
+    PACMAN.dead = true;
+    stop();
+    stopGhosts();
+    pauseTimes();
+    stopBlinkSuperBubbles();
+
+    this.erase();
+    if (LIFES > 0) {
+      lifes(-1);
+      setTimeout(retry, this.retrySpeed);
+    } else {
+      gameover();
+    }
+  }
+
+  testGhosts() {
+    Object.values(GHOSTS).forEach((ghost) => ghost.testPacman());
+  }
+
+  testFruits() {
+    if (FRUIT_CANCEL_TIMER != null) {
+      if (
+        FRUITS_POSITION_X <= this.positionX + this.fruitsGap &&
+        FRUITS_POSITION_X >= this.positionX - this.fruitsGap &&
+        FRUITS_POSITION_Y <= this.positionY + this.fruitsGap &&
+        FRUITS_POSITION_Y >= this.positionY - this.fruitsGap
+      ) {
+        eatFruit();
+      }
+    }
+  }
+
+  testBubbles() {
+    var r = {
+      x: this.positionX - this.size,
+      y: this.positionY - this.size,
+      width: this.size * 2,
+      height: this.size * 2,
+    };
+
+    for (var i = 0, imax = BUBBLES_ARRAY.length; i < imax; i++) {
+      var bubble = BUBBLES_ARRAY[i];
+
+      var bubbleParams = bubble.split(";");
+      var testX = parseInt(bubbleParams[0].split(",")[0]);
+      var testY = parseInt(bubbleParams[0].split(",")[1]);
+      var p = { x: testX, y: testY };
+
+      if (isPointInRect(p, r)) {
+        if (bubbleParams[4] === "0") {
+          var type = bubbleParams[3];
+
+          eraseBubble(type, testX, testY);
+          BUBBLES_ARRAY[i] = bubble.substr(0, bubble.length - 1) + "1";
+
+          if (type === "s") {
+            setSuperBubbleOnXY(testX, testY, "1");
+            score(SCORE_SUPER_BUBBLE);
+            playEatPillSound();
+            affraidGhosts();
+          } else {
+            score(SCORE_BUBBLE);
+            playEatingSound();
+          }
+          BUBBLES_COUNTER--;
+          if (BUBBLES_COUNTER === 0) {
+            win();
+          }
+        } else {
+          stopEatingSound();
+        }
+        return;
+      }
     }
   }
 }
+
+const PACMAN = new Pacman();

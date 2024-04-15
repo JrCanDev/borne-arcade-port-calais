@@ -118,7 +118,7 @@ class Ghost {
       score(SCORE_GHOST_COMBO, this.name);
 
       pauseGhosts();
-      pausePacman();
+      PACMAN.pause();
 
       setTimeout(() => this.eat(), 600);
     }
@@ -137,7 +137,7 @@ class Ghost {
     LOCK = false;
 
     resumeGhosts();
-    resumePacman();
+    PACMAN.resume();
   } 
 
   cancelEat() {
@@ -220,7 +220,7 @@ class Ghost {
         this.draw();
 
         if (this.bodyState === 3 && this.state != -1) {
-          if (!PACMAN_MOVING) {
+          if (!PACMAN.moving) {
             this.testPacman();
           }
           this.testTunnel();
@@ -262,8 +262,8 @@ class Ghost {
 
     if (this.state === 0 || this.state === 1) {
       if (this.positionX != 276 && this.positionY != 258) {
-        var pacmanX = PACMAN_POSITION_X;
-        var pacmanY = PACMAN_POSITION_Y;
+        var pacmanX = PACMAN.positionX;
+        var pacmanY = PACMAN.positionY;
         var axe = oneAxe();
         if (this.name === "blinky") {
           var nothing = whatsYourProblem();
@@ -452,13 +452,13 @@ class Ghost {
 
   testPacman() {
     if (
-      this.positionX <= PACMAN_POSITION_X + PACMAN_GHOST_GAP &&
-      this.positionX >= PACMAN_POSITION_X - PACMAN_GHOST_GAP &&
-      this.positionY <= PACMAN_POSITION_Y + PACMAN_GHOST_GAP &&
-      this.positionY >= PACMAN_POSITION_Y - PACMAN_GHOST_GAP
+      this.positionX <= PACMAN.positionX + PACMAN.ghostGap &&
+      this.positionX >= PACMAN.positionX - PACMAN.ghostGap &&
+      this.positionY <= PACMAN.positionY + PACMAN.ghostGap &&
+      this.positionY >= PACMAN.positionY - PACMAN.ghostGap
     ) {
       if (this.state === 0) {
-        killPacman();
+        PACMAN.kill();
       } else if (this.state === 1) {
         this.startEat();
       }

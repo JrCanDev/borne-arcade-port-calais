@@ -48,8 +48,8 @@ function initGame(newgame) {
 
   initFruits();
 
-  initPacman();
-  drawPacman();
+  PACMAN.init();
+  PACMAN.draw();
 
   initGhosts();
   drawGhosts();
@@ -63,7 +63,7 @@ function win() {
   stopAllSound();
 
   LOCK = true;
-  stopPacman();
+  PACMAN.stop();
   stopGhosts();
   stopBlinkSuperBubbles();
   stopTimes();
@@ -93,10 +93,10 @@ function nextLevel() {
 
   LEVEL++;
 
-  erasePacman();
+  PACMAN.erase();
   eraseGhosts();
 
-  resetPacman();
+  PACMAN.reset();
   resetGhosts();
 
   initGame();
@@ -109,13 +109,13 @@ function nextLevel() {
 function retry() {
   stopTimes();
 
-  erasePacman();
+  PACMAN.erase();
   eraseGhosts();
 
-  resetPacman();
+  PACMAN.reset();
   resetGhosts();
 
-  drawPacman();
+  PACMAN.draw();
   drawGhosts();
 
   TIME_LIFE = 0;
@@ -141,7 +141,7 @@ function go() {
   clearMessage();
   blinkSuperBubbles();
 
-  movePacman();
+  PACMAN.move();
 
   moveGhosts();
 }
@@ -189,7 +189,7 @@ function pauseGame() {
     message("pause");
 
     pauseTimes();
-    pausePacman();
+    PACMAN.pause();
     pauseGhosts();
     stopBlinkSuperBubbles();
   }
@@ -203,7 +203,7 @@ function resumeGame() {
     clearMessage();
 
     resumeTimes();
-    resumePacman();
+    PACMAN.resume();
     resumeGhosts();
     blinkSuperBubbles();
   }
@@ -252,10 +252,10 @@ function gameover() {
   message("game over");
   stopTimes();
 
-  erasePacman();
+  PACMAN.erase();
   eraseGhosts();
 
-  resetPacman();
+  PACMAN.reset();
   resetGhosts();
 
   TIME_GAME = 0;
@@ -301,7 +301,7 @@ function score(s, type) {
       type === "inky" ||
       type === "blinky")
   ) {
-    erasePacman();
+    PACMAN.erase();
     GHOSTS[type].erase()
     $("#board").append('<span class="combo">' + SCORE_GHOST_COMBO + "</span>");
     $("#board span.combo").css(
