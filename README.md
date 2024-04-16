@@ -61,9 +61,10 @@ GRUB_HIDDEN_TIMEOUT_QUIET=true
 Enregistrez et quittez le fichier, puis mettez à jour la configuration de grub en utilisant la commande suivante dans le terminal : `sudo update-grub`.
 
 11.  (Optionel): Désactivez les services inutiles afin d'accélerer le temps pour boot en utilisant la commande suivante dans le terminal : `sudo systemctl mask <service>`. Remplacez `<service>` par le nom du service que vous souhaitez désactiver. Par exemple, pour désactiver le service `bluetooth`, utilisez la commande suivante : `sudo systemctl mask bluetooth`. Quelques services que vous pouvez désactiver sont:
-    - `bluetooth` - Si vous n'utilisez pas le Bluetooth.
-    - `cups` - Si vous n'utilisez pas d'imprimante.
-    - `exim4` - Si vous n'utilisez pas de serveur de messagerie.
+
+- `bluetooth` - Si vous n'utilisez pas le Bluetooth.
+- `cups` - Si vous n'utilisez pas d'imprimante.
+- `exim4` - Si vous n'utilisez pas de serveur de messagerie.
 
 ### Installation de Firefox
 
