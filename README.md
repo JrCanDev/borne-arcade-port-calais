@@ -19,11 +19,11 @@ Ce projet à été développé par Joshua Vandaële lors d'un stage se déroulan
 
 ## Mise en marche
 
-Ce projet nécessite l'installation de [Debian](https://www.debian.org/) avec une installation non graphique (sans DE tels que GNOME), de [Firefox](https://www.mozilla.org/fr/firefox/), et d'un [serveur X](https://fr.wikipedia.org/wiki/X_Window_System) minimal. Pour la première mise en marche, certains paramètres ont besoin d'être changé.
+Ce projet nécessite l'installation de [Debian](https://www.debian.org/) avec une installation non graphique (sans [Environnement de bureau](https://fr.wikipedia.org/wiki/Environnement_de_bureau)), de [Firefox](https://www.mozilla.org/fr/firefox/), et d'un [serveur X](https://fr.wikipedia.org/wiki/X_Window_System) minimal. Pour la première mise en marche, une connexion internet est nécessaire pour télécharger les paquets nécessaires. Une fois l'installation terminée, la borne peut fonctionner hors ligne.
 
 ### Préambule
 
-Pour les étapes suivantes, vous aurez besoin d'un clavier et d'une souris USB, d'un écran, d'une connexion Internet, et d'une clé USB pour l'installation de Debian. Vous aurez également besoin d'un ordinateur pour télécharger l'image ISO de Debian et la flasher sur la clé USB.
+Pour les étapes suivantes, vous aurez besoin de brancher la borne à internet via un câble Ethernet, de connecter un clavier et une souris USB, et de brancher un écran à la borne. Vous aurez également besoin d'une clé USB pour installer Debian, et d'un ordinateur pour télécharger l'image ISO de Debian et la flasher sur la clé USB.
 
 Pour éditer les fichiers de configuration, vous pouvez utiliser l'éditeur de texte `nano` en utilisant la commande suivante dans le terminal : `nano <fichier>`, où `<fichier>` est le fichier que vous souhaitez éditer. Vous pouvez également utiliser un autre éditeur de texte si vous le préférez. Pour enregistrer et quitter le fichier dans `nano`, appuyez sur `Ctrl + O`, puis sur `Entrée`, puis sur `Ctrl + X` pour quitter.
 
@@ -31,7 +31,7 @@ Pour exécuter des commandes en tant que [superutilisateur](https://fr.wikipedia
 
 ### Installation de Debian
 
-1. Téléchargez l'image ISO netinstall de Debian **standard** (Sans Desktop Environment) sur le site officiel de Debian : [https://www.debian.org/CD/live/](https://www.debian.org/CD/live/).
+1. Téléchargez l'image ISO netinstall de Debian **standard** (Sans [environnement de bureau](https://fr.wikipedia.org/wiki/Environnement_de_bureau)) sur le site officiel de Debian : [https://www.debian.org/CD/live/](https://www.debian.org/CD/live/).
 2. Flasher l'image ISO sur une clé USB en utilisant un logiciel tel que [Rufus](https://github.com/pbatard/rufus/releases/latest) ou [Etcher](https://github.com/balena-io/etcher/releases/latest).
 3. Démarrez votre ordinateur sur la clé USB.
 4. Suivez les instructions d'installation de Debian.
