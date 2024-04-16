@@ -17,7 +17,7 @@ Ce projet à été développé par Joshua Vandaële lors d'un stage se déroulan
 
 ## Mise en marche
 
-Ce projet nécessite l'installation de Debian avec une installation non graphique (sans DE tels que GNOME), de Firefox, et d'un serveur X minimal. Pour la première mise en marche, certains paramètres ont besoin d'être changé.
+Ce projet nécessite l'installation de [Debian](https://www.debian.org/) avec une installation non graphique (sans DE tels que GNOME), de [Firefox](https://www.mozilla.org/fr/firefox/), et d'un [serveur X](https://fr.wikipedia.org/wiki/X_Window_System) minimal. Pour la première mise en marche, certains paramètres ont besoin d'être changé.
 
 ### Préambule
 
@@ -25,12 +25,12 @@ Pour les étapes suivantes, vous aurez besoin d'un clavier et d'une souris USB, 
 
 Pour éditer les fichiers de configuration, vous pouvez utiliser l'éditeur de texte `nano` en utilisant la commande suivante dans le terminal : `nano <fichier>`, où `<fichier>` est le fichier que vous souhaitez éditer. Vous pouvez également utiliser un autre éditeur de texte si vous le préférez. Pour enregistrer et quitter le fichier dans `nano`, appuyez sur `Ctrl + O`, puis sur `Entrée`, puis sur `Ctrl + X` pour quitter.
 
-Pour exécuter des commandes en tant que superutilisateur, vous pouvez utiliser la commande `sudo` suivi de la commande que vous souhaitez exécuter. Cela permet d'exécuter la commande en tant que l'utilisateur `root`, qui a les permissions nécessaires pour effectuer des tâches d'administration.
+Pour exécuter des commandes en tant que [superutilisateur](https://fr.wikipedia.org/wiki/Utilisateur_root), vous pouvez utiliser la commande `sudo` suivi de la commande que vous souhaitez exécuter. Cela permet d'exécuter la commande en tant que l'utilisateur `root`, qui a les permissions nécessaires pour effectuer des tâches d'administration.
 
 ### Installation de Debian
 
-1. Téléchargez l'image ISO netinstall de Debian **standard** (Sans Desktop Environment) sur le site officiel de Debian : [https://www.debian.org/distrib/](https://www.debian.org/distrib/).
-2. Flasher l'image ISO sur une clé USB en utilisant un logiciel tel que Rufus ou Etcher.
+1. Téléchargez l'image ISO netinstall de Debian **standard** (Sans Desktop Environment) sur le site officiel de Debian : [https://www.debian.org/CD/live/](https://www.debian.org/CD/live/).
+2. Flasher l'image ISO sur une clé USB en utilisant un logiciel tel que [Rufus](https://github.com/pbatard/rufus/releases/latest) ou [Etcher](https://github.com/balena-io/etcher/releases/latest).
 3. Démarrez votre ordinateur sur la clé USB.
 4. Suivez les instructions d'installation de Debian.
    1. Lors de l'étape de sélection du nom de l'ordinateur, choisissez `borne`.
@@ -50,7 +50,7 @@ ExecStart=-/sbin/agetty --autologin borne --noclear %I $TERM
 
 Cela permettra à l'utilisateur non-root de se connecter automatiquement et de lancer l'interface graphique sur le premier terminal virtuel.
 
-10. Cachez grub au démarrage en modifiant le fichier de configuration `/etc/default/grub` en utilisant la commande `sudo nano /etc/default/grub`. Ajoutez et modifiez les lignes suivantes dans le fichier et enregistrez-le :
+10. Cachez [grub](https://fr.wikipedia.org/wiki/GNU_GRUB) au démarrage en modifiant le fichier de configuration `/etc/default/grub` en utilisant la commande `sudo nano /etc/default/grub`. Ajoutez et modifiez les lignes suivantes dans le fichier et enregistrez-le :
 
 ```conf
 GRUB_TIMEOUT=0
@@ -79,7 +79,7 @@ Pour que le projet fonctionne correctement, vous devez changer certains paramèt
 
 ### Installation de l'application
 
-Si vous souhaitez clonez le dépot sur l'ordinateur de la borne, installez Git en utilisant la commande suivante dans le terminal : `sudo apt-get install git`. Sinon, vous pouvez télécharger le dépot sur une clé USB et le copier sur l'ordinateur.
+Si vous souhaitez clonez le dépot sur l'ordinateur de la borne, installez [Git](https://git-scm.com/) en utilisant la commande suivante dans le terminal : `sudo apt-get install git`. Sinon, vous pouvez télécharger le dépot sur une clé USB et le copier sur l'ordinateur.
 
 1. Clonez ce dépôt en utilisant la commande suivante dans le terminal : `git clone https://github.com/JrCanDev/borne-arcade-port-calais.git` ou téléchargez le dépot avec le bouton "Code" en haut de la page.
 2. Décompressez et extrayez le fichier téléchargé si vous avez téléchargé le dépot.
