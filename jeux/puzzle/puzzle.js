@@ -1,6 +1,7 @@
 const pixelSize = 1000;
 const pieceSize = 150;
-const puzzleSize = 4;
+const puzzleSizeWidth = 5;
+const puzzleSizeHeight = 3;
 
 let timeToSolve = NaN;
 let gameOver = false;
@@ -14,13 +15,13 @@ function updateHighscoreDisplay() {
 }
 
 let puzzle = new Image();
-puzzle.src = "puzzle.png";
+puzzle.src = "puzzle.jpg";
 puzzle.onload = () => {
   const background = new headbreaker.Canvas("puzzle", {
     width: pixelSize,
     height: pixelSize,
     pieceSize: pieceSize,
-    proximity: pieceSize / puzzleSize,
+    proximity: pieceSize / puzzleSizeWidth,
     borderFill: 0,
     strokeWidth: 2,
     lineSoftness: 0.0,
@@ -32,8 +33,8 @@ puzzle.onload = () => {
 
   background.adjustImagesToPuzzleHeight();
   background.autogenerate({
-    horizontalPiecesCount: puzzleSize,
-    verticalPiecesCount: puzzleSize,
+    horizontalPiecesCount: puzzleSizeWidth,
+    verticalPiecesCount:puzzleSizeHeight,
   });
   background.shuffle(0.8);
 
@@ -70,7 +71,7 @@ puzzle.onload = () => {
     setTimeout(() => {
       background.clear();
       puzzle.style.opacity = 1;
-      puzzle.style.backgroundImage = "url('puzzle.png')";
+      puzzle.style.backgroundImage = "url('puzzle.jpg')";
     }, 1000);
 
     setTimeout(() => {
