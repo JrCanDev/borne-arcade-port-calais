@@ -10,6 +10,7 @@ Ce projet à été développé par Joshua Vandaële lors d'un stage se déroulan
     - [Installation de l'application](#installation-de-lapplication)
     - [Installation du serveur X](#installation-du-serveur-x)
     - [Sortir de Firefox](#sortir-de-firefox)
+    - [Démarrage automatique](#démarrage-automatique)
   - [Remettre à zéro les scores](#remettre-à-zéro-les-scores)
   - [Liste des jeux](#liste-des-jeux)
   - [Outil de traduction](#outil-de-traduction)
@@ -138,6 +139,10 @@ Afin de quitter Firefox et de revenir à l'interface en ligne de commande, vous 
 Hors, vous pouvez également changer de terminal virtuel en utilisant les raccourcis clavier `Ctrl + Alt + F1` à `Ctrl + Alt + F6`. Par défaut, le serveur X est lancé sur le premier terminal virtuel, vous pouvez donc utiliser le raccourci clavier `Ctrl + Alt + F1` pour revenir à l'interface de la borne après avoir changé de terminal virtuel.
 
 Pour redémarrer le serveur X après l'avoir quité, vous pouvez utiliser la commande `startx -- -nocursor` dans le terminal, ou plus simplement redémarrer l'ordinateur.
+
+### Démarrage automatique
+
+Pour démarrer automatiquement la borne lorsqu'elle est branchée, il est possible que vous deviez modifier les paramètres du BIOS de l'ordinateur pour qu'il démarre automatiquement lorsqu'il est branché. Les paramètres du BIOS varient en fonction du fabricant de l'ordinateur, donc vous devrez consulter le manuel de l'ordinateur ou le site Web du fabricant pour plus d'informations sur la façon de modifier les paramètres du BIOS. Le paramètre que vous devrez modifier est généralement appelé "Power On After Power Loss" ou quelque chose de similaire, et vous devrez le définir sur "On", "Always", ou "Enabled".
 
 ## Remettre à zéro les scores
 
