@@ -135,9 +135,9 @@ Le fichier `.bashrc` est exécuté à chaque connexion de l'utilisateur.
 
 Afin de quitter Firefox et de revenir à l'interface en ligne de commande, vous pouvez utiliser le raccourci clavier `Ctrl + Shift + W`. Cela fermera Firefox et le serveur X, vous ramenant à l'interface en ligne de commande.
 
-Hors, vous pouvez également changer de terminal virtuel en utilisant les raccourcis clavier `Ctrl + Alt + F1` à `Ctrl + Alt + F6`. Par défaut, le serveur X est lancé sur le premier terminal virtuel, donc pour revenir à l'interface en ligne de commande, vous pouvez utiliser le raccourci clavier `Ctrl + Alt + F1`.
+Hors, vous pouvez également changer de terminal virtuel en utilisant les raccourcis clavier `Ctrl + Alt + F1` à `Ctrl + Alt + F6`. Par défaut, le serveur X est lancé sur le premier terminal virtuel, vous pouvez donc utiliser le raccourci clavier `Ctrl + Alt + F1` pour revenir à l'interface de la borne après avoir changé de terminal virtuel.
 
-Pour redémarrer le serveur X, vous pouvez utiliser la commande `startx -- -nocursor` dans le terminal, ou redémarrer l'ordinateur.
+Pour redémarrer le serveur X après l'avoir quité, vous pouvez utiliser la commande `startx -- -nocursor` dans le terminal, ou plus simplement redémarrer l'ordinateur.
 
 ## Remettre à zéro les scores
 
