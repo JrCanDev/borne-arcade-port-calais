@@ -18,12 +18,17 @@ setInterval(function () {
   inactivity_timer++;
   if (inactivity_timer >= INACTIVITY_TIME) {
     redirectToIndex();
+    resetInactivityTimer() ;
   }
 }, 1000);
 
 function redirectToIndex() {
   var path = window.location.pathname;
   var pathParts = path.split('/');
+  
+  if (pathParts[pathParts.length - 1] === 'index.html') {
+    return;
+  }
   
   (async function checkAndRedirect() {
     for (var i = pathParts.length; i >= 0; i--) {
