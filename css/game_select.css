@@ -102,7 +102,11 @@ main {
     margin: 0;
     padding: 8px 0 0 0;
     animation: grow-shrink 1s infinite ease-in-out;
-    text-align: center;
+    height: 40px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
 }
 
 .game p {
@@ -208,6 +212,62 @@ main {
     margin-top: 128px;
 }
 
-button:hover, button:active {
+button:hover,
+button:active {
     transform: scale(0.95);
+}
+
+/* Game name fonts */
+#quiz-name {
+    font-family: Borel;
+    height: 47px;
+}
+
+#differences-name {
+    font-family: RoadRage;
+    font-size: 42px
+}
+
+#blindtest-name {
+    font-family: Raphigrafie;
+    height: 29px;
+    display: inline-block;
+    font-size: 29px;
+}
+
+#pacman-name {
+    font-family: Crackman;
+    font-size: 37px;
+}
+
+#snake-name {
+    font-family: GreenSnake;
+    color: transparent;
+    text-shadow: 0px 0 0 white, -0px 0 0 white, 0 0px 0 white, 0 -0px 0 white;
+    font-size: 38px;
+}
+
+#puzzle-name {
+    font-family: FontsBombJigsaw;
+    font-size: 36px;
+}
+
+#guesswho-name {
+    font-family: Patrickhand;
+    font-size: 38px;
+}
+
+#tetris-name {
+    font-family: VT323;
+    font-size: 42px;
+}
+
+#maze-name {
+    font-family: MayonExquisite;
+    font-size: 40px;
+}
+
+#flappybird-name {
+    font-family: Featheredflight;
+    font-size: 34px;
 }

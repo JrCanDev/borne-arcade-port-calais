@@ -1,6 +1,61 @@
 @font-face {
+    font-family: "Borel";
+    src: url("../fonts/Borel-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Crackman";
+    src: url("../fonts/crackman.regular.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "Featheredflight";
+    src: url("../fonts/Featheredflight-gp61.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "FontsBombJigsaw";
+    src: url("../fonts/FontsBombJigsaw-0aEr.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "GreenSnake";
+    src: url("../fonts/green-snake-green-snakesvg-400.otf") format("opentype");
+}
+
+@font-face {
     font-family: "Madimi One";
     src: url("../fonts/MadimiOne-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "MayonExquisite";
+    src: url("../fonts/MayonExquisiteRegular-9JX5.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "PatrickHand";
+    src: url("../fonts/PatrickHand-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Raphigrafie";
+    src: url("../fonts/Raphigrafie-1VEZ.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "RoadRage";
+    src: url("../fonts/RoadRage-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "VT323";
+    src: url("../fonts/VT323-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Workbench";
+    src: url("../fonts/Workbench-Regular.ttf") format("truetype");
 }
 
 :root {
