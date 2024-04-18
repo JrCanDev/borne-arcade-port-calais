@@ -164,6 +164,7 @@ class Puzzle extends BgAnimation {
     setTimeout(() => {
       this.element.innerHTML = "";
       this.element.style.backgroundImage = `url(${this.puzzleImage.src})`;
+      this.element.style.backgroundSize = "cover";
       this.element.removeChild(this.fullImage);
     }, this.solved_fade_in);
     this.finishPuzzle();
