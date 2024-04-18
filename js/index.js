@@ -54,7 +54,8 @@ class Puzzle extends BgAnimation {
     this.solved_fade_in = 2000;
     this.solved_positions = [];
     this.solved = true;
-    this.puzzleImage = this.createPuzzleImage();
+    this.puzzleImage = null;
+    this.createPuzzleImage();
     this.fullImage = null;
     setInterval(() => this.solve_random_piece(), this.solve_timeout);
   }
@@ -63,24 +64,39 @@ class Puzzle extends BgAnimation {
     const puzzleImage = new Image();
     puzzleImage.src = BACKGROUND;
 
-    const worker = new Worker("indexPuzzleImageWorker.js");
-    worker.postMessage({
-      image: puzzleImage.src,
-      width: WIDTH,
-      height: HEIGHT,
-    });
+    const worker = new Worker("js/indexPuzzleImageWorker.js");
 
-    worker.onmessage = (event) => {
-      puzzleImage.src = event.data;
-      puzzleImage.onload = () => {};
+    puzzleImage.onload = () => {
+      worker.postMessage({
+        image: puzzleImage.src,
+        width: WIDTH,
+        height: HEIGHT,
+      });
     };
 
-    return puzzleImage;
+    worker.onmessage = (event) => {
+      console.log("Received image from worker");
+      console.log(event.data);
+      puzzleImage.src = event.data;
+      puzzleImage.onload = () => {};
+      this.puzzleImage = puzzleImage;
+      if (this.background) {
+        console.log("Refilling background with new image");
+        this.background.imageMetadata.content = puzzleImage;
+        this.background.adjustImagesToPuzzleHeight();
+        this.background.refill();
+        this.background.redraw();
+      }
+    };
   }
 
   init() {
     this.fullImage = document.createElement("div");
     this.element.style.opacity = 1;
+    while (!this.puzzleImage) {
+      cycleBackground();
+      return;
+    }
     this.setupBackground();
     this.setupPieces();
     this.shuffleAndDraw();
