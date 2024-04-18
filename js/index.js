@@ -74,7 +74,7 @@ class Puzzle extends BgAnimation {
       const dataUrl = canvas.toDataURL();
 
       puzzleImage.src = dataUrl;
-      puzzleImage.onload = () => this.init();
+      puzzleImage.onload = () => {};
     };
     puzzleImage.src = BACKGROUND;
     return puzzleImage;
@@ -212,6 +212,8 @@ let currentAnimation = {
     isOver: () => true,
 }
 
+let lastAnimation = null;
+
 function cycleBackground() {
     if (!currentAnimation.isOver()) {
       return;
@@ -220,10 +222,15 @@ function cycleBackground() {
   
     currentAnimation.destroy();
   
-    currentAnimation = animations[Math.floor(Math.random() * animations.length)];
+    let newAnimation;
+    do {
+      newAnimation = animations[Math.floor(Math.random() * animations.length)];
+    } while (newAnimation === lastAnimation && animations.length > 1);
+  
+    lastAnimation = currentAnimation = newAnimation;
     currentAnimation.init();
     console.log("Current animation: ", currentAnimation.constructor.name)
-  }
+}
 
 function onLocaleChange() {
   document.querySelector(`img[src="img/${locale}-flag.svg"]`).id =

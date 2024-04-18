@@ -162,7 +162,6 @@ footer {
 }
 
 #animated-background-normal {
-    display: unset;
     background-image: url('../img/index-bg.jpg');
     background-size: 125% 125%;
     background-position: 50% 50%;
