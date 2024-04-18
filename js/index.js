@@ -60,34 +60,35 @@ class Puzzle extends BgAnimation {
     setInterval(() => this.solve_random_piece(), this.solve_timeout);
   }
 
-  createPuzzleImage() {
+  async createPuzzleImage() {
+    const puzzleImage = await this.createImageFromBackground(BACKGROUND);
+    this.puzzleImage = puzzleImage;
+  
+    if (this.background) {
+      this.background.imageMetadata.content = puzzleImage;
+      this.background.adjustImagesToPuzzleHeight();
+      this.background.refill();
+      this.background.redraw();
+    }
+  }
+  
+  async createImageFromBackground(background) {
     const puzzleImage = new Image();
-    puzzleImage.src = BACKGROUND;
-
-    const worker = new Worker("js/indexPuzzleImageWorker.js");
-
-    puzzleImage.onload = () => {
-      worker.postMessage({
-        image: puzzleImage.src,
-        width: WIDTH,
-        height: HEIGHT,
-      });
-    };
-
-    worker.onmessage = (event) => {
-      console.log("Received image from worker");
-      console.log(event.data);
-      puzzleImage.src = event.data;
-      puzzleImage.onload = () => {};
-      this.puzzleImage = puzzleImage;
-      if (this.background) {
-        console.log("Refilling background with new image");
-        this.background.imageMetadata.content = puzzleImage;
-        this.background.adjustImagesToPuzzleHeight();
-        this.background.refill();
-        this.background.redraw();
-      }
-    };
+    const canvas = document.createElement('canvas');
+    canvas.width = WIDTH;
+    canvas.height = HEIGHT;
+    const context = canvas.getContext('2d');
+  
+    const response = await fetch(background);
+    const blob = await response.blob();
+    const imgBitmap = await createImageBitmap(blob);
+  
+    context.drawImage(imgBitmap, 0, 0, WIDTH, HEIGHT);
+    const dataUrl = canvas.toDataURL();
+  
+    puzzleImage.src = dataUrl;
+  
+    return puzzleImage;
   }
 
   init() {
