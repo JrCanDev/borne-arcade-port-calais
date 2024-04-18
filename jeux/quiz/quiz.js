@@ -53,8 +53,10 @@ function answerCallback() {
   ) {
     score++;
     question_elem.innerHTML = translations["game.quiz.correct"];
+    question_img_elem.classList.add("correct-answer");
   } else {
     question_elem.innerHTML = translations["game.quiz.incorrect"];
+    question_img_elem.classList.add("wrong-answer");
   }
   question_elem.classList.add("zoomInOut");
   current_question++;
@@ -79,6 +81,8 @@ function updateDisplay() {
 }
 
 function nextQuestion() {
+  question_img_elem.classList.remove("wrong-answer");
+  question_img_elem.classList.remove("correct-answer");
   question_elem.classList.add("zoomInOut");
   if (current_question > Object.keys(questions).length) {
     question_img_elem.style.display = "none";
