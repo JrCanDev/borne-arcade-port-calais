@@ -61,7 +61,7 @@ GRUB_HIDDEN_TIMEOUT_QUIET=true
 ```
 
 Enregistrez et quittez le fichier, puis mettez à jour la configuration de grub en utilisant la commande suivante dans le terminal : `sudo update-grub`.
-
+ 
 11.  (Optionel): Désactivez les services inutiles afin d'accélerer le temps pour boot en utilisant la commande suivante dans le terminal : `sudo systemctl mask <service>`. Remplacez `<service>` par le nom du service que vous souhaitez désactiver. Par exemple, pour désactiver le service `bluetooth`, utilisez la commande suivante : `sudo systemctl mask bluetooth`. Quelques services que vous pouvez désactiver sont:
 
 - `bluetooth` - Si vous n'utilisez pas le Bluetooth.
@@ -169,15 +169,22 @@ Pour remettre à zéro les scores, cliquez dix fois sur le nom de l'application 
 
 ## Outil de traduction
 
-Ce projet inclut un outil de traduction afin de modifier les fichiers langues de manière plus simple.
+Ce projet comprend un outil de traduction pour faciliter la modification des fichiers de langue.
 
-Pour l'utiliser, ouvrez le fichier `traduction.html` dans votre navigateur. Vous pouvez ensuite ouvrir les fichiers de langue qui sont dans le dossier `langues` et les modifier.
+Voici comment l'utiliser :
 
-Une fois que vous avez fini, cliquez sur le bouton "Télécharger" pour télécharger le fichier de langue modifié. Il vous suffit ensuite de remplacer le fichier de langue original par le fichier modifié.
+1. Ouvrez le fichier `traduction.html` dans votre navigateur.
+2. Sélectionnez les fichiers de langue que vous souhaitez modifier. Ces fichiers se trouvent dans le dossier `langues`.
+3. Modifiez les fichiers de langue selon vos besoins.
+4. Une fois terminé, cliquez sur le bouton "Télécharger" pour obtenir le fichier de langue modifié.
+5. Remplacez le fichier de langue original par le fichier modifié. Veillez à ne pas changer le nom ou l'extension du fichier, sinon l'application ne pourra pas lire correctement le fichier de langue. (Exemple: `fr.json`, `en.json`, etc.)
 
-**Attention**: Lors de l'ouverture des fichiers de langue, assurez-vous que le navigateur ait bien accès aux fichiers locaux. Si ce n'est pas le cas, vous pouvez soit utiliser un serveur local pour ouvrir le fichier `traduction.html`, soit ouvrir le fichier `traduction.html` avec un navigateur configuré pour accéder aux fichiers locaux.
+**Note importante** : Lors de l'ouverture des fichiers de langue, assurez-vous que votre navigateur peut accéder aux fichiers locaux. Si ce n'est pas le cas, vous avez deux options :
 
-Assurez-vous également de sélectionner tout les fichiers de langue que vous souhaitez modifier lors de l'ouverture de ceux-ci.
+- Utilisez un serveur local pour ouvrir le fichier `traduction.html`.
+- Configurez votre navigateur pour accéder aux fichiers locaux. Par exemple, pour Firefox, ouvrez Firefox et accédez à l'URL `about:config`. Recherchez `security.fileuri.strict_origin_policy` et assurez-vous que cette valeur soit à `false`.
+
+N'oubliez pas de sélectionner tous les fichiers de langue que vous souhaitez modifier lors de leur ouverture.
 
 ## Licence
 
