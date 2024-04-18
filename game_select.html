@@ -30,7 +30,7 @@
             <div class="game-card">
                 <h1 data-i18n="game.snake.theme"></h1>
                 <div class="game-text">
-                    <h2 id="snake-name" data-i18n="game.snake.name"></h2>
+                    <h2 class="snake-name" data-i18n="game.snake.name"></h2>
                     <p data-i18n="game.snake.description"></p>
                     </p>
                 </div>
@@ -42,7 +42,7 @@
             <div class="game-card">
                 <h1 data-i18n="game.puzzle.theme"></h1>
                 <div class="game-text">
-                    <h2 id="puzzle-name" data-i18n="game.puzzle.name"></h2>
+                    <h2 class="puzzle-name" data-i18n="game.puzzle.name"></h2>
                     <p data-i18n="game.puzzle.description"></p>
                 </div>
             </div>
@@ -53,7 +53,7 @@
             <div class="game-card">
                 <h1 data-i18n="game.guesswho.theme"></h1>
                 <div class="game-text">
-                    <h2 id="guesswho-name" data-i18n="game.guesswho.name"></h2>
+                    <h2 class="guesswho-name" data-i18n="game.guesswho.name"></h2>
                     <p data-i18n="game.guesswho.description"></p>
                 </div>
             </div>
@@ -64,7 +64,7 @@
             <div class="game-card">
                 <h1 data-i18n="game.tetris.theme"></h1>
                 <div class="game-text">
-                    <h2 id="tetris-name" data-i18n="game.tetris.name"></h2>
+                    <h2 class="tetris-name" data-i18n="game.tetris.name"></h2>
                     <p data-i18n="game.tetris.description"></p>
                 </div>
             </div>
@@ -75,7 +75,7 @@
             <div class="game-card">
                 <h1 data-i18n="game.maze.theme"></h1>
                 <div class="game-text">
-                    <h2 id="maze-name" data-i18n="game.maze.name"></h2>
+                    <h2 class="maze-name" data-i18n="game.maze.name"></h2>
                     <p data-i18n="game.maze.description"></p>
                 </div>
             </div>
@@ -86,7 +86,7 @@
             <div class="game-card">
                 <h1 data-i18n="game.quiz.theme"></h1>
                 <div class="game-text">
-                    <h2><span id="quiz-name" data-i18n="game.quiz.name"></span> & <span id="differences-name" data-i18n="game.7differences.name"></span></h2>
+                    <h2><span class="quiz-name" data-i18n="game.quiz.name"></span> & <span class="differences-name" data-i18n="game.7differences.name"></span></h2>
                     <p data-i18n="game.quiz.description"></p>
                     <hr>
                     <p data-i18n="game.7differences.description"></p>
@@ -99,7 +99,7 @@
             <div class="game-card">
                 <h1 data-i18n="game.blindtest.theme"></h1>
                 <div class="game-text">
-                    <h2><span id="blindtest-name" data-i18n="game.blindtest.name"></span> & <span id="pacman-name" data-i18n="game.pacman.name"></span></h2>
+                    <h2><span class="blindtest-name" data-i18n="game.blindtest.name"></span> & <span class="pacman-name" data-i18n="game.pacman.name"></span></h2>
                     <p data-i18n="game.blindtest.description"></p>
                     <hr>
                     <p data-i18n="game.pacman.description"></p>
@@ -112,7 +112,7 @@
             <div class="game-card">
                 <h1 data-i18n="game.flappybird.theme"></h1>
                 <div class="game-text">
-                    <h2 id="flappybird-name" data-i18n="game.flappybird.name"></h2>
+                    <h2 class="flappybird-name" data-i18n="game.flappybird.name"></h2>
                     <p data-i18n="game.flappybird.description"></p>
                 </div>
             </div>
@@ -127,11 +127,15 @@
             <h1 data-i18n="game.blindtest.theme"></h1>
             <div class="modal-buttons">
                 <div class="modal-choice" onclick="redirectToPage(event, 'jeux/blindtest/game.html')">
-                    <button data-i18n="game.blindtest.name"></button>
+                    <button>
+                        <span class="blindtest-name" id="blindtest-modal-button" data-i18n="game.blindtest.name"></span>
+                    </button>
                     <p data-i18n="game.blindtest.description"></p>
                 </div>
                 <div class="modal-choice" onclick="redirectToPage(event, 'jeux/pacman/game.html')">
-                    <button data-i18n="game.pacman.name"></button>
+                    <button>
+                        <span class="pacman-name" id="pacman-modal-button" data-i18n="game.pacman.name"></span>
+                    </button>
                     <p data-i18n="game.pacman.description"></p>
                 </div>
             </div>
@@ -145,11 +149,15 @@
             <h1 data-i18n="game.quiz.theme"></h1>
             <div class="modal-buttons">
                 <div class="modal-choice" onclick="redirectToPage(event, 'jeux/quiz/game.html')">
-                    <button data-i18n="game.quiz.name"></button>
+                    <button>
+                        <span class="quiz-name" id="quiz-modal-button" data-i18n="game.quiz.name"></span>
+                    </button>
                     <p data-i18n="game.quiz.description"></p>
                 </div>
                 <div class="modal-choice" onclick="redirectToPage(event, 'jeux/7differences/game.html')">
-                    <button data-i18n="game.7differences.name"></button>
+                    <button>
+                        <span class="differences-name" id="differences-modal-button" data-i18n="game.7differences.name"></span>
+                    </button>
                     <p data-i18n="game.7differences.description"></p>
                 </div>
             </div>
