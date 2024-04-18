@@ -61,22 +61,20 @@ class Puzzle extends BgAnimation {
 
   createPuzzleImage() {
     const puzzleImage = new Image();
-    puzzleImage.onload = () => {
-      const canvas = document.createElement("canvas");
-      const context = canvas.getContext("2d");
+    puzzleImage.src = BACKGROUND;
 
-      // Resize the image to fit the canvas
-      canvas.width = WIDTH;
-      canvas.height = HEIGHT;
+    const worker = new Worker("indexPuzzleImageWorker.js");
+    worker.postMessage({
+      image: puzzleImage.src,
+      width: WIDTH,
+      height: HEIGHT,
+    });
 
-      context.drawImage(puzzleImage, 0, 0, canvas.width, canvas.height);
-
-      const dataUrl = canvas.toDataURL();
-
-      puzzleImage.src = dataUrl;
+    worker.onmessage = (event) => {
+      puzzleImage.src = event.data;
       puzzleImage.onload = () => {};
     };
-    puzzleImage.src = BACKGROUND;
+
     return puzzleImage;
   }
 
@@ -164,9 +162,9 @@ class Puzzle extends BgAnimation {
     // Start the fade-in
     this.fullImage.style.opacity = "1";
     setTimeout(() => {
-        this.element.innerHTML = "";
-        this.element.style.backgroundImage = `url(${this.puzzleImage.src})`;
-        this.element.removeChild(this.fullImage);
+      this.element.innerHTML = "";
+      this.element.style.backgroundImage = `url(${this.puzzleImage.src})`;
+      this.element.removeChild(this.fullImage);
     }, this.solved_fade_in);
     this.finishPuzzle();
   }
@@ -207,29 +205,29 @@ animations.forEach((animation) => {
 });
 
 let currentAnimation = {
-    init: () => {},
-    destroy: () => {},
-    isOver: () => true,
-}
+  init: () => {},
+  destroy: () => {},
+  isOver: () => true,
+};
 
 let lastAnimation = null;
 
 function cycleBackground() {
-    if (!currentAnimation.isOver()) {
-      return;
-    }
-    console.log("Switching background animation");
-  
-    currentAnimation.destroy();
-  
-    let newAnimation;
-    do {
-      newAnimation = animations[Math.floor(Math.random() * animations.length)];
-    } while (newAnimation === lastAnimation && animations.length > 1);
-  
-    lastAnimation = currentAnimation = newAnimation;
-    currentAnimation.init();
-    console.log("Current animation: ", currentAnimation.constructor.name)
+  if (!currentAnimation.isOver()) {
+    return;
+  }
+  console.log("Switching background animation");
+
+  currentAnimation.destroy();
+
+  let newAnimation;
+  do {
+    newAnimation = animations[Math.floor(Math.random() * animations.length)];
+  } while (newAnimation === lastAnimation && animations.length > 1);
+
+  lastAnimation = currentAnimation = newAnimation;
+  currentAnimation.init();
+  console.log("Current animation: ", currentAnimation.constructor.name);
 }
 
 function onLocaleChange() {
