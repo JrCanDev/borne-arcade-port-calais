@@ -8,6 +8,7 @@
     <script src="js/i18n.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/global.js"></script>
+    <script src="js/headbreaker.js"></script>
 
     <meta charset="UTF-8">
     <meta name="application-name" data-i18n="application-name" data-i18n-field="content" content="Borne Port Calais">
@@ -18,6 +19,7 @@
 <body onclick="redirectToPage(event, 'intro.html')">
    <div id="animated-background">
         <div id="animated-background-normal"></div>
+        <div id="animated-background-puzzle"></div>
    </div> 
     <header>
         <img src="img/fr-flag.svg" onclick="setLocale('fr'); stopPropagation(event)">
@@ -53,16 +55,4 @@
 
 </html>
 
-<script>
-    function onLocaleChange() {
-        document.querySelector(`img[src="img/${locale}-flag.svg"]`).id = "selected-language";
-    }
-
-    // Change the id "#selected-language" to the new selected language when an img in the header is clicked
-    document.querySelectorAll("img").forEach(img => {
-        img.addEventListener("click", function () {
-            document.querySelector("#selected-language").removeAttribute("id");
-            document.querySelector(`img[src="img/${locale}-flag.svg"]`).id = "selected-language";
-        });
-    });
-</script>
+<script src="js/index.js"></script>
