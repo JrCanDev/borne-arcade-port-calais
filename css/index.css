@@ -3,13 +3,8 @@
 }
 
 body {
-    background-image: url('../img/index-bg.jpg');
-    background-size: 125% 125%;
-    background-position: 50% 50%;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    animation: panorama 20s infinite ease-in-out;
 }
 
 main {
@@ -148,4 +143,27 @@ footer {
     height: 90%;
     width: 90%;
     object-fit: contain;
+}
+
+#animated-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+#animated-background div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+#animated-background-normal {
+    display: unset;
+    background-image: url('../img/index-bg.jpg');
+    background-size: 125% 125%;
+    background-position: 50% 50%;
+    animation: panorama 20s infinite ease-in-out;
 }
