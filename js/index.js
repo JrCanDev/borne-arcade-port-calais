@@ -240,8 +240,62 @@ class Puzzle extends BgAnimation {
     return this.solved;
   }
 }
+class FlappyBird extends BgAnimation {
+  constructor() {
+    super();
+    this.elements = [document.getElementById("animated-background-flappy"), document.getElementById("animated-background-normal")];
+    this.birdElement = document.getElementById("flappy-bird");
+    this.position = { x: 0, y: 0 };
+    this.velocity = { x: 5, y: 0 };
+    this.gravity = 0.5;
+    this.flapPower = -10;
+    this.intervalId = null;
+    this.yGoal = HEIGHT / 2; // The y-coordinate of the center of the screen
+  }
 
-let animations = [new Normal(), new Puzzle()];
+  init() {
+    this.position = { x: this.birdElement.offsetLeft, y: Math.floor(Math.random() * HEIGHT) };
+    this.elements.forEach((element) => { element.style.opacity = 1 });
+    this.intervalId = setInterval(() => this.flap(), 20);
+  }
+
+  destroy() {
+    this.elements.forEach((element) => { element.style.opacity = 0; });
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+      this.intervalId = null;
+    }
+  }
+
+  isOver() {
+    return this.position.x > WIDTH;
+  }
+
+  flap() {
+    // Make the bird move around the center card
+    if (this.position.x > 0.2 * WIDTH) {
+      this.yGoal = HEIGHT / 3;
+    }
+    if (this.position.x > 0.7 * WIDTH) {
+      this.yGoal = HEIGHT / 1.75;
+    }
+    setTimeout(() => {
+      this.velocity.y += this.gravity;
+      this.position.y += this.velocity.y;
+      this.position.x += this.velocity.x;
+  
+      let rotation = Math.min(Math.max(this.velocity.y, -10), 10) * 3; // Adjust the multiplier as needed
+  
+      this.birdElement.style.transform = `translate(${this.position.x}px, ${this.position.y}px) rotate(${rotation}deg)`;
+  
+      if (this.position.y < 0 || this.position.y > this.yGoal) {
+        this.velocity.y = this.flapPower;
+      }
+    }, Math.random() * 1000);
+  }
+}
+
+let animations = [new Normal(), new Puzzle(), new FlappyBird()];
 
 animations.forEach((animation) => {
   animation.destroy();

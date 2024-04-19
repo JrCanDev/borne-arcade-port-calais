@@ -6,6 +6,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: var(--primary-color);
+    overflow: hidden;
 }
 
 main {
@@ -167,4 +168,9 @@ footer {
     background-size: 125% 125%;
     background-position: 50% 50%;
     animation: panorama 20s infinite ease-in-out;
+}
+
+#flappy-bird {
+    width: auto;
+    height: 96px;
 }
