@@ -231,7 +231,9 @@ class Puzzle extends BgAnimation {
 
   destroy() {
     this.element.style.opacity = 0;
-    this.element.style.backgroundImage = "none";
+    setTimeout(() => {
+      this.element.style.backgroundImage = "none";
+    }, this.solved_fade_in);
   }
 
   isOver() {
