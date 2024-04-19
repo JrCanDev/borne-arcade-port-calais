@@ -48,7 +48,8 @@ class Puzzle extends BgAnimation {
   constructor() {
     super();
     this.element = document.getElementById("animated-background-puzzle");
-    this.solve_timeout = 500;
+    this.timeToSolve = 200;
+    this.solveSteps = 10;
     this.puzzleSizeWidth = 10;
     this.puzzleSizeHeight = 7;
     this.solved_fade_in = 2000;
@@ -57,7 +58,12 @@ class Puzzle extends BgAnimation {
     this.puzzleImage = null;
     this.createPuzzleImage();
     this.fullImage = null;
-    setInterval(() => this.solve_random_piece(), this.solve_timeout);
+    this.isSolving = false; // Add this line
+    setInterval(() => {
+      if (!this.isSolving) { // Add this line
+        this.solve_random_piece();
+      }
+    }, this.timeToSolve);
   }
 
   async createPuzzleImage() {
@@ -191,6 +197,12 @@ class Puzzle extends BgAnimation {
     this.solved = true;
   }
 
+  lerp(centralPosA, centralPosB, t) {
+    centralPosA.x = centralPosA.x + (centralPosB.x - centralPosA.x) * t
+    centralPosA.y = centralPosA.y + (centralPosB.y - centralPosA.y) * t
+    return centralPosA
+  }
+
   solve_random_piece() {
     if (this.isOver()) {
       return;
@@ -199,11 +211,22 @@ class Puzzle extends BgAnimation {
       return;
     }
     let to_solve = this.solved_positions.pop();
-
+  
     let solved_position = to_solve.centralAnchor.copy();
-
-    to_solve.piece.recenterAround(solved_position);
-    this.background.redraw();
+    let current_position = to_solve.piece.centralAnchor.copy();
+    let t = 0;
+    this.isSolving = true;
+    let intervalId = setInterval(() => {
+      if (t >= 1) {
+        clearInterval(intervalId);
+        this.isSolving = false;
+      } else {
+        t += this.solveSteps / this.timeToSolve;
+        let newPosition = this.lerp(current_position, solved_position, t);
+        to_solve.piece.recenterAround(newPosition);
+        this.background.redraw();
+      }
+    }, this.timeToSolve / this.solveSteps);
   }
 
   destroy() {
