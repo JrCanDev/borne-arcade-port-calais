@@ -66,7 +66,8 @@ header img {
 }
 
 /* img on click do animation */
-header img:hover, header img:active {
+header img:hover,
+header img:active {
     transform: scale(0.95);
 }
 
@@ -173,4 +174,22 @@ footer {
 #flappy-bird {
     width: auto;
     height: 96px;
+}
+
+#pacman,
+#pacman-ghost,
+#pacman-pellets {
+    position: absolute;
+}
+
+#pacman,
+#pacman-ghost {
+    z-index: 1;
+}
+
+#pacman-pellets {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
