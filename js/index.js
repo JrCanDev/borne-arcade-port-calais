@@ -27,7 +27,8 @@ class Normal extends BgAnimation {
     super();
     this.element = document.getElementById("animated-background-normal");
     this.start_time = 0;
-    this.duration = 20000;
+    // 20-40 seconds
+    this.duration = Math.floor(Math.random() * 20000) + 20000;
   }
 
   init() {
@@ -591,8 +592,11 @@ class Pacman extends BgAnimation {
     return this.over;
   }
 }
-let animations = [new Normal(), new Puzzle(), new FlappyBird(), new Pacman()];
 
+let normalAnimation = new Normal();
+let animations = [new Puzzle(), new FlappyBird(), new Pacman()];
+
+normalAnimation.destroy();
 animations.forEach((animation) => {
   animation.destroy();
 });
@@ -604,6 +608,7 @@ let currentAnimation = {
 };
 
 let lastAnimation = null;
+let isNormalNext = true;
 
 function cycleBackground() {
   if (!currentAnimation.isOver()) {
@@ -614,11 +619,17 @@ function cycleBackground() {
   currentAnimation.destroy();
 
   let newAnimation;
-  do {
-    newAnimation = animations[Math.floor(Math.random() * animations.length)];
-  } while (newAnimation === lastAnimation && animations.length > 1);
+  if (isNormalNext) {
+    newAnimation = normalAnimation;
+  } else {
+    do {
+      newAnimation = animations[Math.floor(Math.random() * animations.length)];
+    } while (newAnimation === lastAnimation && animations.length > 1);
+    lastAnimation = newAnimation;
+  }
 
-  lastAnimation = currentAnimation = newAnimation;
+  currentAnimation = newAnimation;
+  isNormalNext = !isNormalNext;
   currentAnimation.init();
   console.log("Current animation: ", currentAnimation.constructor.name);
 }
