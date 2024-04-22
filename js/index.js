@@ -386,6 +386,7 @@ class Pacman extends BgAnimation {
   }
 
   init() {
+    this.over = false;
     this.elements.forEach((element) => {
       element.style.opacity = 1;
     });
@@ -589,8 +590,7 @@ class Pacman extends BgAnimation {
     return this.over;
   }
 }
-// new Normal(), new Puzzle(), new FlappyBird(),
-let animations = [new Pacman()];
+let animations = [new Normal(), new Puzzle(), new FlappyBird(), new Pacman()];
 
 animations.forEach((animation) => {
   animation.destroy();
