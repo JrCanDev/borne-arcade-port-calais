@@ -251,12 +251,19 @@ class FlappyBird extends BgAnimation {
     this.flapPower = -10;
     this.intervalId = null;
     this.yGoal = HEIGHT / 2; // The y-coordinate of the center of the screen
+    this.flapSprites = [
+      "img/planeicons.png",
+      "img/planeicons-flap.png",
+    ]
+    this.currentSpriteIndex = 0;
+    this.flapIntervalId = null;
   }
 
   init() {
     this.position = { x: this.birdElement.offsetLeft, y: Math.floor(Math.random() * HEIGHT) };
     this.elements.forEach((element) => { element.style.opacity = 1 });
     this.intervalId = setInterval(() => this.flap(), 20);
+    this.flapIntervalId = setInterval(() => this.changeSprite(), 100);
   }
 
   destroy() {
@@ -292,6 +299,11 @@ class FlappyBird extends BgAnimation {
         this.velocity.y = this.flapPower;
       }
     }, Math.random() * 1000);
+  }
+
+  changeSprite() {
+    this.currentSpriteIndex = (this.currentSpriteIndex + 1) % this.flapSprites.length;
+    this.birdElement.src = this.flapSprites[this.currentSpriteIndex];
   }
 }
 
