@@ -262,9 +262,10 @@ class FlappyBird extends BgAnimation {
 
   init() {
     this.position = {
-      x: this.birdElement.offsetLeft,
+      x: this.birdElement.width ? -this.birdElement.width : -WIDTH/2,
       y: Math.floor(Math.random() * HEIGHT),
     };
+    this.birdElement.style.transform = `translate(${this.position.x}px, ${this.position.y}px)`;
     this.elements.forEach((element) => {
       element.style.opacity = 1;
     });
