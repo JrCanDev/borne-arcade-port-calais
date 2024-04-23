@@ -607,8 +607,6 @@ destroy() {
 let normalAnimation = new Normal();
 let animations = [new Puzzle(), new FlappyBird(), new Pacman()];
 
-animations = [new Pacman()]
-
 normalAnimation.destroy();
 animations.forEach((animation) => {
   animation.destroy();
