@@ -389,6 +389,9 @@ class Pacman extends BgAnimation {
 
   init() {
     this.over = false;
+    this.isPacmanSuper = false;
+    this.pacman.currentPathIndex = 0;
+    this.ghost.currentPathIndex = 0;
     this.elements.forEach((element) => {
       element.style.opacity = 1;
     });
@@ -573,20 +576,28 @@ class Pacman extends BgAnimation {
     }
   }
 
-  destroy() {
-    this.elements.forEach((element) => {
-      element.style.opacity = 0;
-    });
-    this.pellets.forEach((pellet) => {
-      this.pelletContainer.removeChild(pellet);
-    });
-    this.pellets = [];
-    if (this.pacmanIntervalId) {
-      clearInterval(this.pacmanIntervalId);
-      this.pacmanIntervalId = null;
-    }
-    this.ghost.sprites = this.ghost.normalSprites;
+destroy() {
+  this.elements.forEach((element) => {
+    element.style.opacity = 0;
+  });
+  this.pellets.forEach((pellet) => {
+    this.pelletContainer.removeChild(pellet);
+  });
+  this.pellets = [];
+  if (this.pacmanIntervalId) {
+    clearInterval(this.pacmanIntervalId);
+    this.pacmanIntervalId = null;
   }
+  if (this.ghostIntervalId) {
+    clearInterval(this.ghostIntervalId);
+    this.ghostIntervalId = null;
+  }
+  this.ghost.sprites = this.ghost.normalSprites;
+  this.over = false;
+  this.isPacmanSuper = false;
+  this.pacman.currentPathIndex = undefined;
+  this.ghost.currentPathIndex = undefined;
+}
 
   isOver() {
     return this.over;
@@ -595,6 +606,8 @@ class Pacman extends BgAnimation {
 
 let normalAnimation = new Normal();
 let animations = [new Puzzle(), new FlappyBird(), new Pacman()];
+
+animations = [new Pacman()]
 
 normalAnimation.destroy();
 animations.forEach((animation) => {
