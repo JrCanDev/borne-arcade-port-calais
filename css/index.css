@@ -3,13 +3,10 @@
 }
 
 body {
-    background-image: url('../img/index-bg.jpg');
-    background-size: 125% 125%;
-    background-position: 50% 50%;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    animation: panorama 20s infinite ease-in-out;
+    background-color: var(--primary-color);
+    overflow: hidden;
 }
 
 main {
@@ -69,7 +66,8 @@ header img {
 }
 
 /* img on click do animation */
-header img:hover, header img:active {
+header img:hover,
+header img:active {
     transform: scale(0.95);
 }
 
@@ -148,4 +146,50 @@ footer {
     height: 90%;
     width: 90%;
     object-fit: contain;
+}
+
+#animated-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+#animated-background div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: opacity 1s ease-in-out;
+}
+
+#animated-background-normal {
+    background-image: url('../img/index-bg.jpg');
+    background-size: 125% 125%;
+    background-position: 50% 50%;
+    animation: panorama 20s infinite ease-in-out;
+}
+
+#flappy-bird {
+    width: auto;
+    height: 96px;
+}
+
+#pacman,
+#pacman-ghost,
+#pacman-pellets {
+    position: absolute;
+}
+
+#pacman,
+#pacman-ghost {
+    z-index: 1;
+}
+
+#pacman-pellets {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }

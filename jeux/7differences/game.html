@@ -5,13 +5,14 @@
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/game.css">
 
-    <link rel="stylesheet" href="guesswho.css">
+    <link rel="stylesheet" href="7differences.css">
 
     <script src="../../js/i18n.js"></script>
     <script src="../../js/utils.js"></script>
     <script src="../../js/game.js"></script>
     <script src="../../js/global.js"></script>
-    <script src="../../js/headbreaker.js"></script>
+
+    <script src="7differences.js"></script>
 
     <meta charset="UTF-8">
     <meta name="application-name" data-i18n="application-name" data-i18n-field="content" content="Borne Port Calais">
@@ -23,39 +24,29 @@
     <div id="left">
         <div class="rules">
             <h1 data-i18n="game.rules"></h1>
-            <p data-i18n="game.guesswho.rules"></p>
+            <p data-i18n="game.7differences.rules"></p>
         </div>
         <button data-i18n="game.giveup" onclick="showGiveUp()"></button>
     </div>
     <div id="game-container">
-        <div id="guesswho"></div>
+        <img id="diff-img" src="7differences.png">
+        <div id="differences">
+            <div class="difference" id="difference1" onclick="checkDifference(1)"></div>
+            <div class="difference" id="difference2" onclick="checkDifference(2)"></div>
+            <div class="difference" id="difference3" onclick="checkDifference(3)"></div>
+            <div class="difference" id="difference4" onclick="checkDifference(4)"></div>
+            <div class="difference" id="difference5" onclick="checkDifference(5)"></div>
+            <div class="difference" id="difference6" onclick="checkDifference(6)"></div>
+            <div class="difference" id="difference7" onclick="checkDifference(7)"></div>
+        </div>
     </div>
     <div id="right">
         <div class="score">
-            <h1 data-i18n="game.score"></h1>
-            <p id="score"></p>
+            <h1 data-i18n="game.7differences.accuracy"></h1>
+            <p id="accuracy">100%</p>
             <hr>
-            <h1 data-i18n="game.highscore"></h1>
-            <p id="highscore"></p>
-        </div>
-        <div class="controls">
-            <ul>
-                <li>
-                    <span class="blank"></span>
-                    <span class="blank"></span>
-                    <span class="blank"></span>
-                </li>
-                <li>
-                    <span class="blank"></span>
-                    <img id="restart-button" src="../../img/restart-arrow.svg">
-                    <span class="blank"></span>
-                </li>
-                <li>
-                    <span class="blank"></span>
-                    <span class="blank"></span>
-                    <span class="blank"></span>
-                </li>
-            </ul>
+            <h1 data-i18n="game.7differences.found"></h1>
+            <p id="found">0</p>
         </div>
     </div>
 
@@ -90,10 +81,7 @@
     }
 
     function showGameOver() {
-        let gameover_text = translations["game.gameover.timetext"] + " " + document.getElementById("score").innerHTML;
-        if (document.getElementById("score").innerHTML == document.getElementById("highscore").innerHTML) {
-            gameover_text += translations["game.gameover.newhighscore"];
-        }
+        let gameover_text = translations["game.gameover.text"] + document.getElementById("accuracy").innerHTML;
         document.querySelector("#gameover p").innerHTML = gameover_text
         document.getElementById("gameover").style.display = "block";
         hideGiveUp();
@@ -105,9 +93,8 @@
     }
 
     function nextPage() {
-        redirectToPage(event, '../../info.html?&game=guesswho');
+        redirectToPage(event, '../../info.html?&game=7differences');
     }
 </script>
 
-<script src="./guesswho.js"></script>
 </html>

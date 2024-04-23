@@ -76,6 +76,8 @@
   "game.7differences.theme": "Calais, ville d'escale",
   "game.7differences.description": "Trouvez les 7 différences dans l'image de l'hotel de ville !",
   "game.7differences.rules": "L'hôtel de ville de Calais, inscrit au patrimoine mondiale de l'UNESCO, possède un style particulier. Nous avons modifié 7 éléments du bâtiment, sauriez-vous les retrouver ?\n\nTrouvez les 7 différences dans l'image de la ville de Calais !\n\nCliquez sur les éléments différents pour les sélectionner.",
+  "game.7differences.accuracy": "Précision",
+  "game.7differences.found": "Trouvé",
   "game.quiz.name": "Quiz",
   "game.quiz.theme": "Calais, ville d'escale",
   "game.quiz.description": "Testez vos connaissances sur les monuments de Calais !",

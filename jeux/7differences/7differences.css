@@ -1,0 +1,76 @@
+#game-container {
+    position: relative;
+}
+
+#diff-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#differences {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.difference {
+    position: absolute;
+    border: 2px solid red;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+#difference1 {
+    top: 48px;
+    left: 48px;
+    width: 64px;
+    height: 128px;
+}
+
+#difference2 {
+    top: 280px;
+    left: 270px;
+    width: 128px;
+    height: 128px;
+}
+
+#difference3 {
+    top: 64px;
+    right: 228px;
+    width: 128px;
+    height: 128px;
+}
+
+#difference4 {
+    bottom: 280px;
+    right: 210px;
+    width: 160px;
+    height: 128px;
+}
+
+#difference5 {
+    bottom: 300px;
+    left: 280px;
+    width: 128px;
+    height: 128px;
+}
+
+#difference6 {
+    bottom: 48px;
+    left: 72px;
+    width: 90px;
+    height: 128px;
+}
+
+#difference7 {
+    top: 300px;
+    right: 10px;
+    width: 90px;
+    height: 128px;
+}
