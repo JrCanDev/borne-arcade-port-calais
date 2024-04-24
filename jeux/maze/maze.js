@@ -171,36 +171,38 @@ class Maze {
     return position;
   }
   
+  getPixelData(position) {
+    const characterRect = this.characterElement.getBoundingClientRect();
+    return {
+      topLeftPixelData: this.mazeContext.getImageData(
+        position.left,
+        position.top,
+        1,
+        1
+      ).data,
+      topRightPixelData: this.mazeContext.getImageData(
+        position.left + characterRect.width,
+        position.top,
+        1,
+        1
+      ).data,
+      bottomLeftPixelData: this.mazeContext.getImageData(
+        position.left,
+        position.top + characterRect.height,
+        1,
+        1
+      ).data,
+      bottomRightPixelData: this.mazeContext.getImageData(
+        position.left + characterRect.width,
+        position.top + characterRect.height,
+        1,
+        1
+      ).data,
+    };
+  }
+
   isOnPath(position) {
-    // Get the character's dimensions
-    let characterRect = this.characterElement.getBoundingClientRect();
-  
-    // Check if the new position is on the path
-    let topLeftPixelData = this.mazeContext.getImageData(
-      position.left,
-      position.top,
-      1,
-      1
-    ).data;
-    let topRightPixelData = this.mazeContext.getImageData(
-      position.left + characterRect.width,
-      position.top,
-      1,
-      1
-    ).data;
-    let bottomLeftPixelData = this.mazeContext.getImageData(
-      position.left,
-      position.top + characterRect.height,
-      1,
-      1
-    ).data;
-    let bottomRightPixelData = this.mazeContext.getImageData(
-      position.left + characterRect.width,
-      position.top + characterRect.height,
-      1,
-      1
-    ).data;
-  
+    const { topLeftPixelData, topRightPixelData, bottomLeftPixelData, bottomRightPixelData } = this.getPixelData(position);
     return (
       !this.isWall(topLeftPixelData) &&
       !this.isWall(topRightPixelData) &&
@@ -210,35 +212,7 @@ class Maze {
   }
 
   isOnGoal(position) {
-    // Get the character's dimensions
-    let characterRect = this.characterElement.getBoundingClientRect();
-  
-    // Check if the new position is on the goal
-    let topLeftPixelData = this.mazeContext.getImageData(
-      position.left,
-      position.top,
-      1,
-      1
-    ).data;
-    let topRightPixelData = this.mazeContext.getImageData(
-      position.left + characterRect.width,
-      position.top,
-      1,
-      1
-    ).data;
-    let bottomLeftPixelData = this.mazeContext.getImageData(
-      position.left,
-      position.top + characterRect.height,
-      1,
-      1
-    ).data;
-    let bottomRightPixelData = this.mazeContext.getImageData(
-      position.left + characterRect.width,
-      position.top + characterRect.height,
-      1,
-      1
-    ).data;
-  
+    const { topLeftPixelData, topRightPixelData, bottomLeftPixelData, bottomRightPixelData } = this.getPixelData(position);
     return (
       this.isGoal(topLeftPixelData) ||
       this.isGoal(topRightPixelData) ||
