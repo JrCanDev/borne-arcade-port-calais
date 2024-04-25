@@ -296,32 +296,6 @@ button:active {
     font-size: 34px;
 }
 
-#scroll-arrow {
-    position: fixed;
-    right: 32px;
-    top: 316px;
-    animation: scroll-arrow 1s infinite;
-    width: 90px;
-    height: 384px;
-    background-color: #ffffffbb;
-    clip-path: polygon(0 10%, 10% 0, 100% 50%, 10% 100%, 0 90%, 70% 50%);
-    transition: opacity 0.5s;
-}
-
-@keyframes scroll-arrow {
-    0% {
-        transform: translateX(0);
-    }
-
-    50% {
-        transform: translateX(10px);
-    }
-
-    100% {
-        transform: translateX(0);
-    }
-}
-
 #swipe-animation {
     position: fixed;
     /* Center horizontally */
