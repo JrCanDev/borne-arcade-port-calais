@@ -59,21 +59,103 @@ class Puzzle extends BgAnimation {
     this.puzzleImage = null;
     this.createPuzzleImage();
     this.fullImage = null;
-    this.isSolving = false; // Add this line
+    this.isSolving = false;
     setInterval(() => {
       if (!this.isSolving) {
-        // Add this line
         this.solve_random_piece();
       }
     }, this.timeToSolve);
   }
 
-  async createPuzzleImage() {
-    const puzzleImage = await this.createImageFromBackground(BACKGROUND);
-    this.puzzleImage = puzzleImage;
+  async idbStorage(key, data = null) {
+    return new Promise((resolve, reject) => {
+      const request = window.indexedDB.open("indexDB", 1);
+      request.onerror = reject;
+      request.onupgradeneeded = function() {
+        const db = request.result;
+        if (!db.objectStoreNames.contains('images')) {
+          db.createObjectStore('images');
+        }
+      };
+      request.onsuccess = function() {
+        const db = request.result;
+        const transaction = db.transaction('images', data ? 'readwrite' : 'readonly');
+        const store = transaction.objectStore('images');
+        if (data) {
+          store.put(data, key);
+          resolve();
+        } else {
+          const getRequest = store.get(key);
+          getRequest.onsuccess = function() {
+            resolve(getRequest.result);
+          };
+          getRequest.onerror = reject;
+        }
+      };
+    });
+  }
 
+  async fetchImage() {
+    return new Promise((resolve, reject) => {
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", BACKGROUND, true);
+      xhr.responseType = "blob";
+      xhr.onload = async () => {
+        if (xhr.status == 200) {
+          const blob = xhr.response;
+          const image = await blob.text();
+          this.fetchImage = async() => Promise.resolve(image);
+          resolve(image);
+        } else {
+          reject(new Error("Network error"));
+        }
+      };
+      xhr.onerror = () => {
+        reject(new Error("Network error"));
+      };
+      xhr.send();
+    });
+  }
+  
+  async isCacheValid() {
+    let cachedImage = await this.idbStorage("indexPuzzleImage");
+    if (!cachedImage) {
+      return false;
+    }
+  
+    try {
+      const image = await this.fetchImage();
+      return image === cachedImage;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  }
+  
+  async updateCache() {
+    console.log("Updating cache");
+    try {
+      const image = await this.fetchImage();
+      await this.idbStorage("indexPuzzleImage", image);
+      await this.createImageFromBackground(BACKGROUND);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async createPuzzleImage() {
+    let cachedResizedImage = await this.idbStorage("indexPuzzleImageResized");
+    this.puzzleImage = new Image();
+
+    if (!await this.isCacheValid()) {
+      await this.updateCache();
+      cachedResizedImage = await this.idbStorage("indexPuzzleImage");
+    }
+    
+    this.puzzleImage.src = cachedResizedImage;
+      
     if (this.background) {
-      this.background.imageMetadata.content = puzzleImage;
+      this.background.imageMetadata.content = this.puzzleImage;
       this.background.adjustImagesToPuzzleHeight();
       this.background.refill();
       this.background.redraw();
@@ -81,7 +163,7 @@ class Puzzle extends BgAnimation {
   }
 
   async createImageFromBackground(background) {
-    const puzzleImage = new Image();
+    this.puzzleImage = new Image();
     const canvas = document.createElement("canvas");
     canvas.width = WIDTH;
     canvas.height = HEIGHT;
@@ -89,14 +171,13 @@ class Puzzle extends BgAnimation {
 
     const response = await fetch(background);
     const blob = await response.blob();
-    const imgBitmap = await createImageBitmap(blob);
 
-    context.drawImage(imgBitmap, 0, 0, WIDTH, HEIGHT);
-    const dataUrl = canvas.toDataURL();
-
-    puzzleImage.src = dataUrl;
-
-    return puzzleImage;
+    createImageBitmap(blob).then((imageBitmap) => {
+      context.drawImage(imageBitmap, 0, 0, WIDTH, HEIGHT);
+      const dataUrl = canvas.toDataURL();
+      this.puzzleImage.src = dataUrl;
+      this.idbStorage("indexPuzzleImageResized", dataUrl);
+    });
   }
 
   init() {
@@ -263,7 +344,7 @@ class FlappyBird extends BgAnimation {
 
   init() {
     this.position = {
-      x: this.birdElement.width ? -this.birdElement.width : -WIDTH/2,
+      x: this.birdElement.width ? -this.birdElement.width : -WIDTH / 2,
       y: Math.floor(Math.random() * HEIGHT),
     };
     this.birdElement.style.transform = `translate(${this.position.x}px, ${this.position.y}px)`;
@@ -301,7 +382,7 @@ class FlappyBird extends BgAnimation {
       this.position.y += this.velocity.y;
       this.position.x += this.velocity.x;
 
-      let rotation = Math.min(Math.max(this.velocity.y, -10), 10) * 3; // Adjust the multiplier as needed
+      let rotation = Math.min(Math.max(this.velocity.y, -10), 10) * 3;
 
       this.birdElement.style.transform = `translate(${this.position.x}px, ${this.position.y}px) rotate(${rotation}deg)`;
 
@@ -477,21 +558,21 @@ class Pacman extends BgAnimation {
   calculateDirection(currentPath, nextPath) {
     let directionX = nextPath.x - currentPath.x;
     let directionY = nextPath.y - currentPath.y;
-  
+
     // Normalize the direction
     let distance = Math.sqrt(directionX * directionX + directionY * directionY);
     directionX /= distance;
     directionY /= distance;
-  
+
     return { directionX, directionY };
   }
-  
+
   updatePositions(character, directionX, directionY) {
     // Update the positions
     character.position.x += directionX * this.characterMovementSpeed;
     character.position.y += directionY * this.characterMovementSpeed;
   }
-  
+
   updateSprites(character, directionX, directionY) {
     // Update the sprites
     let spriteDirection = 0;
@@ -502,56 +583,56 @@ class Pacman extends BgAnimation {
     } else if (directionY < 0) {
       spriteDirection = 3;
     }
-  
-    // Update the elements on the screen
+
     this.updateCharacter(character, spriteDirection);
   }
-  
+
   checkNextPath(character, nextPath) {
     // If we've reached the next path, move on to the next one
     if (
-      Math.abs(character.position.x - nextPath.x) < this.characterMovementSpeed &&
+      Math.abs(character.position.x - nextPath.x) <
+        this.characterMovementSpeed &&
       Math.abs(character.position.y - nextPath.y) < this.characterMovementSpeed
     ) {
       character.currentPathIndex += this.isPacmanSuper ? -1 : 1;
     }
   }
-  
+
   checkPelletCollision() {
     this.pellets = this.pellets.filter((pellet) => {
       const pelletRect = pellet.getBoundingClientRect();
       const pacmanRect = this.pacman.element.getBoundingClientRect();
-  
-      const offset = this.pellets.length > 1 ? this.pelletSize : this.superPelletSize;
-  
+
+      const offset =
+        this.pellets.length > 1 ? this.pelletSize : this.superPelletSize;
+
       const collision = !(
         pelletRect.right < pacmanRect.left + offset ||
         pelletRect.left > pacmanRect.right - offset ||
         pelletRect.bottom < pacmanRect.top + offset ||
         pelletRect.top > pacmanRect.bottom - offset
       );
-  
+
       if (collision) {
         this.pelletContainer.removeChild(pellet);
       }
-  
+
       return !collision;
     });
   }
-  
+
   playAnimation(character) {
-    // Assuming we have a currentPathIndex to keep track of the current path
     if (character.currentPathIndex === undefined) {
       character.currentPathIndex = this.isPacmanSuper
         ? this.paths.length - 1
         : 0;
     }
-  
+
     let currentPath = this.paths[character.currentPathIndex];
     let nextPath = this.isPacmanSuper
       ? this.paths[character.currentPathIndex - 1]
       : this.paths[character.currentPathIndex + 1];
-  
+
     // If there's no next path, we've reached the end of the animation
     if (!nextPath) {
       if (this.isPacmanSuper) {
@@ -564,40 +645,43 @@ class Pacman extends BgAnimation {
       this.ghost.currentPathIndex = this.paths.length - 1;
       return;
     }
-  
-    const { directionX, directionY } = this.calculateDirection(currentPath, nextPath);
+
+    const { directionX, directionY } = this.calculateDirection(
+      currentPath,
+      nextPath
+    );
     this.updatePositions(character, directionX, directionY);
     this.updateSprites(character, directionX, directionY);
     this.checkNextPath(character, nextPath);
-  
+
     // If the character is Pacman, check for collisions with pellets
     if (character === this.pacman) {
       this.checkPelletCollision();
     }
   }
 
-destroy() {
-  this.elements.forEach((element) => {
-    element.style.opacity = 0;
-  });
-  this.pellets.forEach((pellet) => {
-    this.pelletContainer.removeChild(pellet);
-  });
-  this.pellets = [];
-  if (this.pacmanIntervalId) {
-    clearInterval(this.pacmanIntervalId);
-    this.pacmanIntervalId = null;
+  destroy() {
+    this.elements.forEach((element) => {
+      element.style.opacity = 0;
+    });
+    this.pellets.forEach((pellet) => {
+      this.pelletContainer.removeChild(pellet);
+    });
+    this.pellets = [];
+    if (this.pacmanIntervalId) {
+      clearInterval(this.pacmanIntervalId);
+      this.pacmanIntervalId = null;
+    }
+    if (this.ghostIntervalId) {
+      clearInterval(this.ghostIntervalId);
+      this.ghostIntervalId = null;
+    }
+    this.ghost.sprites = this.ghost.normalSprites;
+    this.over = false;
+    this.isPacmanSuper = false;
+    this.pacman.currentPathIndex = undefined;
+    this.ghost.currentPathIndex = undefined;
   }
-  if (this.ghostIntervalId) {
-    clearInterval(this.ghostIntervalId);
-    this.ghostIntervalId = null;
-  }
-  this.ghost.sprites = this.ghost.normalSprites;
-  this.over = false;
-  this.isPacmanSuper = false;
-  this.pacman.currentPathIndex = undefined;
-  this.ghost.currentPathIndex = undefined;
-}
 
   isOver() {
     return this.over;
