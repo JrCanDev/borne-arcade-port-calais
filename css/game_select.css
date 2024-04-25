@@ -304,6 +304,7 @@ button:active {
     transform: translateX(-50%) translateY(-50%);
     animation: swipe 2s infinite;
     transition: opacity 0.5s;
+    opacity: 0;
 }
 
 #swipe-animation img {
