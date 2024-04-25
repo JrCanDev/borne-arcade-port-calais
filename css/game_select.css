@@ -295,3 +295,61 @@ button:active {
     font-family: Featheredflight;
     font-size: 34px;
 }
+
+#scroll-arrow {
+    position: fixed;
+    right: 32px;
+    top: 316px;
+    animation: scroll-arrow 1s infinite;
+    width: 90px;
+    height: 384px;
+    background-color: #ffffffbb;
+    clip-path: polygon(0 10%, 10% 0, 100% 50%, 10% 100%, 0 90%, 70% 50%);
+    transition: opacity 0.5s;
+}
+
+@keyframes scroll-arrow {
+    0% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(10px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+#swipe-animation {
+    position: fixed;
+    /* Center horizontally */
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    animation: swipe 2s infinite;
+    transition: opacity 0.5s;
+}
+
+#swipe-animation img {
+    width: 192px;
+    height: 192px;
+    filter: invert(100%) drop-shadow(8px 8px 16px #000)
+}
+
+@keyframes swipe {
+    0% {
+        transform: translateX(256px) rotate(10deg) scale(0.9);
+    }
+    50% {
+        transform: translateX(-512px) rotate(-10deg) scale(0.9);
+
+    }
+    75% {
+        transform: translateX(256px) rotate(10deg);
+    }
+    100% {
+        transform: translateX(256px) rotate(10deg) scale(0.9);
+    }
+}
