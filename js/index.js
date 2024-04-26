@@ -483,13 +483,11 @@ class Pacman extends BgAnimation {
     this.elements.forEach((element) => {
       element.style.opacity = 1;
     });
-    this.pacman.position = { x: this.paths[0].x, y: this.paths[0].y };
-    this.ghost.position = { x: this.paths[0].x, y: this.paths[0].y };
-    this.updateCharacter(this.pacman);
-    this.updateCharacter(this.ghost);
     this.generatePellets();
+    this.pacman.position = { x: this.paths[0].x, y: this.paths[0].y };
     this.playAnimation(this.pacman);
     setTimeout(() => {
+      this.ghost.position = { x: this.paths[0].x, y: this.paths[0].y };
       this.playAnimation(this.ghost);
     }, this.characterMovementSpeed * this.pacmanGhostGap);
   }
@@ -660,8 +658,30 @@ class Pacman extends BgAnimation {
     if (character === this.pacman) {
       this.checkPelletCollision();
     }
+    this.checkGhostCollision()
 
     requestAnimationFrame(() => this.playAnimation(character));
+  }
+
+  checkGhostCollision() {
+    const ghostRect = this.ghost.element.getBoundingClientRect();
+    const pacmanRect = this.pacman.element.getBoundingClientRect();
+
+    const collision = !(
+      ghostRect.right < pacmanRect.left ||
+      ghostRect.left > pacmanRect.right ||
+      ghostRect.bottom < pacmanRect.top ||
+      ghostRect.top > pacmanRect.bottom
+    )
+
+    if (collision) {
+      this.over = true;
+      if (this.isPacmanSuper) {
+        this.ghost.element.style.opacity = 0;
+      } else {
+        this.pacman.element.style.opacity = 0;
+      }
+    }
   }
 
   destroy() {
