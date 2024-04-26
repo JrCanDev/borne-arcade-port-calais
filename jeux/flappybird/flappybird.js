@@ -165,10 +165,8 @@ function main() {
   canvas.height = height;
   ctx = canvas.getContext("2d");
 
-  var img = new Image();
-
-  img.onload = function () {
-    initSprites(this);
+  getImageWithAvailableExtension("img/sheet").then((img) => {
+    initSprites(img);
     ctx.fillStyle = s_bg.color;
     okbtn = {
       x: (width - s_buttons.Ok.width) / 2,
@@ -177,9 +175,7 @@ function main() {
       height: s_buttons.Ok.height,
     };
     run();
-  };
-
-  img.src = "sheet.png";
+  });
 }
 
 function run() {

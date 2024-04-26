@@ -15,6 +15,7 @@ Ce projet à été développé par Joshua Vandaële lors d'un stage se déroulan
   - [Remettre à zéro les scores](#remettre-à-zéro-les-scores)
   - [Liste des jeux](#liste-des-jeux)
   - [Outil de traduction](#outil-de-traduction)
+  - [Changer les images utilisées dans l'application](#changer-les-images-utilisées-dans-lapplication)
   - [Licence](#licence)
 
 ## Mise en marche
@@ -185,6 +186,18 @@ Voici comment l'utiliser :
 - Configurez votre navigateur pour accéder aux fichiers locaux. Par exemple, pour Firefox, ouvrez Firefox et accédez à l'URL `about:config`. Recherchez `security.fileuri.strict_origin_policy` et assurez-vous que cette valeur soit à `false`.
 
 N'oubliez pas de sélectionner tous les fichiers de langue que vous souhaitez modifier lors de leur ouverture.
+
+## Changer les images utilisées dans l'application
+
+Pour changer les images utilisées dans l'application, vous pouvez remplacer les images existantes par vos propres images. Voici comment procéder :
+
+1. Ouvrez le dossier contenant les images de l'application. Les images pour le site se trouvent dans le dossier `img`, alors que les images pour les jeux se trouvent dans le dossier `jeux/nom-du-jeu/img`, où `nom-du-jeu` est le nom du jeu.
+2. Remplacez les images existantes par vos propres images. Assurez-vous que les nouvelles images ont le même nom que les images existantes. Par exemple, si vous souhaitez remplacer l'image `image.png`, assurez-vous que votre nouvelle image s'appelle `image` et qu'elle est sous le format `.png`, `.jpg`, `.jpeg`, `.svg`, `.webp`, ou `.gif`.
+3. Rafraîchissez la page de l'application pour voir les nouvelles images en action.
+
+Il est important que les images que vous utilisez respectent les licences des images originales. Si vous utilisez des images sous licence, assurez-vous de respecter les termes de la licence et de donner le crédit approprié à l'auteur de l'image.
+
+Lorsque vous remplacez les images, assurez-vous que les nouvelles images ont une taille et une résolution appropriées pour l'application. Les images trop grandes ou trop petites peuvent ne pas s'afficher correctement dans l'application, ou prendre trop de temps à charger.
 
 ## Licence
 

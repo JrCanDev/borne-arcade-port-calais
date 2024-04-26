@@ -8,7 +8,7 @@ async function tryLoadImage(imgPath) {
 }
 
 async function findImageWithAvailableExtension(basePath) {
-    const extensions = ["jpg", "jpeg", "png", "svg", "webp"];
+    const extensions = ["jpg", "jpeg", "png", "svg", "webp", "gif"];
     const fallbackImgPath = "img/fallback.svg";
   
     const loadPromises = extensions.map(extension => {
