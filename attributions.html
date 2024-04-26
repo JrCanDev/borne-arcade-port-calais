@@ -8,6 +8,8 @@
     <script src="js/i18n.js"></script>
     <script src="js/global.js"></script>
 
+    <script src="js/attributions.js"></script>
+
     <meta charset="UTF-8">
     <meta name="application-name" data-i18n="application-name" data-i18n-field="content" content="Borne Port Calais">
     <meta name="author" content="Joshua Vandaële">
@@ -112,22 +114,5 @@
         </div>
     </main>
 </body>
-
-<script>
-    let hiddenReset = document.getElementById("hidden-reset");
-    let hiddenResetClicks = 0;
-    hiddenReset.addEventListener("click", () => {
-        hiddenResetClicks++;
-        if (hiddenResetClicks == 10) {
-            if (confirm("Êtes-vous sûr de vouloir effacer les données locales ?")) {
-                localStorage.clear();
-                alert("Données locales effacées.");
-                window.history.back();
-            } else {
-                hiddenResetClicks = 0;
-            }
-        }
-    });
-</script>
 
 </html>
