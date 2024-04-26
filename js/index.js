@@ -484,9 +484,11 @@ class Pacman extends BgAnimation {
       element.style.opacity = 1;
     });
     this.generatePellets();
+    this.pacman.element.style.opacity = 1;
     this.pacman.position = { x: this.paths[0].x, y: this.paths[0].y };
     this.playAnimation(this.pacman);
     setTimeout(() => {
+      this.ghost.element.style.opacity = 1;
       this.ghost.position = { x: this.paths[0].x, y: this.paths[0].y };
       this.playAnimation(this.ghost);
     }, this.characterMovementSpeed * this.pacmanGhostGap);
@@ -621,6 +623,10 @@ class Pacman extends BgAnimation {
   }
 
   playAnimation(character) {
+    if (this.over) {
+      return;
+    }
+
     if (character.currentPathIndex === undefined) {
       character.currentPathIndex = this.isPacmanSuper
         ? this.paths.length - 1
@@ -635,7 +641,9 @@ class Pacman extends BgAnimation {
     // If there's no next path, we've reached the end of the animation
     if (!nextPath) {
       if (this.isPacmanSuper) {
-        this.over = true;
+        if (character === this.pacman) {
+          this.over = true;
+        }
         return;
       }
       this.isPacmanSuper = true;
@@ -658,12 +666,18 @@ class Pacman extends BgAnimation {
     if (character === this.pacman) {
       this.checkPelletCollision();
     }
-    this.checkGhostCollision()
+    this.checkGhostCollision();
 
     requestAnimationFrame(() => this.playAnimation(character));
   }
 
   checkGhostCollision() {
+    if (
+      this.ghost.element.style.opacity !== 1 ||
+      this.pacman.element.style.opacity !== 1
+    ) {
+      return;
+    }
     const ghostRect = this.ghost.element.getBoundingClientRect();
     const pacmanRect = this.pacman.element.getBoundingClientRect();
 
@@ -672,7 +686,7 @@ class Pacman extends BgAnimation {
       ghostRect.left > pacmanRect.right ||
       ghostRect.bottom < pacmanRect.top ||
       ghostRect.top > pacmanRect.bottom
-    )
+    );
 
     if (collision) {
       this.over = true;
