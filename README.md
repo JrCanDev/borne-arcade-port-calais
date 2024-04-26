@@ -12,10 +12,12 @@ Ce projet à été développé par Joshua Vandaële lors d'un stage se déroulan
     - [Installation de l'application](#installation-de-lapplication)
     - [Installation du serveur X](#installation-du-serveur-x)
     - [Démarrage automatique](#démarrage-automatique)
-  - [Remettre à zéro les scores](#remettre-à-zéro-les-scores)
-  - [Liste des jeux](#liste-des-jeux)
-  - [Outil de traduction](#outil-de-traduction)
-  - [Changer les images utilisées dans l'application](#changer-les-images-utilisées-dans-lapplication)
+  - [Remise à Zéro des Scores](#remise-à-zéro-des-scores)
+  - [Jeux Inclus](#jeux-inclus)
+  - [Outil de Traduction](#outil-de-traduction)
+  - [Personnalisation de l'Application](#personnalisation-de-lapplication)
+    - [Changer les Images](#changer-les-images)
+    - [Changer les textes](#changer-les-textes)
   - [Licence](#licence)
 
 ## Mise en marche
@@ -148,31 +150,29 @@ Le fichier `.bashrc` est exécuté à chaque connexion de l'utilisateur.
 
 Pour démarrer automatiquement la borne lorsqu'elle est branchée, il est possible que vous deviez modifier les paramètres du BIOS de l'ordinateur pour qu'il démarre automatiquement lorsqu'il est branché. Les paramètres du BIOS varient en fonction du fabricant de l'ordinateur, donc vous devrez consulter le manuel de l'ordinateur ou le site Web du fabricant pour plus d'informations sur la façon de modifier les paramètres du BIOS. Le paramètre que vous devrez modifier est généralement appelé "Power On After Power Loss" ou quelque chose de similaire, et vous devrez le définir sur "On", "Always", ou "Enabled".
 
-## Remettre à zéro les scores
+## Remise à Zéro des Scores
 
 Pour remettre à zéro les scores, cliquez dix fois sur le nom de l'application sur la page attributions. Un message de confirmation apparaîtra. Cliquez sur "OK" pour remettre à zéro les scores.
 
-## Liste des jeux
+## Jeux Inclus
 
-| Jeu             | Repo                                                                                          | License | Demo                                                                                                                                            |
-| --------------- | --------------------------------------------------------------------------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| Pacman          | [github.com/luciopanepinto/pacman](https://github.com/luciopanepinto/pacman)                  | GPLv3   | [pacman-e281c.firebaseapp.com](https://pacman-e281c.firebaseapp.com/)                                                                           |
-| Tetris          | [github.com/jakesgordon/javascript-tetris](https://github.com/jakesgordon/javascript-tetris/) | MIT     | [jakesgordon.com/games/tetris/](https://jakesgordon.com/games/tetris/)                                                                          |
-| Puzzle          | [github.com/flbulgarelli/headbreaker](https://github.com/flbulgarelli/headbreaker)            | ISC     | [flbulgarelli.github.io/headbreaker](https://flbulgarelli.github.io/headbreaker/)                                                               |
-| Où est charlie? | Fait à partir de zéro.                                                                        | GPLv3   | N/A                                                                                                                                             |
-| 7 erreurs       | Fait à partir de zéro.                                                                        | GPLv3   | N/A                                                                                                                                             |
-| Quiz            | [Fait à partir de zéro.](jeux/quiz/)                                                          | GPLv3   | N/A                                                                                                                                             |
-| Blind test      | Fait à partir de zéro.                                                                        | GPLv3   | N/A                                                                                                                                             |
-| Qui est-ce?     | [github.com/flbulgarelli/headbreaker](https://github.com/flbulgarelli/headbreaker)            | ISC     | [flbulgarelli.github.io/headbreaker](https://flbulgarelli.github.io/headbreaker/)                                                               |
-| Labyrinthe      | Fait à partir de zéro.                                                                        | GPLv3   | N/A                                                                                                                                             |
-| Snake           | [github.com/rembound/Snake-Game-HTML5](https://github.com/rembound/Snake-Game-HTML5)          | MIT     | [rembound.com/articles/creating-a-snake-game-tutorial-with-html5](https://rembound.com/articles/creating-a-snake-game-tutorial-with-html5#demo) |
-| Flappy Bird     | [github.com/surajondev/JavaScript](https://github.com/surajondev/JavaScript)                  | MIT     | None                                                                                                                                            |
+| Jeu           | Repo                                                                                          | License | Demo                                                                                                                                            |
+| ------------- | --------------------------------------------------------------------------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| 7 Différences | [Fait à partir de zéro.](jeux/7differences)                                                   | GPLv3   | N/A                                                                                                                                             |
+| Blind Test    | [Fait à partir de zéro.](jeux/blindtest)                                                      | GPLv3   | N/A                                                                                                                                             |
+| Devine Qui ?  | [Fait à partir de zéro.](jeux/guesswho)                                                       | GPLv3   | N/A                                                                                                                                             |
+| Flappy Bird   | [github.com/surajondev/JavaScript](https://github.com/surajondev/JavaScript)                  | MIT     | None                                                                                                                                            |
+| Labyrinthe    | [Fait à partir de zéro.](jeux/maze)                                                           | GPLv3   | N/A                                                                                                                                             |
+| Pacman        | [github.com/luciopanepinto/pacman](https://github.com/luciopanepinto/pacman)                  | GPLv3   | [pacman-e281c.firebaseapp.com](https://pacman-e281c.firebaseapp.com/)                                                                           |
+| Puzzle        | [github.com/flbulgarelli/headbreaker](https://github.com/flbulgarelli/headbreaker)            | ISC     | [flbulgarelli.github.io/headbreaker](https://flbulgarelli.github.io/headbreaker/)                                                               |
+| Qui est-ce ?  | [github.com/flbulgarelli/headbreaker](https://github.com/flbulgarelli/headbreaker)            | ISC     | [flbulgarelli.github.io/headbreaker](https://flbulgarelli.github.io/headbreaker/)                                                               |
+| Quiz          | [Fait à partir de zéro.](jeux/quiz/)                                                          | GPLv3   | N/A                                                                                                                                             |
+| Snake         | [github.com/rembound/Snake-Game-HTML5](https://github.com/rembound/Snake-Game-HTML5)          | MIT     | [rembound.com/articles/creating-a-snake-game-tutorial-with-html5](https://rembound.com/articles/creating-a-snake-game-tutorial-with-html5#demo) |
+| Tetris        | [github.com/jakesgordon/javascript-tetris](https://github.com/jakesgordon/javascript-tetris/) | MIT     | [jakesgordon.com/games/tetris/](https://jakesgordon.com/games/tetris/)                                                                          |
 
-## Outil de traduction
+## Outil de Traduction
 
-Ce projet comprend un outil de traduction pour faciliter la modification des fichiers de langue.
-
-Voici comment l'utiliser :
+Ce projet comprend un outil de traduction pour faciliter la modification des fichiers de langue. Voici comment l'utiliser :
 
 1. Ouvrez le fichier `traduction.html` dans votre navigateur.
 2. Sélectionnez les fichiers de langue que vous souhaitez modifier. Ces fichiers se trouvent dans le dossier `langues`.
@@ -187,7 +187,9 @@ Voici comment l'utiliser :
 
 N'oubliez pas de sélectionner tous les fichiers de langue que vous souhaitez modifier lors de leur ouverture.
 
-## Changer les images utilisées dans l'application
+## Personnalisation de l'Application
+
+### Changer les Images
 
 Pour changer les images utilisées dans l'application, vous pouvez remplacer les images existantes par vos propres images. Voici comment procéder :
 
@@ -198,6 +200,16 @@ Pour changer les images utilisées dans l'application, vous pouvez remplacer les
 Il est important que les images que vous utilisez respectent les licences des images originales. Si vous utilisez des images sous licence, assurez-vous de respecter les termes de la licence et de donner le crédit approprié à l'auteur de l'image.
 
 Lorsque vous remplacez les images, assurez-vous que les nouvelles images ont une taille et une résolution appropriées pour l'application. Les images trop grandes ou trop petites peuvent ne pas s'afficher correctement dans l'application, ou prendre trop de temps à charger.
+
+### Changer les textes
+
+Pour changer les textes utilisés dans l'application, vous pouvez modifier les fichiers de langue. Les fichiers de langue se trouvent dans le dossier `langues`. Voici comment procéder :
+
+1. Ouvrez le fichier de langue que vous souhaitez modifier. Les fichiers de langue sont au format JSON et contiennent les textes utilisés dans l'application.
+2. Modifiez les textes selon vos besoins. Assurez-vous de respecter la structure du fichier JSON et de ne pas modifier les clés ou les valeurs des textes. [L'outil de traduction](#outil-de-traduction) peut vous aider à modifier les fichiers de langue de manière plus conviviale sans avoir à modifier directement le fichier JSON.
+3. Enregistrez les modifications apportées au fichier de langue, et écrasez le fichier original avec le fichier modifié.
+
+Après chaque modification des textes, veuillez à vérifier que les textes s'affichent correctement dans l'application. Si les textes ne s'affichent pas correctement, assurez-vous que les modifications apportées au fichier de langue sont correctes et que la structure du fichier JSON est respectée.
 
 ## Licence
 
