@@ -11,7 +11,7 @@ Pour changer les textes utilisés dans l'application, vous pouvez modifier les f
 
 ## Utilisation de l'Outil de Traduction
 
-[L'outil de traduction](../outiltraduction) peut vous aider à modifier les fichiers de langue de manière plus conviviale sans avoir à modifier directement le fichier JSON.
+[L'outil de traduction](../outiltraduction.md) peut vous aider à modifier les fichiers de langue de manière plus conviviale sans avoir à modifier directement le fichier JSON.
 
 ## Enregistrement des Modifications
 
