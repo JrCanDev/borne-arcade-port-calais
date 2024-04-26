@@ -1,0 +1,23 @@
+site_name: Borne d'Arcade du Port de Calais
+site_description: Documentation de la borne d'arcade du Port de Calais
+site_author: Joshua Vandaële
+site_url: https://jrcandev.github.io/borne-arcade-port-calais/
+repo_url: https://github.com/JrCanDev/borne-arcade-port-calais/
+theme: readthedocs
+nav:
+  - Accueil: 'index.md'
+  - 'Remise à Zéro des Scores': 'remiseazero.md'
+  - 'Outil de Traduction': 'outiltraduction.md'
+  - 'Documentation au format imprimable': 'print_page'
+  - 'Mise en marche':
+    - 'Mise en marche': 'miseenmarche/index.md'
+    - 'Installation de Debian': 'miseenmarche/debian.md'
+    - 'Installation de Firefox': 'miseenmarche/firefox.md'
+    - "Installation de l'application": 'miseenmarche/application.md'
+    - 'Installation du Serveur X': 'miseenmarche/xserver.md'
+  - "Personnalisation de l'Application":
+    - 'Changer les Images': 'personnalisation/images.md'
+    - 'Changer les textes': 'personnalisation/textes.md'
+plugins:
+  - search
+  - print-site
