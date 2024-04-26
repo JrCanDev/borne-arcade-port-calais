@@ -294,22 +294,25 @@ class Puzzle extends BgAnimation {
       return;
     }
     let to_solve = this.solved_positions.pop();
-
+  
     let solved_position = to_solve.centralAnchor.copy();
     let current_position = to_solve.piece.centralAnchor.copy();
     let t = 0;
     this.isSolving = true;
-    let intervalId = setInterval(() => {
+  
+    const animate = () => {
       if (t >= 1) {
-        clearInterval(intervalId);
         this.isSolving = false;
       } else {
         t += this.solveSteps / this.timeToSolve;
         let newPosition = this.lerp(current_position, solved_position, t);
         to_solve.piece.recenterAround(newPosition);
         this.background.redraw();
+        requestAnimationFrame(animate);
       }
-    }, this.timeToSolve / this.solveSteps);
+    };
+  
+    animate();
   }
 
   destroy() {
@@ -689,7 +692,8 @@ class Pacman extends BgAnimation {
 }
 
 let normalAnimation = new Normal();
-let animations = [new Puzzle(), new FlappyBird(), new Pacman()];
+// let animations = [new Puzzle(), new FlappyBird(), new Pacman()];
+let animations = [new Puzzle()];
 
 normalAnimation.destroy();
 animations.forEach((animation) => {
