@@ -127,8 +127,8 @@ button:hover, button:active {
 }
 
 #start {
-    width: 1025px;
-    height: 1025px;
+    width: 1026px;
+    height: 1026px;
     position: absolute;
     z-index: 1;
     top: 50%;

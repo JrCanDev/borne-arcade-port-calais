@@ -140,6 +140,10 @@
     }
 
     initScore("pacman");
+    window.onload = function () {
+        const gameContainer = document.getElementById("game-container");
+        gameContainer.style.backgroundImage = `url(${BACKGROUND_IMAGE.src})`;
+    }
 </script>
 
 <script type="text/javascript">
@@ -147,7 +151,7 @@
 
     $(document).ready(function () {
         loadAllSound();
-        
+
         $(document).keydown(function (e) {
             if (PACMAN.dead && !LOCK) {
                 PACMAN.erase();
