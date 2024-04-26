@@ -6,6 +6,9 @@ var canvas,
   frames = 0,
   score = 0,
   currentstate,
+  lastFrameTime = Date.now(),
+  deltaTime = 0,
+  goalDeltaTime = 1000 / 60, // 60 FPS
   states = {
     Splash: 0,
     Game: 1,
@@ -14,7 +17,7 @@ var canvas,
   bird = {
     x: 60,
     y: 100,
-    frame: 0,
+    frameCounter: 0,
     velocity: 0,
     animation: [0, 1, 2, 1],
     rotation: 0,
@@ -27,18 +30,17 @@ var canvas,
     },
 
     update: function () {
-      var n = currentstate === states.Splash ? 10 : 5;
-      this.frame += frames % n === 0 ? 1 : 0;
+      this.frameCounter += 1 / 8;
 
-      this.frame = this.frame % this.animation.length;
+      this.frameCounter = this.frameCounter % this.animation.length;
 
       if (currentstate === states.Splash) {
         this.y = height - 280 + 5 * Math.cos(frames / 10);
         this.rotation = 0;
       } else {
-        this.velocity += this.gravity;
+        this.velocity += this.gravity * deltaTime;
 
-        this.y += this.velocity;
+        this.y += this.velocity * deltaTime;
         if (this.y >= height - s_fg.height - 10) {
           this.y = height - s_fg.height - 10;
           if (currentstate === states.Game) currentstate = states.Score;
@@ -46,7 +48,7 @@ var canvas,
         }
 
         if (this.velocity >= this._jump) {
-          this.frame = 1;
+          this.frameCounter = 1;
           this.rotation = Math.min(Math.PI / 6, this.rotation + 0.3);
         } else {
           this.rotation = -0.3;
@@ -58,7 +60,7 @@ var canvas,
       ctx.save();
       ctx.translate(this.x, this.y);
       ctx.rotate(this.rotation);
-      var n = this.animation[this.frame];
+      let n = this.animation[Math.floor(this.frameCounter)];
       s_bird[n].draw(ctx, -s_bird[n].width / 2, -s_bird[n].height / 2);
 
       ctx.restore();
@@ -70,7 +72,7 @@ var canvas,
       this._pipes = [];
     },
     update: function () {
-      if (frames % 100 === 0) {
+      if (frames % 90 <= 1) {
         var _y =
           height -
           (s_pipeSouth.height + s_fg.height + 120 + 200 * Math.random());
@@ -79,14 +81,19 @@ var canvas,
           y: _y,
           width: s_pipeSouth.width,
           height: s_pipeSouth.height,
+          scored: false,
         });
       }
 
       for (var i = 0, len = this._pipes.length; i < len; i++) {
         var p = this._pipes[i];
 
+        if (!p.scored && bird.x > p.x + p.width) {
+          score++;
+          p.scored = true;
+        }
+
         if (i === 0) {
-          score += p.x === bird.x ? 1 : 0;
           var cx = Math.min(Math.max(bird.x, p.x), p.x + p.width);
           var cy1 = Math.min(Math.max(bird.y, p.y), p.y + p.height);
           var cy2 = Math.min(
@@ -107,7 +114,7 @@ var canvas,
           }
         }
 
-        p.x -= 2;
+        p.x -= 2 * deltaTime;
         if (p.x < -50) {
           this._pipes.splice(i, 1);
           i--;
@@ -185,9 +192,14 @@ function run() {
 }
 
 function update() {
-  frames++;
+  var now = Date.now();
+  deltaTime = (now - lastFrameTime) / goalDeltaTime;
+  lastFrameTime = now;
+
+  frames += deltaTime;
+
   if (currentstate !== states.Score) {
-    fgpos = (fgpos - 2) % 14;
+    fgpos = (fgpos - 2 * deltaTime) % 14;
   }
   if (currentstate === states.Game) {
     pipes.update();
