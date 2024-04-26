@@ -9,18 +9,22 @@ let answers_elem = null;
 let explanation_elem = null;
 let explanation_img_elem = null;
 
-function onLocaleChange() {
+async function onLocaleChange() {
   let i = 1;
   while (translations["game.blindtest.question." + i]) {
     let question = translations["game.blindtest.question." + i];
     let answers = [];
-    let images = ["img/" + i + ".jpg"];
+    let images = [
+      await findImageWithAvailableExtension("img/" + i),
+    ]
     j = 1;
     while (translations["game.blindtest.question." + i + ".incorrect" + j]) {
       answers.push(
         translations["game.blindtest.question." + i + ".incorrect" + j]
       );
-      images.push("img/" + i + "-" + j + ".jpg");
+      images.push(
+        await findImageWithAvailableExtension("img/" + i + "-" + j)
+      )
       j++;
     }
     questions[question] = {

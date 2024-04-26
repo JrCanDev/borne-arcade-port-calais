@@ -1,38 +1,51 @@
-function loadImage(imgPath) {
-    const img = w;
+async function tryLoadImage(imgPath) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = imgPath;
+    });
+}
+
+async function findImageWithAvailableExtension(basePath) {
+    const extensions = ["jpg", "jpeg", "png", "svg", "webp"];
+    const fallbackImgPath = "img/fallback.svg";
+  
+    const loadPromises = extensions.map(extension => {
+        const imgPath = `${basePath}.${extension}`;
+        return tryLoadImage(imgPath).then(() => ({ status: 'fulfilled', value: imgPath }), () => ({ status: 'rejected' }));
+    });
+  
+    while (loadPromises.length > 0) {
+        const index = await Promise.race(loadPromises.map((p, index) => p.then(() => index)));
+        const result = await loadPromises[index];
+  
+        loadPromises.splice(index, 1);
+  
+        if (result.status === 'fulfilled') {
+            return result.value;
+        }
+    }
+  
+    console.error(
+        `No image found for ${basePath} with any of the following extensions: ${extensions.join(", ")}`
+    );
+  
+    return fallbackImgPath;
+}
+
+async function setImageWithAvailableExtension(imgElement, basePath) {
+  const imgPath = await findImageWithAvailableExtension(basePath);
+  setElementImage(imgElement, imgPath);
+}
+
+async function getImageWithAvailableExtension(basePath) {
+  return new Promise(async (resolve) => {
+    const imgPath = await findImageWithAvailableExtension(basePath);
+    const img = new Image();
+    img.onload = () => resolve(img);
     img.src = imgPath;
-    return img;
-  }
-
-function setImageSourceWithAvailableExtension(imgElement, basePath) {
-  const extensions = ["jpg", "jpeg", "png", "svg", "webp"];
-  let loadAttempts = 0;
-  let imageLoaded = false;
-
-  for (const extension of extensions) {
-    if (imageLoaded) break;
-
-    const imgPath = basePath + "." + extension;
-    const img = loadImage(imgPath);
-
-    img.onload = () => {
-      imageLoaded = true;
-      loadAttempts = -Infinity;
-      setElementImage(imgElement, imgPath);
-    };
-
-    img.onerror = () => {
-      loadAttempts++;
-      if (loadAttempts === extensions.length) {
-        console.error(
-          `No image found for ${basePath} with any of the following extensions: ${extensions.join(
-            ", "
-          )}`
-        );
-        setElementImage(imgElement, "img/fallback.svg");
-      }
-    };
-  }
+  });
 }
 
 function setElementImage(imgElement, imgPath) {

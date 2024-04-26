@@ -93,56 +93,60 @@ var dx,
 //
 //-------------------------------------------------------------------------
 
-var i = {
-  size: 4,
-  blocks: [0x4444, 0x0f00, 0x2222, 0x00f0],
-  image: "blocks/iblock.png",
-  color: "#a4a4ac",
-};
-var j = {
-  size: 3,
-  blocks: [0x44c0, 0x8e00, 0x6440, 0x0e20],
-  image: "blocks/jblock.png",
-  color: "#888386",
-};
-var l = {
-  size: 3,
-  blocks: [0xc440, 0x2e00, 0x4460, 0x0e80],
-  image: "blocks/lblock.png",
-  color: "#5c585c",
-};
-var o = {
-  size: 2,
-  blocks: [0xcc00, 0xcc00, 0xcc00, 0xcc00],
-  image: "blocks/oblock.png",
-  color: "#bbb4bb",
-  square: true,
-};
-var s = {
-  size: 3,
-  blocks: [0x8c40, 0x6c00, 0x4620, 0x06c0],
-  image: "blocks/sblock.png",
-  color: "#918a8a",
-};
-var z = {
-  size: 3,
-  blocks: [0x4c80, 0xc600, 0x2640, 0x0c60],
-  image: "blocks/zblock.png",
-  color: "#626267",
-};
-var t = {
-  size: 3,
-  blocks: [0x4c40, 0x4e00, 0x4640, 0x0e40],
-  image: "blocks/tblock.png",
-  color: "#a49fa3",
-};
-var x = {
-  size: 3,
-  blocks: [0x4e40, 0x4e40, 0x4e40, 0x4e40],
-  image: "blocks/xblock.png",
-  color: "#313134",
-  square: true,
-};
+var i, j, l, o, s, t, z, x;
+
+async function initializeBlocks() {
+  i = {
+    size: 4,
+    blocks: [0x4444, 0x0f00, 0x2222, 0x00f0],
+    image: await getImageWithAvailableExtension("img/blocks/iblock"),
+    color: "#a4a4ac",
+  };
+  j = {
+    size: 3,
+    blocks: [0x44c0, 0x8e00, 0x6440, 0x0e20],
+    image: await getImageWithAvailableExtension("img/blocks/jblock"),
+    color: "#888386",
+  };
+  l = {
+    size: 3,
+    blocks: [0xc440, 0x2e00, 0x4460, 0x0e80],
+    image: await getImageWithAvailableExtension("img/blocks/lblock"),
+    color: "#5c585c",
+  };
+  o = {
+    size: 2,
+    blocks: [0xcc00, 0xcc00, 0xcc00, 0xcc00],
+    image: await getImageWithAvailableExtension("img/blocks/oblock"),
+    color: "#bbb4bb",
+    square: true,
+  };
+  s = {
+    size: 3,
+    blocks: [0x8c40, 0x6c00, 0x4620, 0x06c0],
+    image: await getImageWithAvailableExtension("img/blocks/sblock"),
+    color: "#918a8a",
+  };
+  z = {
+    size: 3,
+    blocks: [0x4c80, 0xc600, 0x2640, 0x0c60],
+    image: await getImageWithAvailableExtension("img/blocks/zblock"),
+    color: "#626267",
+  };
+  t = {
+    size: 3,
+    blocks: [0x4c40, 0x4e00, 0x4640, 0x0e40],
+    image: await getImageWithAvailableExtension("img/blocks/tblock"),
+    color: "#a49fa3",
+  };
+  x = {
+    size: 3,
+    blocks: [0x4e40, 0x4e40, 0x4e40, 0x4e40],
+    image: await getImageWithAvailableExtension("img/blocks/xblock"),
+    color: "#313134",
+    square: true,
+  };
+}
 
 //------------------------------------------------
 // do the bit manipulation and iterate through each
@@ -200,7 +204,8 @@ function randomPiece() {
 // GAME LOOP
 //-------------------------------------------------------------------------
 
-function run() {
+async function run() {
+  await initializeBlocks();
   addEvents(); // attach keydown and resize events
 
   var last = (now = timestamp());
@@ -545,36 +550,32 @@ function drawRows() {
 }
 
 function drawImagePiece(ctx, type, x, y, dir) {
-  var img = new Image();
-  img.src = type.image;
-  img.onload = function () {
-    ctx.save();
-    var y_translation = (0, y + type.size / 2);
-    var x_translation = x + type.size / 2;
+  ctx.save();
+  var y_translation = (0, y + type.size / 2);
+  var x_translation = x + type.size / 2;
 
-    if (!type.square) {
-      if (dir === 0) {
-        x_translation -= 0.5;
-      } else if (dir === 1) {
-        y_translation -= 0.5;
-      } else if (dir === 2) {
-        x_translation += 0.5;
-      } else if (dir === 3) {
-        y_translation += 0.5;
-      }
+  if (!type.square) {
+    if (dir === 0) {
+      x_translation -= 0.5;
+    } else if (dir === 1) {
+      y_translation -= 0.5;
+    } else if (dir === 2) {
+      x_translation += 0.5;
+    } else if (dir === 3) {
+      y_translation += 0.5;
     }
-    ctx.translate(x_translation * dx, y_translation * dy);
+  }
+  ctx.translate(x_translation * dx, y_translation * dy);
 
-    ctx.rotate((dir * Math.PI) / 2);
-    ctx.drawImage(
-      img,
-      (-type.size / 2) * dx,
-      (-type.size / 2) * dy,
-      type.size * dx,
-      type.size * dy
-    );
-    ctx.restore();
-  };
+  ctx.rotate((dir * Math.PI) / 2);
+  ctx.drawImage(
+    type.image,
+    (-type.size / 2) * dx,
+    (-type.size / 2) * dy,
+    type.size * dx,
+    type.size * dy
+  );
+  ctx.restore();
 }
 
 function drawPiece(ctx, type, x, y, dir) {

@@ -63,12 +63,12 @@ var image2_solved = new Image();
 var image3 = new Image();
 var image3_solved = new Image();
 
-image1.src = "guesswho1.png";
-image1_solved.src = "guesswho1_solved.png";
-image2.src = "guesswho2.png";
-image2_solved.src = "guesswho2_solved.png";
-image3.src = "guesswho3.png";
-image3_solved.src = "guesswho3_solved.png";
+setImageWithAvailableExtension(image1, "img/guesswho1");
+setImageWithAvailableExtension(image1_solved, "img/guesswho1_solved");
+setImageWithAvailableExtension(image2, "img/guesswho2");
+setImageWithAvailableExtension(image2_solved, "img/guesswho2_solved");
+setImageWithAvailableExtension(image3, "img/guesswho3");
+setImageWithAvailableExtension(image3_solved, "img/guesswho3_solved");
 
 let guessed = 0b000;
 function onCombined() {

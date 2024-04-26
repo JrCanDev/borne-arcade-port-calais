@@ -14,7 +14,7 @@ canvas {
 #canvas {
     display: inline-block;
     vertical-align: top;
-    background: url("background.jpg");
+    background: url("img/background.jpg");
     background-size: cover;
     box-shadow: 10px 10px 10px #999;
     height: 90%;

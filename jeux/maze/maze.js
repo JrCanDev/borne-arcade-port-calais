@@ -1,6 +1,6 @@
-const BACKGROUND_IMAGE = "bg.jpg";
-const PATH_IMAGE = "path.jpg";
-const CHARACTER_IMAGE = "character.png";
+const BACKGROUND_IMAGE = findImageWithAvailableExtension("img/bg");
+const PATH_IMAGE = findImageWithAvailableExtension("img/path");
+const CHARACTER_IMAGE = findImageWithAvailableExtension("img/character");
 const DEBUG = true;
 // Path image:
 // Black = wall

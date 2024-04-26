@@ -33,46 +33,7 @@ window.onload = function () {
   var initialized = false;
 
   // Images
-  var images = [];
   var tileimage;
-
-  // Image loading global variables
-  var loadcount = 0;
-  var loadtotal = 0;
-  var preloaded = false;
-
-  // Load images
-  function loadImages(imagefiles) {
-    // Initialize variables
-    loadcount = 0;
-    loadtotal = imagefiles.length;
-    preloaded = false;
-
-    // Load the images
-    var loadedimages = [];
-    for (var i = 0; i < imagefiles.length; i++) {
-      // Create the image object
-      var image = new Image();
-
-      // Add onload event handler
-      image.onload = function () {
-        loadcount++;
-        if (loadcount == loadtotal) {
-          // Done loading
-          preloaded = true;
-        }
-      };
-
-      // Set the source url of the image
-      image.src = imagefiles[i];
-
-      // Save to the image array
-      loadedimages[i] = image;
-    }
-
-    // Return an array of images
-    return loadedimages;
-  }
 
   // Level properties
   var Level = function (columns, rows, tilewidth, tileheight) {
@@ -204,10 +165,9 @@ window.onload = function () {
   var gameoverdelay = 0.5; // Waiting time after game over
 
   // Initialize the game
-  function init() {
+  async function init() {
     // Load images
-    images = loadImages(["snake-graphics.png"]);
-    tileimage = images[0];
+    tileimage = await getImageWithAvailableExtension("img/snake-graphics")
 
     // Add mouse events
     canvas.addEventListener("mousedown", onMouseDown);
@@ -286,33 +246,8 @@ window.onload = function () {
     window.requestAnimationFrame(main);
 
     if (!initialized) {
-      // Preloader
-
-      // Clear the canvas
       context.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Draw a progress bar
-      var loadpercentage = loadcount / loadtotal;
-      context.strokeStyle = "#ff8080";
-      context.lineWidth = 3;
-      context.strokeRect(18.5, 0.5 + canvas.height - 51, canvas.width - 37, 32);
-      context.fillStyle = "#ff8080";
-      context.fillRect(
-        18.5,
-        0.5 + canvas.height - 51,
-        loadpercentage * (canvas.width - 37),
-        32
-      );
-
-      // Draw the progress text
-      var loadtext = "Loaded " + loadcount + "/" + loadtotal + " images";
-      context.fillStyle = "#000000";
-      context.font = "16px Verdana";
-      context.fillText(loadtext, 18, 0.5 + canvas.height - 63);
-
-      if (preloaded) {
-        initialized = true;
-      }
+      initialized = true;
     } else {
       // Update and render the game
       update(tframe);
@@ -412,14 +347,18 @@ window.onload = function () {
     framecount++;
   }
 
-  var bg_img = new Image();
-  bg_img.onload = function () {
-    context.drawImage(bg_img, 0, 0, canvas.width, canvas.height);
-  };
-  bg_img.src = "background.png";
+  var bg_img;
+
+  getImageWithAvailableExtension("img/background").then((img) => {
+    bg_img = img;
+    context.drawImage(img, 0, 0, canvas.width, canvas.height);
+  });
+
   // Render the game
   function render() {
-    context.drawImage(bg_img, 0, 0, canvas.width, canvas.height);
+    if (bg_img) {
+      context.drawImage(bg_img, 0, 0, canvas.width, canvas.height);
+    }
 
     drawLevel();
     drawSnake();

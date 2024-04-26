@@ -7,17 +7,17 @@ function onLocaleChange() {
   setElementText(".img-r p", `game.${params.game}.theme.topText`);
   setElementText(".img-l p", `game.${params.game}.theme.bottomText`);
 
-  setImageSourceWithAvailableExtension(
+  setImageWithAvailableExtension(
     document.querySelector(".img-r img"),
     `img/${params.game}-top`
   );
 
-  setImageSourceWithAvailableExtension(
+  setImageWithAvailableExtension(
     document.querySelector(".img-l img"),
     `img/${params.game}-bottom`
   );
 
-  setImageSourceWithAvailableExtension(
+  setImageWithAvailableExtension(
     document.getElementById("img-zoom"),
     `img/${params.game}-info-${locale}`
   );
@@ -90,7 +90,7 @@ function updateMagnifierDisplay() {
 function resetMagnifier() {
   magnifier.style.cssText =
     magnifier.defaultStyle.left + " " + magnifier.defaultStyle.top;
-  setImageSourceWithAvailableExtension(
+  setImageWithAvailableExtension(
     document.getElementById("magnifier"),
     "img/" + params.game + "-info-" + locale
   );

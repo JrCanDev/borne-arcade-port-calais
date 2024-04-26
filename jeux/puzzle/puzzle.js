@@ -14,9 +14,7 @@ function updateHighscoreDisplay() {
     document.getElementById("highscore").innerHTML = prettyTimeHighscore;
 }
 
-let puzzle = new Image();
-puzzle.src = "puzzle.jpg";
-puzzle.onload = () => {
+ getImageWithAvailableExtension("img/puzzle").then((puzzle) => {
   const background = new headbreaker.Canvas("puzzle", {
     width: pixelSize,
     height: pixelSize,
@@ -78,7 +76,7 @@ puzzle.onload = () => {
       showGameOver();
     }, 3000);
   });
-};
+});
 
 setInterval(() => {
   if (!isNaN(timeToSolve) && !gameOver) {

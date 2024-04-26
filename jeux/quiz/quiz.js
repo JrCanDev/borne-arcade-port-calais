@@ -7,7 +7,7 @@ let question_img_elem = null;
 let answers_elem = null;
 let explanation_elem = null;
 
-function onLocaleChange() {
+async function onLocaleChange() {
   let i = 1;
   while (translations["game.quiz.question." + i]) {
     let question = translations["game.quiz.question." + i];
@@ -20,7 +20,7 @@ function onLocaleChange() {
     questions[question] = {
       correct: translations["game.quiz.question." + i + ".correct"],
       answers: answers,
-      image: "img/" + i + ".jpg",
+      image: await findImageWithAvailableExtension("img/" + i),
       explanation: translations["game.quiz.question." + i + ".explanation"],
     };
     i++;
