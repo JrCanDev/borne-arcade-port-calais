@@ -60,3 +60,18 @@ TIMER_RESET_EVENTS.forEach((event) => {
 window.addEventListener("contextmenu", function (e) {
   e.preventDefault();
 });
+
+function handleImageError(imgElement) {
+  console.error(`No image found for ${imgElement.src}, trying with other extensions`);
+  img_base_path = imgElement.src.split(".")[0];
+  setImageWithAvailableExtension(imgElement, img_base_path);
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  const allImages = document.querySelectorAll("img");
+  allImages.forEach((img) => {
+    img.addEventListener("error", function () {
+      handleImageError(img);
+    });
+  });
+});
