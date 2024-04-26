@@ -1,72 +1,25 @@
-const params = new Proxy(new URLSearchParams(window.location.search), {
-  get: (searchParams, prop) => searchParams.get(prop),
-});
-
-function setImageSourceWithAvailableExtension(
-  imgElement,
-  basePath,
-  extensions
-) {
-  let loadAttempts = 0;
-  for (const extension of extensions) {
-    const imgPath = basePath + "." + extension;
-    const img = new Image();
-    img.src = imgPath;
-    img.onload = () => {
-      loadAttempts = -Infinity;
-      if (imgElement.tagName === "IMG") {
-        imgElement.src = imgPath;
-      } else {
-        imgElement.style.backgroundImage = "url(" + imgPath + ")";
-      }
-    };
-    img.onerror = () => {
-      loadAttempts++;
-      if (loadAttempts === extensions.length - 1) {
-        console.error(
-          "No image found for " +
-            basePath +
-            " with any of the following extensions: " +
-            extensions.join(", ")
-        );
-
-        if (imgElement.tagName === "IMG") {
-          imgElement.src = "img/fallback.svg";
-        } else {
-          imgElement.style.backgroundImage = "url(img/fallback.svg)";
-        }
-      }
-    };
-  }
+function setElementText(selector, textKey) {
+  document.querySelector(selector).innerHTML = getTranslation(textKey)
 }
 
 function onLocaleChange() {
-  document.querySelector("h1").innerHTML =
-    translations["game." + params.game + ".theme"] ||
-    translations["translation_not_found_error"];
+  setElementText("h1", `game.${params.game}.theme`);
+  setElementText(".img-r p", `game.${params.game}.theme.topText`);
+  setElementText(".img-l p", `game.${params.game}.theme.bottomText`);
 
-  document.querySelector(".img-r p").innerHTML =
-    translations["game." + params.game + ".theme.topText"] ||
-    translations["translation_not_found_error"];
   setImageSourceWithAvailableExtension(
     document.querySelector(".img-r img"),
-    "img/" + params.game + "-top",
-    ["jpg", "jpeg", "png", "svg", "webp"]
+    `img/${params.game}-top`
   );
 
-  document.querySelector(".img-l p").innerHTML =
-    translations["game." + params.game + ".theme.bottomText"] ||
-    translations["translation_not_found_error"];
   setImageSourceWithAvailableExtension(
     document.querySelector(".img-l img"),
-    "img/" + params.game + "-bottom",
-    ["jpg", "jpeg", "png", "svg", "webp"]
+    `img/${params.game}-bottom`
   );
 
   setImageSourceWithAvailableExtension(
     document.getElementById("img-zoom"),
-    "img/" + params.game + "-info-" + locale,
-    ["jpg", "jpeg", "png", "svg", "webp"]
+    `img/${params.game}-info-${locale}`
   );
 
   resetMagnifier();
@@ -118,12 +71,6 @@ function getObjectFitSize(imageElement) {
   };
 }
 
-const magnifier = document.getElementById("magnifier");
-magnifier.defaultStyle = {
-  left: magnifier.style.left,
-  top: magnifier.style.top,
-};
-
 function updateMagnifierDisplay() {
   const img = document.getElementById("img-zoom");
   const rendered = getObjectFitSize(img);
@@ -145,8 +92,7 @@ function resetMagnifier() {
     magnifier.defaultStyle.left + " " + magnifier.defaultStyle.top;
   setImageSourceWithAvailableExtension(
     document.getElementById("magnifier"),
-    "img/" + params.game + "-info-" + locale,
-    ["jpg", "jpeg", "png", "svg", "webp"]
+    "img/" + params.game + "-info-" + locale
   );
   document.getElementById("magnifier-tutorial").style.opacity = 1;
   updateMagnifierDisplay();
@@ -204,5 +150,17 @@ function startDrag(event) {
   }
 }
 
-magnifier.addEventListener("mousedown", startDrag);
-magnifier.addEventListener("touchstart", startDrag);
+window.onload = function () {
+  window.params = new Proxy(new URLSearchParams(window.location.search), {
+    get: (searchParams, prop) => searchParams.get(prop),
+  });
+
+  window.magnifier = document.getElementById("magnifier");
+  magnifier.defaultStyle = {
+    left: magnifier.style.left,
+    top: magnifier.style.top,
+  };
+
+  magnifier.addEventListener("mousedown", startDrag);
+  magnifier.addEventListener("touchstart", startDrag);
+};

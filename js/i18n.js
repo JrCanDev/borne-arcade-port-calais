@@ -25,10 +25,14 @@ async function setLocale(newLocale) {
   onLocaleChange();
 }
 
+function getTranslation(key) {
+  return translations[key] || translations["translation_not_found_error"];
+}
+
 function translateElement(element) {
   const key = element.getAttribute("data-i18n");
   const field = element.getAttribute("data-i18n-field");
-  const translation = translations[key] || translations["translation_not_found_error"];
+  const translation = getTranslation(key);
   if (field) {
     element.setAttribute(field, translation);
   } else {

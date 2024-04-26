@@ -1,45 +1,35 @@
 const SWIPE_HINT_COOLDOWN = 5000;
+const swipeAnimationElement = document.getElementById("swipe-animation");
+const mainElement = document.querySelector("main");
 
-function setSwipeAnimationOpacity(opacity, delay = 0) {
-    if (delay === 0) {
-        document.getElementById('swipe-animation').style.opacity = opacity;
-        return -1;
-    }
-    return setTimeout(function() {
-        document.getElementById('swipe-animation').style.opacity = opacity;
-    }, delay);
-}
+const setSwipeAnimationOpacity = (opacity, delay = 0) =>
+  delay === 0
+    ? ((swipeAnimationElement.style.opacity = opacity), -1)
+    : setTimeout(() => (swipeAnimationElement.style.opacity = opacity), delay);
 
-window.onload = function() {
-    let timeout = setSwipeAnimationOpacity(1, SWIPE_HINT_COOLDOWN);
+window.onload = () => {
+  let timeout = setSwipeAnimationOpacity(1, SWIPE_HINT_COOLDOWN);
 
-    document.querySelector('main').addEventListener('scroll', function() {
-        clearTimeout(timeout);
-        setSwipeAnimationOpacity(0);
-        timeout = setSwipeAnimationOpacity(1, SWIPE_HINT_COOLDOWN);
-    });
-}
+  mainElement.addEventListener("scroll", () => {
+    clearTimeout(timeout);
+    setSwipeAnimationOpacity(0);
+    timeout = setSwipeAnimationOpacity(1, SWIPE_HINT_COOLDOWN);
+  });
+};
 
 function onLocaleChange() {
-    document.querySelector(`img[src="img/${locale}-flag.svg"]`).id = "selected-language";
-    console.log("loaded")
+  let prevLang = document.getElementById("selected-language");
+  if (prevLang) prevLang.id = "";
+  document.querySelector(`img[src="img/${locale}-flag.svg"]`).id =
+    "selected-language";
 }
 
-// Change the id "#selected-language" to the new selected language when an img in the header is clicked
-document.querySelectorAll("img").forEach(img => {
-    img.addEventListener("click", function () {
-        document.querySelector("#selected-language").removeAttribute("id");
-        document.querySelector(`img[src="img/${locale}-flag.svg"]`).id = "selected-language";
-    });
-});
+const chooseBetweenGames = (event, game1, game2) => {
+  event.stopPropagation();
 
-function chooseBetweenGames(event, game1, game2) {
-    event.stopPropagation();
+  var element =
+    document.getElementById(`${game1}-${game2}`) ||
+    document.getElementById(`${game2}-${game1}`);
 
-    var element = document.getElementById(game1 + "-" + game2);
-    if (!element) {
-        element = document.getElementById(game2 + "-" + game1);
-    }
-
-    element.style.display = "block";
-}
+  element.style.display = "block";
+};
