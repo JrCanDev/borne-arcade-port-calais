@@ -71,22 +71,25 @@ class Puzzle extends BgAnimation {
     return new Promise((resolve, reject) => {
       const request = window.indexedDB.open("indexDB", 1);
       request.onerror = reject;
-      request.onupgradeneeded = function() {
+      request.onupgradeneeded = function () {
         const db = request.result;
-        if (!db.objectStoreNames.contains('images')) {
-          db.createObjectStore('images');
+        if (!db.objectStoreNames.contains("images")) {
+          db.createObjectStore("images");
         }
       };
-      request.onsuccess = function() {
+      request.onsuccess = function () {
         const db = request.result;
-        const transaction = db.transaction('images', data ? 'readwrite' : 'readonly');
-        const store = transaction.objectStore('images');
+        const transaction = db.transaction(
+          "images",
+          data ? "readwrite" : "readonly"
+        );
+        const store = transaction.objectStore("images");
         if (data) {
           store.put(data, key);
           resolve();
         } else {
           const getRequest = store.get(key);
-          getRequest.onsuccess = function() {
+          getRequest.onsuccess = function () {
             resolve(getRequest.result);
           };
           getRequest.onerror = reject;
@@ -104,7 +107,7 @@ class Puzzle extends BgAnimation {
         if (xhr.status == 200) {
           const blob = xhr.response;
           const image = await blob.text();
-          this.fetchImage = async() => Promise.resolve(image);
+          this.fetchImage = async () => Promise.resolve(image);
           resolve(image);
         } else {
           reject(new Error("Network error"));
@@ -116,13 +119,13 @@ class Puzzle extends BgAnimation {
       xhr.send();
     });
   }
-  
+
   async isCacheValid() {
     let cachedImage = await this.idbStorage("indexPuzzleImage");
     if (!cachedImage) {
       return false;
     }
-  
+
     try {
       const image = await this.fetchImage();
       return image === cachedImage;
@@ -131,7 +134,7 @@ class Puzzle extends BgAnimation {
       return false;
     }
   }
-  
+
   async updateCache() {
     console.log("Updating cache");
     try {
@@ -147,13 +150,13 @@ class Puzzle extends BgAnimation {
     let cachedResizedImage = await this.idbStorage("indexPuzzleImageResized");
     this.puzzleImage = new Image();
 
-    if (!await this.isCacheValid()) {
+    if (!(await this.isCacheValid())) {
       await this.updateCache();
       cachedResizedImage = await this.idbStorage("indexPuzzleImage");
     }
-    
+
     this.puzzleImage.src = cachedResizedImage;
-      
+
     if (this.background) {
       this.background.imageMetadata.content = this.puzzleImage;
       this.background.adjustImagesToPuzzleHeight();
@@ -294,12 +297,12 @@ class Puzzle extends BgAnimation {
       return;
     }
     let to_solve = this.solved_positions.pop();
-  
+
     let solved_position = to_solve.centralAnchor.copy();
     let current_position = to_solve.piece.centralAnchor.copy();
     let t = 0;
     this.isSolving = true;
-  
+
     const animate = () => {
       if (t >= 1) {
         this.isSolving = false;
@@ -311,7 +314,7 @@ class Puzzle extends BgAnimation {
         requestAnimationFrame(animate);
       }
     };
-  
+
     animate();
   }
 
@@ -391,6 +394,7 @@ class FlappyBird extends BgAnimation {
 
       if (this.position.y < 0 || this.position.y > this.yGoal) {
         this.velocity.y = this.flapPower;
+        this.changeSprite();
       }
     }, Math.random() * 1000);
   }
@@ -418,7 +422,7 @@ class Pacman extends BgAnimation {
     this.pelletSize = 25;
     this.superPelletSize = 50;
     this.pelletGap = 10;
-    this.pacmanGhostGap = 1000;
+    this.pacmanGhostGap = 500;
     this.paths = this.getPaths();
     this.pacmanIntervalId = null;
     this.isPacmanSuper = false;
@@ -484,16 +488,10 @@ class Pacman extends BgAnimation {
     this.updateCharacter(this.pacman);
     this.updateCharacter(this.ghost);
     this.generatePellets();
-    this.pacmanIntervalId = setInterval(
-      () => this.playAnimation(this.pacman),
-      10
-    );
+    this.playAnimation(this.pacman);
     setTimeout(() => {
-      this.ghostIntervalId = setInterval(
-        () => this.playAnimation(this.ghost),
-        10
-      );
-    }, this.pacmanGhostGap);
+      this.playAnimation(this.ghost);
+    }, this.characterMovementSpeed * this.pacmanGhostGap);
   }
 
   generatePellets() {
@@ -646,6 +644,7 @@ class Pacman extends BgAnimation {
       this.ghost.sprites = this.ghost.scaredSprites;
       this.pacman.currentPathIndex = this.paths.length - 1;
       this.ghost.currentPathIndex = this.paths.length - 1;
+      requestAnimationFrame(() => this.playAnimation(this.pacman));
       return;
     }
 
@@ -661,6 +660,8 @@ class Pacman extends BgAnimation {
     if (character === this.pacman) {
       this.checkPelletCollision();
     }
+
+    requestAnimationFrame(() => this.playAnimation(character));
   }
 
   destroy() {
@@ -692,8 +693,7 @@ class Pacman extends BgAnimation {
 }
 
 let normalAnimation = new Normal();
-// let animations = [new Puzzle(), new FlappyBird(), new Pacman()];
-let animations = [new Puzzle()];
+let animations = [new Puzzle(), new FlappyBird(), new Pacman()];
 
 normalAnimation.destroy();
 animations.forEach((animation) => {
