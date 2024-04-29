@@ -673,8 +673,8 @@ class Pacman extends BgAnimation {
 
   checkGhostCollision() {
     if (
-      this.ghost.element.style.opacity !== 1 ||
-      this.pacman.element.style.opacity !== 1
+      this.ghost.element.style.opacity != 1 ||
+      this.pacman.element.style.opacity != 1
     ) {
       return;
     }
