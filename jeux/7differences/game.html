@@ -62,7 +62,7 @@
 
     <div id="gameover" class="modal" style="display: none;">
         <h2 data-i18n="game.gameover.title"></h2>
-        <p data-i18n="game.gameover.timetext"></p>
+        <p data-i18n="game.gameover.accuracytext"></p>
         <div class="buttons">
             <button onclick="nextPage()" data-i18n="game.gameover.next"></button>
             <button onclick="hideGameOver()" data-i18n="game.gameover.retry"></button>
@@ -81,7 +81,7 @@
     }
 
     function showGameOver() {
-        let gameover_text = translations["game.gameover.text"] + document.getElementById("accuracy").innerHTML;
+        let gameover_text = translations["game.gameover.accuracytext"] + document.getElementById("accuracy").innerHTML;
         document.querySelector("#gameover p").innerHTML = gameover_text
         document.getElementById("gameover").style.display = "block";
         hideGiveUp();
