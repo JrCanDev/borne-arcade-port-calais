@@ -201,6 +201,7 @@ main {
     background-color: var(--primary-color);
     color: var(--text-color-light);
     border: none;
+    overflow: hidden;
 }
 
 .modal-buttons button span {
@@ -229,7 +230,6 @@ button:active {
 
 #quiz-modal-button {
     font-size: 60px;
-    top: -4px;
 }
 
 .differences-name {
