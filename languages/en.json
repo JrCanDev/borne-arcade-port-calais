@@ -75,6 +75,7 @@
   "game.blindtest.question.1.incorrect1": "Dog",
   "game.blindtest.question.1.incorrect2": "Cat",
   "game.blindtest.question.1.incorrect3": "Cow",
+  "game.blindtest.question.1.explanation": "Seagull are seabirds known to live near the coasts. They are often found near ports and beaches.",
   "game.flappybird.name": "Flappy Bird",
   "game.flappybird.theme": "The crossings of the Channel",
   "game.flappybird.description": "Help the bird cross the English Channel by avoiding the obstacles in its path!",

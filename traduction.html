@@ -86,12 +86,17 @@
 
         #translation-area {
             display: none;
-            /* display: flex; */
+            /* display: flex */
+            align-items: center;
+            gap: 32px;
+        }
+
+        #translation-controls {
+            display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 16px;
-            min-height: 100vh;
         }
 
         #error-message {
@@ -126,6 +131,12 @@
             text-align: center;
             opacity: 0.6;
         }
+
+        #translation-missing-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
     </style>
 
     <title>Outil Traducteur Borne Port Calais</title>
@@ -154,16 +165,26 @@
             <pre></pre>
         </div>
         <div id="translation-area">
-            <select id="translation-keys"
-                title="Vous devez sauvegarder ou abandonner la traduction actuelle avant de changer la clé">
-                <!-- Rempli avec JavaScript -->
-            </select>
-            <div id="translation-values">
-                <!-- Rempli avec JavaScript -->
+            <div id="translation-controls">
+                <select id="translation-keys"
+                    title="Vous devez sauvegarder ou abandonner la traduction actuelle avant de changer la clé">
+                    <!-- Rempli avec JavaScript -->
+                </select>
+                <div id="translation-values">
+                    <!-- Rempli avec JavaScript -->
+                </div>
+                <button id="save-translation">Sauvegarder</button>
+                <button id="discard-translation">Abandonner</button>
+                <button id="download-translations">Télécharger</button>
             </div>
-            <button id="save-translation">Sauvegarder</button>
-            <button id="discard-translation">Abandonner</button>
-            <button id="download-translations">Télécharger</button>
+            <div id="translation-info">
+                <div id="translation-missing">
+                    <h2>Traductions manquantes</h2>
+                    <ul id="translation-missing-list">
+                        <!-- Rempli avec JavaScript -->
+                    </ul>
+                </div>
+            </div>
         </div>
     </main>
 </body>
@@ -194,6 +215,33 @@
             const response = await fetch(`languages/${locale}.json`);
             const translations = await response.json();
             localStorage.setItem(`translations_${locale}`, JSON.stringify(translations));
+        }
+    }
+
+    function checkMissingTranslations() {
+        const missingElement = document.getElementById("translation-missing");
+        const missingList = document.getElementById("translation-missing-list");
+        missingList.innerHTML = "";
+
+        let found = false;
+
+        const keys = getTranslationKeys();
+        for (const key of keys) {
+            for (const locale of locales) {
+                const translation = getTranslation(locale, key);
+                if (!translation) {
+                    found = true;
+                    const li = document.createElement("li");
+                    li.textContent = `${locale} - ${key}`;
+                    missingList.appendChild(li);
+                }
+            }
+        }
+
+        if (found) {
+            missingElement.style.display = "block";
+        } else {
+            missingElement.style.display = "none";
         }
     }
 
@@ -234,6 +282,7 @@
                 document.getElementById("error-message").style.display = "block";
                 document.getElementById("translation-area").style.display = "none";
             }
+            checkMissingTranslations();
         }).catch((e) => {
             document.getElementById("error-message").style.display = "block";
             document.getElementById("translation-area").style.display = "none";
@@ -267,6 +316,7 @@
         }
 
         document.getElementById("translation-keys").disabled = false;
+        checkMissingTranslations();
     });
 
     document.getElementById("download-translations").addEventListener("click", () => {
