@@ -1,7 +1,18 @@
-const pixelSize = 1000;
-const pieceSize = 150;
-const puzzleSizeWidth = 5;
-const puzzleSizeHeight = 3;
+const puzzles = [
+  {
+    pixelSize: 1000,
+    pieceSize: 150,
+    puzzleSizeWidth: 5,
+    puzzleSizeHeight: 3,
+    image: "img/puzzle1",
+  },
+
+];
+
+const nextButton = document.getElementById("next-puzzle");
+const puzzleContainer = document.getElementById("puzzle");
+
+let currentPuzzleIndex = 0;
 
 let timeToSolve = NaN;
 let gameOver = false;
@@ -9,74 +20,91 @@ let score = Infinity;
 let highscore = parseInt(localStorage.getItem("puzzle")) || 86399000;
 
 function updateHighscoreDisplay() {
-    let prettyTimeHighscore = new Date(highscore).toISOString().substr(11, 8);
-    
-    document.getElementById("highscore").innerHTML = prettyTimeHighscore;
+  let prettyTimeHighscore = new Date(highscore).toISOString().substr(11, 8);
+
+  document.getElementById("highscore").innerHTML = prettyTimeHighscore;
 }
 
- getImageWithAvailableExtension("img/puzzle").then((puzzle) => {
-  const background = new headbreaker.Canvas("puzzle", {
-    width: pixelSize,
-    height: pixelSize,
-    pieceSize: pieceSize,
-    proximity: pieceSize / puzzleSizeWidth,
-    borderFill: 0,
-    strokeWidth: 2,
-    lineSoftness: 0.0,
-    image: puzzle,
-    outline: new headbreaker.outline.Rounded(),
-    preventOffstageDrag: true,
-    fixed: true,
-  });
+function initPuzzle(puzzle) {
+  nextButton.style.display = "none";
+  puzzleContainer.style.backgroundImage = "none";
 
-  background.adjustImagesToPuzzleHeight();
-  background.autogenerate({
-    horizontalPiecesCount: puzzleSizeWidth,
-    verticalPiecesCount:puzzleSizeHeight,
-  });
-  background.shuffle(0.8);
+  getImageWithAvailableExtension(puzzle.image).then((puzzleImage) => {
+    const background = new headbreaker.Canvas("puzzle", {
+      width: puzzle.pixelSize,
+      height: puzzle.pixelSize,
+      pieceSize: puzzle.pieceSize,
+      proximity: puzzle.pieceSize / puzzle.puzzleSizeWidth,
+      borderFill: 0,
+      strokeWidth: 2,
+      lineSoftness: 0.0,
+      image: puzzleImage,
+      outline: new headbreaker.outline.Rounded(),
+      preventOffstageDrag: true,
+      fixed: true,
+    });
 
-  background.draw();
-
-  document.getElementById("restart-button").addEventListener("click", () => {
-    if (gameOver) {
-      return;
-    }
+    background.adjustImagesToPuzzleHeight();
+    background.autogenerate({
+      horizontalPiecesCount: puzzle.puzzleSizeWidth,
+      verticalPiecesCount: puzzle.puzzleSizeHeight,
+    });
     background.shuffle(0.8);
-    background.redraw();
-    timeToSolve = NaN;
-    score = Infinity;
-    document.getElementById("score").innerHTML = "00:00:00";
+
+    background.draw();
+
+    document.getElementById("restart-button").addEventListener("click", () => {
+      if (gameOver) {
+        return;
+      }
+      background.shuffle(0.8);
+      background.redraw();
+    });
+
+    background.onConnect(() => {
+      if (isNaN(timeToSolve)) {
+        timeToSolve = new Date().getTime();
+      }
+    });
+
+    background.attachSolvedValidator();
+    background.onValid(() => {
+      nextButton.style.opacity = 0;
+      puzzleContainer.style.opacity = 0;
+
+      nextButton.style.display = "block";
+
+      setTimeout(() => {
+        background.clear();
+        nextButton.style.opacity = 1;
+        puzzleContainer.style.opacity = 1;
+        puzzleContainer.style.backgroundImage = `url('${puzzleImage.src}')`;
+      }, 1000);
+    });
   });
+}
 
-  background.onConnect(() => {
-    if (isNaN(timeToSolve)) {
-      timeToSolve = new Date().getTime();
-    }
-  });
+nextButton.addEventListener("click", () => {
+  currentPuzzleIndex++;
 
-  background.attachSolvedValidator();
-  background.onValid(() => {
-    gameOver = true;
-    if (score < highscore) {
-      highscore = score;
-      localStorage.setItem("puzzle", score);
-    }
-    updateHighscoreDisplay();
-    let puzzle = document.getElementById("puzzle");
-    puzzle.style.opacity = 0;
-
-    setTimeout(() => {
-      background.clear();
-      puzzle.style.opacity = 1;
-      puzzle.style.backgroundImage = "url('puzzle.jpg')";
-    }, 1000);
-
-    setTimeout(() => {
-      showGameOver();
-    }, 3000);
-  });
+  if (currentPuzzleIndex >= puzzles.length) {
+    nextButton.style.opacity = 0;
+    gameover();
+    return;
+  }
+  
+  initPuzzle(puzzles[currentPuzzleIndex]);
 });
+
+function gameover() {
+  gameOver = true;
+  if (score < highscore) {
+    highscore = score;
+    localStorage.setItem("puzzle", score);
+  }
+  updateHighscoreDisplay();
+  showGameOver();
+}
 
 setInterval(() => {
   if (!isNaN(timeToSolve) && !gameOver) {
@@ -91,5 +119,6 @@ setInterval(() => {
   }
 }, 100);
 
-updateHighscoreDisplay()
+updateHighscoreDisplay();
 document.getElementById("score").innerHTML = "00:00:00";
+initPuzzle(puzzles[currentPuzzleIndex]);

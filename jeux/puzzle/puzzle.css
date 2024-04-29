@@ -1,8 +1,22 @@
+#game-container {
+    position: relative;
+}
+
 #puzzle {
     transition: opacity 1s linear;
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
+}
+
+#next-puzzle {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 20%;
+    filter: drop-shadow(0 0 5px gray);
+    animation: animatedArrow 1s infinite;
+    transition: opacity 1s linear;
 }
 
 #restart-button {
