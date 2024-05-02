@@ -1,4 +1,4 @@
-const BACKGROUND_IMAGE = findImageWithAvailableExtension("img/bg");
+const BACKGROUND_IMAGE = findImageWithAvailableExtension("img/path");
 const PATH_IMAGE = findImageWithAvailableExtension("img/path");
 const CHARACTER_IMAGE = findImageWithAvailableExtension("img/character");
 const DEBUG = true;
