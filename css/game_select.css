@@ -226,6 +226,7 @@ button:active {
 .quiz-name {
     font-family: Borel;
     height: 47px;
+    font-size: 32px;
 }
 
 #quiz-modal-button {
@@ -272,12 +273,12 @@ button:active {
 }
 
 .puzzle-name {
-    font-family: FontsBombJigsaw;
+    font-family: "Rampart One";
     font-size: 36px;
 }
 
 .guesswho-name {
-    font-family: Patrickhand;
+    font-family: Workbench;
     font-size: 38px;
 }
 
@@ -292,7 +293,7 @@ button:active {
 }
 
 .flappybird-name {
-    font-family: Featheredflight;
+    font-family: Copyduck;
     font-size: 34px;
 }
 
