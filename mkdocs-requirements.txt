@@ -1,0 +1,1 @@
+mkdocs-print-site-plugin==2.4.0
