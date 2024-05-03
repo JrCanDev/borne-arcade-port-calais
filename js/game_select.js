@@ -1,6 +1,4 @@
 const SWIPE_HINT_COOLDOWN = 5000;
-const swipeAnimationElement = document.getElementById("swipe-animation");
-const mainElement = document.querySelector("main");
 
 const setSwipeAnimationOpacity = (opacity, delay = 0) =>
   delay === 0
@@ -8,6 +6,9 @@ const setSwipeAnimationOpacity = (opacity, delay = 0) =>
     : setTimeout(() => (swipeAnimationElement.style.opacity = opacity), delay);
 
 window.onload = () => {
+  window.swipeAnimationElement = document.getElementById("swipe-animation");
+  window.mainElement = document.querySelector("main");
+
   let timeout = setSwipeAnimationOpacity(1, SWIPE_HINT_COOLDOWN);
 
   mainElement.addEventListener("scroll", () => {
