@@ -1,7 +1,3 @@
-const BACKGROUND_IMAGE = findImageWithAvailableExtension("img/path");
-const PATH_IMAGE = findImageWithAvailableExtension("img/path");
-const CHARACTER_IMAGE = findImageWithAvailableExtension("img/character");
-const DEBUG = true;
 // Path image:
 // Black = wall
 // Red = start
@@ -243,7 +239,11 @@ class Maze {
   }
 }
 
-window.onload = function () {
+window.onload = async function () {
+  window.BACKGROUND_IMAGE = await findImageWithAvailableExtension("img/path");
+  window.PATH_IMAGE = await findImageWithAvailableExtension("img/path");
+  window.CHARACTER_IMAGE = await findImageWithAvailableExtension("img/character");
+  window.DEBUG = true;
 
   function onGoalReached() {
     alert("You reached the goal!");

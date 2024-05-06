@@ -18,23 +18,23 @@ setInterval(function () {
   inactivity_timer++;
   if (inactivity_timer >= INACTIVITY_TIME) {
     redirectToIndex();
-    resetInactivityTimer() ;
+    resetInactivityTimer();
   }
 }, 1000);
 
 function redirectToIndex() {
   var path = window.location.pathname;
-  var pathParts = path.split('/');
-  
-  if (pathParts[pathParts.length - 1] === 'index.html') {
+  var pathParts = path.split("/");
+
+  if (pathParts[pathParts.length - 1] === "index.html") {
     return;
   }
-  
+
   (async function checkAndRedirect() {
     for (var i = pathParts.length; i >= 0; i--) {
-      var newPath = pathParts.slice(0, i).join('/') + '/index.html';
+      var newPath = pathParts.slice(0, i).join("/") + "/index.html";
       try {
-        let response = await fetch(newPath, { method: 'HEAD' });
+        let response = await fetch(newPath, { method: "HEAD" });
         if (response.ok) {
           window.location.href = newPath;
           break;
@@ -62,7 +62,14 @@ window.addEventListener("contextmenu", function (e) {
 });
 
 function handleImageError(imgElement) {
-  console.error(`No image found for ${imgElement.src}, trying with other extensions`);
+  if (imgElement.retryCount >= 2) {
+    console.error(`No image found for ${imgElement.src}`);
+    return;
+  }
+  console.error(
+    `No image found for ${imgElement.src}, trying with other extensions`
+  );
+  imgElement.retryCount = imgElement.retryCount + 1 || 0;
   img_base_path = imgElement.src.split(".")[0];
   setImageWithAvailableExtension(imgElement, img_base_path);
 }
