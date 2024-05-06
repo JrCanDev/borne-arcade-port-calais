@@ -222,8 +222,6 @@ class Pacman {
   }
 
   kill() {
-    playDieSound();
-
     LOCK = true;
     PACMAN.dead = true;
     stop();
@@ -283,18 +281,14 @@ class Pacman {
           if (type === "s") {
             setSuperBubbleOnXY(testX, testY, "1");
             score(SCORE_SUPER_BUBBLE);
-            playEatPillSound();
             affraidGhosts();
           } else {
             score(SCORE_BUBBLE);
-            playEatingSound();
           }
           BUBBLES_COUNTER--;
           if (BUBBLES_COUNTER === 0) {
             win();
           }
-        } else {
-          stopEatingSound();
         }
       }
     }

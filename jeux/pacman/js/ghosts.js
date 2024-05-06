@@ -100,14 +100,11 @@ class Ghost {
       this.stop();
       this.state = 0;
       this.move();
-      testStateGhosts()
     }
   }
   
   startEat() {
     if (!LOCK) {
-      playEatGhostSound();
-
       LOCK = true;
 
       if (this.afraidTimer) {
@@ -125,8 +122,6 @@ class Ghost {
   }
 
   eat() {
-    playGhostEatenSound();
-
     if (this.state === 1) {
       $("#board span.combo").remove();
       this.state = -1;
@@ -147,7 +142,6 @@ class Ghost {
       this.stop();
       this.state = 0;
       this.move();
-      testStateGhosts();
     }
   }
 
@@ -485,25 +479,9 @@ function drawGhosts() {
 }
 
 function affraidGhosts() {
-  playWazaSound();
-
   SCORE_GHOST_COMBO = 200;
 
   Object.values(GHOSTS).forEach((ghost) => ghost.affraid());
-}
-
-function testStateGhosts() {
-  if (
-    Object.values(GHOSTS).some((ghost) => ghost.state === 1)
-  ) {
-    playWazaSound();
-  } else if (
-    Object.values(GHOSTS).some((ghost) => ghost.state === -1)
-  ) {
-    playGhostEatenSound();
-  } else {
-    playSirenSound();
-  }
 }
 
 function moveGhosts() {

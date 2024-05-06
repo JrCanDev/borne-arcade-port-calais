@@ -29,7 +29,6 @@
     <script type="text/javascript" src="js/fruits.js"></script>
     <script type="text/javascript" src="js/pacman.js"></script>
     <script type="text/javascript" src="js/ghosts.js"></script>
-    <script type="text/javascript" src="js/sound.js"></script>
 </head>
 
 <body>
@@ -150,8 +149,6 @@
     var GAMEOVER = true;
 
     $(document).ready(function () {
-        loadAllSound();
-
         $(document).keydown(function (e) {
             if (PACMAN.dead && !LOCK) {
                 PACMAN.erase();

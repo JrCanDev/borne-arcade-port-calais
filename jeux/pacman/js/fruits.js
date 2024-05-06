@@ -68,8 +68,6 @@ function getLevelFruitsCanvasContext() {
 }
 
 function eatFruit() {
-  playEatFruitSound();
-
   var s = FRUITS[FRUIT] ? FRUITS[FRUIT].points : 0;
 
   score(s, "fruit");
