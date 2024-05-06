@@ -240,10 +240,10 @@ class Maze {
 }
 
 window.onload = async function () {
-  window.BACKGROUND_IMAGE = await findImageWithAvailableExtension("img/path");
+  window.BACKGROUND_IMAGE = await findImageWithAvailableExtension("img/bg");
   window.PATH_IMAGE = await findImageWithAvailableExtension("img/path");
   window.CHARACTER_IMAGE = await findImageWithAvailableExtension("img/character");
-  window.DEBUG = true;
+  window.DEBUG = false;
 
   function onGoalReached() {
     alert("You reached the goal!");
