@@ -1,12 +1,25 @@
 const puzzles = [
   {
     pixelSize: 1000,
-    pieceSize: 150,
-    puzzleSizeWidth: 5,
+    pieceSize: 200,
+    puzzleSizeWidth: 4,
     puzzleSizeHeight: 3,
     image: "img/puzzle1",
   },
-
+  {
+    pixelSize: 1000,
+    pieceSize: 165,
+    puzzleSizeWidth: 5,
+    puzzleSizeHeight: 4,
+    image: "img/puzzle2",
+  },
+  {
+    pixelSize: 1000,
+    pieceSize: 150,
+    puzzleSizeWidth: 5,
+    puzzleSizeHeight: 5,
+    image: "img/puzzle3",
+  }
 ];
 
 const nextButton = document.getElementById("next-puzzle");
@@ -49,7 +62,7 @@ function initPuzzle(puzzle) {
       horizontalPiecesCount: puzzle.puzzleSizeWidth,
       verticalPiecesCount: puzzle.puzzleSizeHeight,
     });
-    background.shuffle(0.8);
+    // background.shuffle(0.8);
 
     background.draw();
 
