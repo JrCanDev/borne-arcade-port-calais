@@ -7,7 +7,9 @@ theme: readthedocs
 nav:
   - Accueil: "index.md"
   - "Remise à Zéro des Scores": "remiseazero.md"
-  - "Outil de Traduction": "outiltraduction.md"
+  - "Outils":
+    - "Outil de Traduction": "outils/traduction.md"
+    - "Outil d'optimisation des images": "outils/optimisation.md"
   - "Documentation au format imprimable": "print_page"
   - "Mise en marche":
       - "Mise en marche": "miseenmarche/index.md"

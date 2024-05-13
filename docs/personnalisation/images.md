@@ -15,3 +15,7 @@ Il est important que les images que vous utilisez respectent les licences des im
 ## Taille et Résolution des Images
 
 Lorsque vous remplacez les images, assurez-vous que les nouvelles images ont une taille et une résolution appropriées pour l'application. Les images trop grandes ou trop petites peuvent ne pas s'afficher correctement dans l'application, ou prendre trop de temps à charger.
+
+## Optimisation des Images
+
+Certaines images peuvent être optimisées pour réduire leur taille et améliorer la vitesse de chargement de l'application. Vous pouvez utiliser l'outil d'optimisation des images fourni avec le projet pour optimiser les images. Consultez la [documentation sur l'optimisation des images](../outils/optimisation.md) pour plus d'informations sur l'utilisation de cet outil.
