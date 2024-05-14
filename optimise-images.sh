@@ -63,6 +63,22 @@ check_executables() {
 # Function to resize images
 resize_images() {
     echo "Resizing images..."
+    echo "> Resizing index background image..."
+    index_bg="img/index-bg*"
+    convert $index_bg -resize x1350 $index_bg > /dev/null;
+
+    echo "> Resizing intro background image..."
+    intro_bg="img/intro-bg*"
+    convert $intro_bg -resize 1920x1080\> $intro_bg > /dev/null;
+
+    echo "> Resizing logos..."
+    for img in img/logo*; do
+        if [[ $img == *.svg ]]; then
+            continue
+        fi
+        convert $img -resize 512x512\> $img > /dev/null;
+    done
+
     echo "> Resizing info panels..."
     for img in img/*-top.* img/*-bottom.*; do
         convert $img -resize x372 $img > /dev/null;
