@@ -309,7 +309,6 @@ button:active {
 }
 
 #swipe-animation img {
-    width: 192px;
     height: 192px;
     filter: invert(100%) drop-shadow(8px 8px 16px #000)
 }
