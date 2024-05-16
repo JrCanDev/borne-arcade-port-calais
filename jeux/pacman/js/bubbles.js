@@ -5,7 +5,7 @@ var BUBBLES_X_END = 518;
 var BUBBLES_GAP = (BUBBLES_X_END - BUBBLES_X_START) / 25;
 var BUBBLES_Y_START = 26;
 var BUBBLES_Y_END = 522;
-var BUBBLES_SIZE = 6;
+var BUBBLES_SIZE = 12;
 var BUBBLES_COUNTER = 0;
 
 var SUPER_BUBBLES = [];
@@ -104,7 +104,7 @@ function blinkSuperBubbles() {
   if (SUPER_BUBBLES_BLINK === false) {
     SUPER_BUBBLES_BLINK = true;
     SUPER_BUBBLES_BLINK_TIMER = setInterval(
-      "blinkSuperBubbles()",
+      blinkSuperBubbles,
       SUPER_BUBBLES_BLINK_SPEED
     );
   } else {
@@ -177,7 +177,7 @@ function eraseBubble(t, x, y) {
     size = BUBBLES_SIZE;
   }
 
-  ctx.clearRect(x - size, y - size, (size + 1) * 2, (size + 1) * 2);
+  ctx.clearRect(x - size, y - size, (size - 1) * 2, (size - 1) * 2);
 }
 
 function isSuperBubble(line, bubble) {
