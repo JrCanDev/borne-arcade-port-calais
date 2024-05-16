@@ -1,10 +1,30 @@
 DIFFERENCE_COUNT = 7;
+COUNTDOWN_SECONDS = 5;
 
-window.onload = function() {
+window.onload = async function() {
+    let ORIGINAL = await findImageWithAvailableExtension("img/original");
+    let MODIFIED = await findImageWithAvailableExtension("img/modified");
     let ACCURACY_COUNTER = document.getElementById("accuracy");
     let FOUND_COUNTER = document.getElementById("found");
+    let SHOWN_IMAGE = document.getElementById("diff-img");
+    let COUNTDOWN_COUNTER = document.getElementById("countdown");
     let guesses = 0;
     let found = 0;
+
+    SHOWN_IMAGE.src = ORIGINAL;
+    
+    let countdown = COUNTDOWN_SECONDS;
+    let countdownInterval = setInterval(function() {
+        COUNTDOWN_COUNTER.innerHTML = getTranslation("game.7differences.memorise") + "\n" + countdown;
+        countdown--;
+        if (countdown < 0) {
+            SHOWN_IMAGE.src = MODIFIED;
+            SHOWN_IMAGE.classList.add('slide-in');
+            clearInterval(countdownInterval);
+            COUNTDOWN_COUNTER.innerHTML = "";
+        }
+    }, 1000);
+
 
     function updateAccuracyCounter() {
         ACCURACY_COUNTER.innerHTML = Math.round((found / guesses) * 100) + "%";
@@ -23,7 +43,6 @@ window.onload = function() {
 
     let differences = []
     for (let i = 0; i < DIFFERENCE_COUNT; i++) {
-        // difference1
         differences.push(document.getElementById('difference' + (i + 1)));
     }
 
