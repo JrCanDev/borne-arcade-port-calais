@@ -56,6 +56,8 @@
   "game.tetris.theme.bottomText": "Ayant duré six ans, le chantier comprend :\n- La création d'une digue de protection de 3 km \n- La création d'un bassin portuaire d'environ 90 ha (110 ha à terme)\n- La réalisation de nouveaux terre-pleins qui accueilleront les espaces nécessaires à une intégration efficiente des infrastructures intermodales rail-route-mer.\n- La réalisation de 3 postes ferries et allongement d'un poste de chargement Roll on - Roll off\n- La mise en place d'un nouveau schéma de circulation\n- La réalisation des zones et bâtiments liés aux contrôles",
   "game.maze.name": "Labyrinthe",
   "game.maze.theme": "Le fonctionnement du port",
+  "game.maze.theme.topText": "Le port de Calais est le 1er port français de voyageurs. Il met à disposition des voyageurs, des services et infrastructures adpatés pour préparer au mieux votre traversée. Trois compagnies de ferry proposent chaque jour des traversées au départ de Calais (jusqu'à 50 départs par jour).",
+  "game.maze.theme.bottomText": "La Grande-Bretagne restant en dehors de l'Espace Schengen, il est vivement recommandé de vous conformer à la législation Britannique.\nL'enregistrement des passagers piétons et des véhicules se fait au moins 60 minutes avant l'embarquement (hors contrôle PAF et UK Border Force).\nDes contrôles d'identité aux frontières sont réalisés à l'issue de l'enregistrement par la Police aux Frontières et UK Border Force (UKBF)",
   "game.maze.description": "Aidez le voyageur à arriver à son bateau en passant par les différents services du port ! N'arrivez pas en retard !",
   "game.guesswho.name": "Devine Qui",
   "game.guesswho.theme": "Les acteurs",

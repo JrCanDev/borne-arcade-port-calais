@@ -56,6 +56,8 @@
   "game.tetris.theme.bottomText": "The work, which spanned six years, included the following tasks:\n- Constructing a 3 km long protective dyke and a counter-jetty\n- Creating a port basin of approximately 90 hectares (eventually 110)\n- Building new quayage to accommodate the efficient integration of intermodal rail-road-sea infrastructure\n- Constructing three ferry berths and extending a Roll-on/Roll-off loading berth\n- Implementing a new traffic scheme\n- Constructing areas and buildings for inspections",
   "game.maze.name": "Maze",
   "game.maze.theme": "The operation of the port",
+  "game.maze.theme.topText": "The port of Calais is the number one French port for passengers. It provides passengers with services and infrastructure to make your crossing as smooth as possible. Three ferry companies offer daily crossings from Calais (up to 50 departures per day).",
+  "game.maze.theme.bottomText": "As the UK remains outside the Schengen Area, it is strongly recommended that you comply with British legislation.\nPassenger and vehicle registration takes place at least 60 minutes before boarding (excluding PAF and UK Border Force checks). Identity checks at the borders are carried out after registration by the Border Police and UK Border Force (UKBF)",
   "game.maze.description": "Guide our intrepid traveler to his boat by navigating the bustling port of Calais! Remember, time waits for no one!",
   "game.guesswho.name": "Guess Who",
   "game.guesswho.theme": "The Port Crew",
