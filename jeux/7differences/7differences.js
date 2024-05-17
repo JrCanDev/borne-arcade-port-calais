@@ -2,16 +2,13 @@ DIFFERENCE_COUNT = 7;
 COUNTDOWN_SECONDS = 5;
 
 window.onload = async function () {
-  let ORIGINAL = await findImageWithAvailableExtension("img/original");
-  let MODIFIED = await findImageWithAvailableExtension("img/modified");
+  let ORIGINAL_IMAGE = document.getElementById("original-img");
+  let MODIFIED_IMAGE = document.getElementById("modified-img");
   let ACCURACY_COUNTER = document.getElementById("accuracy");
   let FOUND_COUNTER = document.getElementById("found");
-  let SHOWN_IMAGE = document.getElementById("diff-img");
   let COUNTDOWN_COUNTER = document.getElementById("countdown");
   let guesses = 0;
   let found = 0;
-
-  SHOWN_IMAGE.src = ORIGINAL;
 
   let countdown = COUNTDOWN_SECONDS;
   let countdownInterval = setInterval(function () {
@@ -32,8 +29,12 @@ window.onload = async function () {
   }
 
   function onMemorisationEnd() {
-    SHOWN_IMAGE.src = MODIFIED;
-    SHOWN_IMAGE.classList.add("slide-in");
+    ORIGINAL_IMAGE.addEventListener('animationend', () => {
+        ORIGINAL_IMAGE.style.display = 'none';
+    });
+    ORIGINAL_IMAGE.classList.add("slide-out");
+    MODIFIED_IMAGE.classList.add("slide-in");
+
     clearInterval(countdownInterval);
     COUNTDOWN_COUNTER.innerHTML = "";
 

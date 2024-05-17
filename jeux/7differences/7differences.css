@@ -6,22 +6,41 @@
     0% {
         transform: translateY(100%);
     }
+
     100% {
         transform: translateY(0);
     }
 }
 
-.slide-in {
-    animation: slideInFromBottom 1s ease-out;
+@keyframes slideOutToTop {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-100%);
+    }
 }
 
-#diff-img {
+.slide-out {
+    animation: slideOutToTop 1s ease-in;
+}
+
+.slide-in {
+    animation: slideInFromBottom 1s ease-in;
+}
+
+#original-img, #modified-img {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+#original-img {
+    z-index: 1;
 }
 
 #countdown {
