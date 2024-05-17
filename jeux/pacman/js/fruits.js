@@ -24,39 +24,45 @@ function initFruits() {
   }
 
   var ctx = getLevelFruitsCanvasContext();
-  const FRUITS = {
-    "cherry": {points: 100, upTo: 1},
-    "strawberry": {points: 300, upTo: 2},
-    "orange": {points: 500, upTo: 4},
-    "apple": {points: 700, upTo: 6},
-    "melon": {points: 1000, upTo: 8},
-    "galboss": {points: 2000, upTo: 10},
-    "bell": {points: 3000, upTo: 12},
-    "key": {points: 5000, upTo: Infinity},
-}
-  const FRUIT_CANVAS_HEIGHT = 60;
-  const FRUIT_CANVAS_WIDTH = FRUIT_CANVAS_HEIGHT * Object.keys(FRUITS).length;
-  const FRUIT_CANVAS_SIZE = 50;
-  const FRUIT_CANVAS_GAP = 8;
+  FRUITS = {
+    cherry: { points: 100, upTo: 1 },
+    strawberry: { points: 300, upTo: 2 },
+    orange: { points: 500, upTo: 4 },
+    apple: { points: 700, upTo: 6 },
+    melon: { points: 1000, upTo: 8 },
+    galboss: { points: 2000, upTo: 10 },
+    bell: { points: 3000, upTo: 12 },
+    key: { points: 5000, upTo: Infinity },
+  };
+  FRUIT_CANVAS_HEIGHT = 60;
+  FRUIT_CANVAS_WIDTH = FRUIT_CANVAS_HEIGHT * Object.keys(FRUITS).length;
+  FRUIT_CANVAS_SIZE = 50;
+  FRUIT_CANVAS_GAP = 8;
 
   ctx.clearRect(0, 0, FRUIT_CANVAS_WIDTH, FRUIT_CANVAS_HEIGHT);
-  
-  var x = FRUIT_CANVAS_WIDTH - FRUIT_CANVAS_SIZE;
-  var y = FRUIT_CANVAS_HEIGHT/2;
 
-  let level_fruits = []
+  var x = FRUIT_CANVAS_WIDTH - FRUIT_CANVAS_SIZE;
+  var y = FRUIT_CANVAS_HEIGHT / 2;
+
+  let level_fruits = [];
 
   // draw the level indicator fruits
   for (let i = 0; i < LEVEL; i++) {
-    let fruit = Object.keys(FRUITS).find(fruit => FRUITS[fruit].upTo > i);
+    let fruit = Object.keys(FRUITS).find((fruit) => FRUITS[fruit].upTo > i);
     level_fruits.push(fruit);
     if (level_fruits.length > 7) {
       level_fruits.shift();
     }
   }
-  
+
   for (let i = 0; i < level_fruits.length; i++) {
-    drawFruit(ctx, level_fruits[i], x - (i + 0.5) % 7 * (FRUIT_CANVAS_SIZE + FRUIT_CANVAS_GAP), y, FRUIT_CANVAS_SIZE);
+    drawFruit(
+      ctx,
+      level_fruits[i],
+      x - ((i + 0.5) % 7) * (FRUIT_CANVAS_SIZE + FRUIT_CANVAS_GAP),
+      y,
+      FRUIT_CANVAS_SIZE
+    );
   }
 }
 
@@ -121,13 +127,7 @@ function eraseFruit() {
 function drawFruit(ctx, f, x, y, size) {
   ctx.save();
 
-  ctx.drawImage(
-    FRUIT_IMAGES[f],
-    x - size / 2,
-    y - size / 2,
-    size,
-    size
-  );
+  ctx.drawImage(FRUIT_IMAGES[f], x - size / 2, y - size / 2, size, size);
 
   ctx.restore();
 }
