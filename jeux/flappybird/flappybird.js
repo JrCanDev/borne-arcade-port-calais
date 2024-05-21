@@ -41,8 +41,8 @@ var canvas,
         this.velocity += this.gravity * deltaTime;
 
         this.y += this.velocity * deltaTime;
-        if (this.y >= height - s_fg.height - 10) {
-          this.y = height - s_fg.height - 10;
+        if (this.y >= height - s_fg.height + 5) {
+          this.y = height - s_fg.height + 10;
           if (currentstate === states.Game) currentstate = states.Score;
           this.velocity = this._jump;
         }
@@ -153,7 +153,7 @@ function onpress(evt) {
   }
 }
 
-function main() {
+async function main() {
   currentstate = states.Splash;
   canvas = document.getElementById("viewport");
   width = canvas.width;
@@ -165,17 +165,8 @@ function main() {
   canvas.height = height;
   ctx = canvas.getContext("2d");
 
-  getImageWithAvailableExtension("img/sheet").then((img) => {
-    initSprites(img);
-    ctx.fillStyle = s_bg.color;
-    okbtn = {
-      x: (width - s_buttons.Ok.width) / 2,
-      y: height - 200,
-      width: s_buttons.Ok.width,
-      height: s_buttons.Ok.height,
-    };
-    run();
-  });
+  await initSprites();
+  run();
 }
 
 function run() {
@@ -195,7 +186,7 @@ function update() {
   frames += deltaTime;
 
   if (currentstate !== states.Score) {
-    fgpos = (fgpos - 2 * deltaTime) % 14;
+    fgpos = (fgpos - 2 * deltaTime) % s_fg.width;
   }
   if (currentstate === states.Game) {
     pipes.update();
@@ -206,14 +197,14 @@ function update() {
 
 function render() {
   ctx.fillRect(0, 0, width, height);
-  s_bg.draw(ctx, 0, height - s_bg.height);
-  s_bg.draw(ctx, s_bg.width, height - s_bg.height);
+  s_bg.draw(ctx, 0, 0);
 
   bird.draw(ctx);
   pipes.draw(ctx);
 
   s_fg.draw(ctx, fgpos, height - s_fg.height);
-  s_fg.draw(ctx, fgpos + s_fg.width, height - s_fg.height);
+  s_fg.draw(ctx, fgpos + s_fg.width - 1, height - s_fg.height);
+  s_fg.draw(ctx, fgpos + s_fg.width*2 - 2, height - s_fg.height);
 
   var width2 = width / 2;
   if (currentstate === states.Splash) {
