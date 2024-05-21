@@ -9,7 +9,7 @@ var BUBBLES_SIZE = 12;
 var BUBBLES_COUNTER = 0;
 
 var SUPER_BUBBLES = [];
-var SUPER_BUBBLES_SIZE = 16;
+var SUPER_BUBBLES_SIZE = 24;
 var SUPER_BUBBLES_BLINK = false;
 var SUPER_BUBBLES_BLINK_STATE = 0;
 var SUPER_BUBBLES_BLINK_TIMER = -1;
@@ -172,7 +172,7 @@ function eraseBubble(t, x, y) {
 
   var size = "";
   if (t === "s") {
-    size = SUPER_BUBBLES_SIZE;
+    size = SUPER_BUBBLES_SIZE / 1.5;
   } else {
     size = BUBBLES_SIZE;
   }
