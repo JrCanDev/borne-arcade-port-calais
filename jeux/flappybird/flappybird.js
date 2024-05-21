@@ -68,11 +68,12 @@ var canvas,
   },
   pipes = {
     _pipes: [],
+    gap: 350,
     reset: function () {
       this._pipes = [];
     },
     update: function () {
-      if (frames % 90 <= 1) {
+      if (this._pipes.length === 0 || this.getLastPipe().x < this.gap) {
         var _y =
           height -
           (s_pipeSouth.height + s_fg.height + 120 + 200 * Math.random());
@@ -121,6 +122,10 @@ var canvas,
           len--;
         }
       }
+    },
+
+    getLastPipe: function () {
+      return this._pipes[this._pipes.length - 1];
     },
 
     draw: function (ctx) {
