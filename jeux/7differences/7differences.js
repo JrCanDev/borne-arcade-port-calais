@@ -1,5 +1,5 @@
 DIFFERENCE_COUNT = 7;
-COUNTDOWN_SECONDS = 5;
+MEMORISE_SECONDS = 5;
 
 window.onload = async function () {
   let ORIGINAL_IMAGE = document.getElementById("original-img");
@@ -10,15 +10,43 @@ window.onload = async function () {
   let guesses = 0;
   let found = 0;
 
-  let countdown = COUNTDOWN_SECONDS;
-  let countdownInterval = setInterval(function () {
-    COUNTDOWN_COUNTER.innerHTML =
-      getTranslation("game.7differences.memorise") + "\n" + countdown;
+  const GAME_STATES = {
+    MEMORISE: 0,
+    TRANSITION: 1,
+    GAME: 2,
+  };
+
+  let game_state = GAME_STATES.MEMORISE;
+
+  let countdown = MEMORISE_SECONDS;
+
+  function updateCountdown() {
     countdown--;
     if (countdown < 0) {
-      onMemorisationEnd();
+      countdown = 0;
     }
-  }, 1000);
+
+    switch (game_state) {
+      case GAME_STATES.MEMORISE:
+        COUNTDOWN_COUNTER.innerHTML =
+          getTranslation("game.7differences.memorise") + "\n" + countdown;
+        if (countdown === 0) {
+          onMemorisationEnd();
+          game_state = GAME_STATES.TRANSITION;
+          COUNTDOWN_COUNTER.innerHTML = "";
+        }
+        break;
+      case GAME_STATES.TRANSITION:
+        COUNTDOWN_COUNTER.innerHTML = countdown;
+        if (countdown === 0) {
+          game_state = GAME_STATES.GAME;
+          COUNTDOWN_COUNTER.innerHTML = "";
+        }
+        break;
+    }
+  }
+
+  let countdownInterval = setInterval(updateCountdown, 1000);
 
   function updateAccuracyCounter() {
     ACCURACY_COUNTER.innerHTML = Math.round((found / guesses) * 100) + "%";
@@ -29,14 +57,15 @@ window.onload = async function () {
   }
 
   function onMemorisationEnd() {
-    ORIGINAL_IMAGE.addEventListener('animationend', () => {
-        ORIGINAL_IMAGE.style.display = 'none';
+    ORIGINAL_IMAGE.addEventListener("animationend", () => {
+      ORIGINAL_IMAGE.style.display = "none";
     });
     ORIGINAL_IMAGE.classList.add("slide-out");
     MODIFIED_IMAGE.classList.add("slide-in");
-
-    clearInterval(countdownInterval);
-    COUNTDOWN_COUNTER.innerHTML = "";
+    // make countdown the value of slide-in animation duration
+    let style = window.getComputedStyle(MODIFIED_IMAGE);
+    let animationDuration = style.animationDuration;
+    countdown = parseFloat(animationDuration);
 
     let differences = [];
     for (let i = 0; i < DIFFERENCE_COUNT; i++) {

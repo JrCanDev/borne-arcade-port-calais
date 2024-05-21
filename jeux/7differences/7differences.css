@@ -4,7 +4,7 @@
 
 @keyframes slideInFromBottom {
     0% {
-        transform: translateY(100%);
+        transform: translateY(400%);
     }
 
     100% {
@@ -27,7 +27,7 @@
 }
 
 .slide-in {
-    animation: slideInFromBottom 1s ease-in;
+    animation: slideInFromBottom 4s ease-in;
 }
 
 #original-img, #modified-img {
