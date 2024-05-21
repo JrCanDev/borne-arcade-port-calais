@@ -39,6 +39,7 @@ window.onload = async function () {
       case GAME_STATES.TRANSITION:
         COUNTDOWN_COUNTER.innerHTML = countdown;
         if (countdown === 0) {
+          onStartAnimationEnd();
           game_state = GAME_STATES.GAME;
           COUNTDOWN_COUNTER.innerHTML = "";
         }
@@ -66,7 +67,9 @@ window.onload = async function () {
     let style = window.getComputedStyle(MODIFIED_IMAGE);
     let animationDuration = style.animationDuration;
     countdown = parseFloat(animationDuration);
+  }
 
+  function onStartAnimationEnd() {
     let differences = [];
     for (let i = 0; i < DIFFERENCE_COUNT; i++) {
       differences.push(document.getElementById("difference" + (i + 1)));
