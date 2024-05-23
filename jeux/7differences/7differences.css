@@ -22,12 +22,26 @@
     }
 }
 
+@keyframes slideInFromTop {
+    0% {
+        transform: translateY(-100%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
 .slide-out {
     animation: slideOutToTop 1s ease-in;
 }
 
 .slide-in {
     animation: slideInFromBottom 4s ease-in;
+}
+
+.slide-in-quick {
+    animation: slideInFromTop 1s ease-in;
 }
 
 #original-img, #modified-img {
@@ -45,12 +59,13 @@
 
 #countdown {
     z-index: 1;
-    color: black;
-    font-size: 32px;
+    color: #00000085;
+    top: 250px;
+    font-size: 40px;
     position: absolute;
-    top: 0;
     white-space: pre;
     text-align: center;
+    height: 100%;
 }
 
 #differences {
@@ -67,6 +82,7 @@
     border-radius: 10px;
     opacity: 0;
     transition: opacity 0.5s;
+    z-index: 100;
 }
 
 #difference1 {

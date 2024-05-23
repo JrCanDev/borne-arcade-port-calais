@@ -32,17 +32,19 @@ window.onload = async function () {
           getTranslation("game.7differences.memorise") + "\n" + countdown;
         if (countdown === 0) {
           onMemorisationEnd();
-          game_state = GAME_STATES.TRANSITION;
-          COUNTDOWN_COUNTER.innerHTML = "";
         }
         break;
       case GAME_STATES.TRANSITION:
         COUNTDOWN_COUNTER.innerHTML = countdown;
         if (countdown === 0) {
           onStartAnimationEnd();
-          game_state = GAME_STATES.GAME;
-          COUNTDOWN_COUNTER.innerHTML = "";
+        } else if (countdown === 1) {
+          COUNTDOWN_COUNTER.classList.remove("slide-in-quick");
+          COUNTDOWN_COUNTER.classList.add("slide-out");
         }
+        break;
+      default:
+        COUNTDOWN_COUNTER.innerHTML = "";
         break;
     }
   }
@@ -60,16 +62,29 @@ window.onload = async function () {
   function onMemorisationEnd() {
     ORIGINAL_IMAGE.addEventListener("animationend", () => {
       ORIGINAL_IMAGE.style.display = "none";
+      MODIFIED_IMAGE.style.display = "block";
     });
+    COUNTDOWN_COUNTER.addEventListener("animationend", () => {
+      COUNTDOWN_COUNTER.style.color = "black";
+      COUNTDOWN_COUNTER.style.fontSize = "64px";
+      COUNTDOWN_COUNTER.style.top = "400px";
+      COUNTDOWN_COUNTER.classList.add("slide-in-quick");
+      COUNTDOWN_COUNTER.removeEventListener("animationend", () => {});
+    });
+    COUNTDOWN_COUNTER.classList.add("slide-out");
     ORIGINAL_IMAGE.classList.add("slide-out");
     MODIFIED_IMAGE.classList.add("slide-in");
     // make countdown the value of slide-in animation duration
     let style = window.getComputedStyle(MODIFIED_IMAGE);
     let animationDuration = style.animationDuration;
     countdown = parseFloat(animationDuration);
+    game_state = GAME_STATES.TRANSITION;
   }
 
   function onStartAnimationEnd() {
+    game_state = GAME_STATES.GAME;
+    COUNTDOWN_COUNTER.innerHTML = "";
+
     let differences = [];
     for (let i = 0; i < DIFFERENCE_COUNT; i++) {
       differences.push(document.getElementById("difference" + (i + 1)));
@@ -100,5 +115,7 @@ window.onload = async function () {
           updateAccuracyCounter();
         }, 100);
       });
+
+    game_state = GAME_STATES.GAME;
   }
 };
