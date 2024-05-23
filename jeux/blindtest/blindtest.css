@@ -71,6 +71,8 @@
     padding: 16px 32px;
     background-color: var(--primary-color);
     max-width: 360px;
+    max-height: 300px;
+    text-align: center;
 }
 
 #answers p {

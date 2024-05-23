@@ -37,7 +37,6 @@ async function onLocaleChange() {
     };
     i++;
   }
-
   let keys = Object.keys(questions);
   let shuffled = {};
   keys.sort(() => Math.random() - 0.5);
@@ -109,6 +108,8 @@ function updateDisplay() {
 }
 
 function nextQuestion() {
+  explanation_img_elem.style.display = "none";
+  play_button_elem.style.display = "block";
   play_button_elem.classList.remove("wrong-answer");
   play_button_elem.classList.remove("correct-answer");
   question_elem.classList.add("zoomInOut");
@@ -119,7 +120,6 @@ function nextQuestion() {
     question_elem.style.margin = "auto";
     answers_elem.style.display = "none";
     explanation_elem.style.display = "none";
-    explanation_img_elem.style.display = "none";
     showGameOver();
     return;
   }
