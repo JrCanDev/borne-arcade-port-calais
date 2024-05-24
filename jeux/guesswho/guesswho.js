@@ -1,5 +1,6 @@
 const PIECE_SIZE = 110;
 const CANVAS_SIZE = 1026;
+const CHARACTERS = 3;
 const Y_POS = CANVAS_SIZE - PIECE_SIZE * 2;
 
 let timeToSolve = NaN;
@@ -11,6 +12,10 @@ function updateHighscoreDisplay() {
   let prettyTimeHighscore = new Date(highscore).toISOString().substr(11, 8);
 
   document.getElementById("highscore").innerHTML = prettyTimeHighscore;
+}
+
+function flipbits(bits) {
+  return bits.split("").reverse().join("");
 }
 
 updateHighscoreDisplay();
@@ -55,22 +60,27 @@ class Flat {
   }
 }
 
-var combinedImages = {};
-var image1 = new Image();
-var image1_solved = new Image();
-var image2 = new Image();
-var image2_solved = new Image();
-var image3 = new Image();
-var image3_solved = new Image();
+let combinedImages = {};
+let images = {};
+let solvedImages = {};
+let clothedImages = {};
+for (let i = 0; i < CHARACTERS; i++) {
+  images[i] = new Image();
+  solvedImages[i] = new Image();
+  clothedImages[i] = new Image();
+  setImageWithAvailableExtension(images[i], `img/guesswho${i + 1}`);
+  setImageWithAvailableExtension(
+    solvedImages[i],
+    `img/guesswho${i + 1}_solved`
+  );
+  setImageWithAvailableExtension(
+    clothedImages[i],
+    `img/guesswho${i + 1}_clothed`
+  );
+}
 
-setImageWithAvailableExtension(image1, "img/guesswho1");
-setImageWithAvailableExtension(image1_solved, "img/guesswho1_solved");
-setImageWithAvailableExtension(image2, "img/guesswho2");
-setImageWithAvailableExtension(image2_solved, "img/guesswho2_solved");
-setImageWithAvailableExtension(image3, "img/guesswho3");
-setImageWithAvailableExtension(image3_solved, "img/guesswho3_solved");
-
-let guessed = 0b000;
+let guessed = 0b000000000000000000000000;
+let clothed = [false, false, false];
 function onCombined() {
   const guesswho = new headbreaker.Canvas("guesswho", {
     width: CANVAS_SIZE,
@@ -88,9 +98,130 @@ function onCombined() {
   });
 
   function setImage() {
+    console.log("Setting image", guessed.toString(2));
+    console.log(combinedImages[guessed]);
     guesswho.imageMetadata.content = combinedImages[guessed];
     guesswho.refill();
     guesswho.redraw();
+  }
+
+  function placeItems() {
+    guesswho.sketchPiece({
+      structure: "TTTT",
+      metadata: {
+        id: "a1",
+        targetPosition: { x: PIECE_SIZE - 2, y: PIECE_SIZE - 2 },
+      },
+    });
+    guesswho.sketchPiece({
+      structure: "TTTT",
+      metadata: {
+        id: "c1",
+        targetPosition: { x: PIECE_SIZE * 3 - 2, y: PIECE_SIZE - 2 },
+      },
+    });
+    guesswho.sketchPiece({
+      structure: "TTTT",
+      metadata: {
+        id: "d1",
+        targetPosition: { x: PIECE_SIZE - 2, y: PIECE_SIZE * 2 - 2 },
+      },
+    });
+    guesswho.sketchPiece({
+      structure: "TTTT",
+      metadata: {
+        id: "f1",
+        targetPosition: { x: PIECE_SIZE * 3 - 2, y: PIECE_SIZE * 2 - 2 },
+      },
+    });
+
+    guesswho.sketchPiece({
+      structure: "TTTT",
+      metadata: {
+        id: "a2",
+        targetPosition: { x: PIECE_SIZE * 5 - 2, y: PIECE_SIZE - 2 },
+      },
+    });
+    guesswho.sketchPiece({
+      structure: "TTTT",
+      metadata: {
+        id: "c2",
+        targetPosition: { x: PIECE_SIZE * 7 - 2, y: PIECE_SIZE - 2 },
+      },
+    });
+    guesswho.sketchPiece({
+      structure: "TTTT",
+      metadata: {
+        id: "d2",
+        targetPosition: { x: PIECE_SIZE * 5 - 2, y: PIECE_SIZE * 2 - 2 },
+      },
+    });
+    guesswho.sketchPiece({
+      structure: "TTTT",
+      metadata: {
+        id: "f2",
+        targetPosition: { x: PIECE_SIZE * 7 - 2, y: PIECE_SIZE * 2 - 2 },
+      },
+    });
+
+    guesswho.sketchPiece({
+      structure: "TTTT",
+      metadata: {
+        id: "a3",
+        targetPosition: { x: PIECE_SIZE * 9 - 2, y: PIECE_SIZE - 2 },
+      },
+    });
+    guesswho.sketchPiece({
+      structure: "TTTT",
+      metadata: {
+        id: "c3",
+        targetPosition: { x: PIECE_SIZE * 11 - 2, y: PIECE_SIZE - 2 },
+      },
+    });
+    guesswho.sketchPiece({
+      structure: "TTTT",
+      metadata: {
+        id: "d3",
+        targetPosition: { x: PIECE_SIZE * 9 - 2, y: PIECE_SIZE * 2 - 2 },
+      },
+    });
+    guesswho.sketchPiece({
+      structure: "TTTT",
+      metadata: {
+        id: "f3",
+        targetPosition: { x: PIECE_SIZE * 11 - 2, y: PIECE_SIZE * 2 - 2 },
+      },
+    });
+
+    guesswho.puzzle.shuffle(CANVAS_SIZE, Y_POS - PIECE_SIZE * 2);
+  }
+
+  function placeClothes() {
+    guesswho.sketchPiece({
+      structure: "TTTT",
+      metadata: {
+        id: "C1",
+        targetPosition: { x: PIECE_SIZE * 4 - 2, y: PIECE_SIZE - 2 },
+      },
+    });
+
+    guesswho.sketchPiece({
+      structure: "TTTT",
+      metadata: {
+        id: "C2",
+        targetPosition: { x: PIECE_SIZE * 8 - 2, y: PIECE_SIZE - 2 },
+      },
+    });
+
+    guesswho.sketchPiece({
+      structure: "TTTT",
+      metadata: {
+        id: "C3",
+        targetPosition: { x: PIECE_SIZE * 12 - 2, y: PIECE_SIZE - 2 },
+      },
+    });
+
+    guesswho.puzzle.shuffle(CANVAS_SIZE, Y_POS - PIECE_SIZE * 2);
   }
 
   guesswho.adjustImagesToPuzzleHeight();
@@ -110,95 +241,8 @@ function onCombined() {
     },
   });
 
-  //Items that needs to be placed randomly
-  guesswho.sketchPiece({
-    structure: "TTTT",
-    metadata: {
-      id: "a1",
-      targetPosition: { x: PIECE_SIZE - 2, y: PIECE_SIZE - 2 },
-    },
-  });
-  guesswho.sketchPiece({
-    structure: "TTTT",
-    metadata: {
-      id: "c1",
-      targetPosition: { x: PIECE_SIZE * 3 - 2, y: PIECE_SIZE - 2 },
-    },
-  });
-  guesswho.sketchPiece({
-    structure: "TTTT",
-    metadata: {
-      id: "d1",
-      targetPosition: { x: PIECE_SIZE - 2, y: PIECE_SIZE * 2 - 2 },
-    },
-  });
-  guesswho.sketchPiece({
-    structure: "TTTT",
-    metadata: {
-      id: "f1",
-      targetPosition: { x: PIECE_SIZE * 3 - 2, y: PIECE_SIZE * 2 - 2 },
-    },
-  });
-
-  guesswho.sketchPiece({
-    structure: "TTTT",
-    metadata: {
-      id: "a2",
-      targetPosition: { x: PIECE_SIZE * 4 - 2, y: PIECE_SIZE - 2 },
-    },
-  });
-  guesswho.sketchPiece({
-    structure: "TTTT",
-    metadata: {
-      id: "c2",
-      targetPosition: { x: PIECE_SIZE * 6 - 2, y: PIECE_SIZE - 2 },
-    },
-  });
-  guesswho.sketchPiece({
-    structure: "TTTT",
-    metadata: {
-      id: "d2",
-      targetPosition: { x: PIECE_SIZE * 4 - 2, y: PIECE_SIZE * 2 - 2 },
-    },
-  });
-  guesswho.sketchPiece({
-    structure: "TTTT",
-    metadata: {
-      id: "f2",
-      targetPosition: { x: PIECE_SIZE * 6 - 2, y: PIECE_SIZE * 2 - 2 },
-    },
-  });
-
-  guesswho.sketchPiece({
-    structure: "TTTT",
-    metadata: {
-      id: "a3",
-      targetPosition: { x: PIECE_SIZE * 7 - 2, y: PIECE_SIZE - 2 },
-    },
-  });
-  guesswho.sketchPiece({
-    structure: "TTTT",
-    metadata: {
-      id: "c3",
-      targetPosition: { x: PIECE_SIZE * 9 - 2, y: PIECE_SIZE - 2 },
-    },
-  });
-  guesswho.sketchPiece({
-    structure: "TTTT",
-    metadata: {
-      id: "d3",
-      targetPosition: { x: PIECE_SIZE * 7 - 2, y: PIECE_SIZE * 2 - 2 },
-    },
-  });
-  guesswho.sketchPiece({
-    structure: "TTTT",
-    metadata: {
-      id: "f3",
-      targetPosition: { x: PIECE_SIZE * 9 - 2, y: PIECE_SIZE * 2 - 2 },
-    },
-  });
-
-  guesswho.puzzle.shuffle(CANVAS_SIZE, Y_POS - PIECE_SIZE * 2); //Place items randomly
+  placeClothes();
+  // placeItems();
 
   const SPACING = PIECE_SIZE * 2;
   const FIXED_COL_COUNT = 3;
@@ -236,7 +280,7 @@ function onCombined() {
     structure: "S-SS",
     metadata: {
       id: "b2",
-      targetPosition: { x: PIECE_SIZE * 5 - 2, y: PIECE_SIZE - 2 },
+      targetPosition: { x: PIECE_SIZE * 6 - 2, y: PIECE_SIZE - 2 },
       currentPosition: { ...FIXED_POSITIONS["b2"] },
     },
   });
@@ -244,7 +288,7 @@ function onCombined() {
     structure: "SSS-",
     metadata: {
       id: "e2",
-      targetPosition: { x: PIECE_SIZE * 5 - 2, y: PIECE_SIZE * 2 - 2 },
+      targetPosition: { x: PIECE_SIZE * 6 - 2, y: PIECE_SIZE * 2 - 2 },
       currentPosition: { ...FIXED_POSITIONS["e2"] },
     },
   });
@@ -252,7 +296,7 @@ function onCombined() {
     structure: "S-SS",
     metadata: {
       id: "b3",
-      targetPosition: { x: PIECE_SIZE * 8 - 2, y: PIECE_SIZE - 2 },
+      targetPosition: { x: PIECE_SIZE * 10 - 2, y: PIECE_SIZE - 2 },
       currentPosition: { ...FIXED_POSITIONS["b3"] },
     },
   });
@@ -260,7 +304,7 @@ function onCombined() {
     structure: "SSS-",
     metadata: {
       id: "e3",
-      targetPosition: { x: PIECE_SIZE * 8 - 2, y: PIECE_SIZE * 2 - 2 },
+      targetPosition: { x: PIECE_SIZE * 10 - 2, y: PIECE_SIZE * 2 - 2 },
       currentPosition: { ...FIXED_POSITIONS["e3"] },
     },
   });
@@ -298,21 +342,41 @@ function onCombined() {
         const piece = getPieceById(j + i);
         valid_connections += piece.connections.filter((c) => c).length;
       }
+      let required_connections = clothed[i - 1] ? 4 : 1;
 
-      if (valid_connections == 4) {
-        // Binary 2, 4, 8 for 1, 2, 3 (111 if 1, 2 and 3 is solved 001 if only 3 is solved, etc)
-        guessed |= 1 << (i - 1);
+      if (valid_connections == required_connections) {
+        if (!clothed[i - 1]) {
+          clothed[i - 1] = true;
+          getPieceById("C" + i).recenterAround(new headbreaker.Anchor(-PIECE_SIZE, -PIECE_SIZE));
+          // if all clothed
+          if (clothed.every((c) => c)) {
+            placeItems();
+          }
+          return;
+        } else {
+          // Binary 2, 4, 8 for 1, 2, 3 (111 if 1, 2 and 3 is solved 001 if only 3 is solved, etc)
+          guessed |= 1 << (i - 1);
+        }
       }
     }
-    // switch from LE to BE
-    let binaryString = guessed.toString(2);
-    let paddedBinaryString = binaryString.padStart(3, "0"); // enforce 3 bits
-    guessed = parseInt(paddedBinaryString.split("").reverse().join(""), 2);
+    for (let i = 0; i < CHARACTERS; i++) {
+      if (clothed[i]) {
+        guessed += 2 ** (31 - i);
+      }
+    }
+    // flip the last 3 bits of guessed
+    guessedStr = guessed.toString(2).padStart(32, "0");
+    guessed = parseInt(guessedStr.slice(0, 32-CHARACTERS) + flipbits(guessedStr.slice(32-CHARACTERS), CHARACTERS), 2);
     if (old_guessed != guessed) {
       setImage();
     }
 
-    if (guessed != 0b111) {
+    completed = 0;
+    for (let i = 0; i < CHARACTERS; i++) {
+      completed += 2 ** i;
+      completed += 2 ** (31 - i);
+    }
+    if (guessed != completed) { 
       return;
     }
 
@@ -338,6 +402,12 @@ function onCombined() {
         );
       }
     });
+
+    for (let i = 0; i < CHARACTERS; i++) {
+      if (clothed[i]) {
+        getPieceById("C" + (i + 1)).recenterAround(new headbreaker.Anchor(-PIECE_SIZE, -PIECE_SIZE));
+      }
+    }
   }
   setInterval(placePersonsPiecesBack, 100);
   setInterval(checkWin, 100);
@@ -356,44 +426,59 @@ function onCombined() {
 }
 
 var canvas = document.createElement("canvas");
-canvas.width = 900;
+canvas.width = 400 * 3;
 canvas.height = 200;
 var context = canvas.getContext("2d");
 
 var imagesLoaded = 0;
 
+function pickImages(key, images, otherImages) {
+  let binaryKey = key.toString(2).padStart(CHARACTERS, "0");
+  let pickedImages = [];
+  for (let i = 0; i < CHARACTERS; i++) {
+    pickedImages.push(binaryKey[i] === "0" ? images[i] : otherImages[i]);
+  }
+  return pickedImages;
+}
+
 var onLoadImage = () => {
   imagesLoaded++;
-  if (imagesLoaded === 6) {
-    for (let key = 0; key < 8; key++) {
+  if (imagesLoaded === CHARACTERS * 3) {
+
+    for (let key = 0; key < 2**CHARACTERS; key++) {
       combinedImages[key] = new Image();
-    }
-    combinedImages[0].onload = onCombined;
-    for (let key = 0; key < 8; key++) {
       context.clearRect(0, 0, canvas.width, canvas.height);
-      let binaryKey = (parseInt(key) >>> 0).toString(2).padStart(3, "0");
-      for (let i = 0; i < binaryKey.length; i++) {
-        let image = i === 0 ? image1 : i === 1 ? image2 : image3;
-        let solvedImage =
-          i === 0 ? image1_solved : i === 1 ? image2_solved : image3_solved;
-        context.drawImage(
-          binaryKey[i] === "0" ? image : solvedImage,
-          i * 300,
-          0,
-          300,
-          200
-        );
-      }
+      pickImages(key, images, solvedImages).forEach((image, i) => {
+        context.drawImage(image, i * 400, 0, 400, 200);
+      });
       combinedImages[key].src = canvas.toDataURL("image/png");
+
+      for (let clothedKey = 1; clothedKey < 2**CHARACTERS; clothedKey++) {
+        let strClothedKey = clothedKey.toString(2).padStart(CHARACTERS, "0");
+        let strKey = key.toString(2).padStart(CHARACTERS, "0");
+        let strCombinedKey = (strClothedKey + '0'.repeat(32 - strClothedKey.length - strKey.length) + strKey);
+        let combinedKey = parseInt(strCombinedKey, 2);
+        combinedImages[combinedKey] = new Image();
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        let clothedCombination = pickImages(clothedKey, images, clothedImages)
+        pickImages(key, clothedCombination, solvedImages).forEach((image, i) => {
+          context.drawImage(image, i * 400, 0, 400, 200);
+        });
+        console.log(combinedKey);
+        console.log(canvas.toDataURL("image/png"));
+        combinedImages[combinedKey].src = canvas.toDataURL("image/png");
+      }
+
+      if (key == 0) {
+        combinedImages[key].onload = onCombined;
+      }      
     }
   }
 };
-
-image1.onload = onLoadImage;
-image1_solved.onload = onLoadImage;
-image2.onload = onLoadImage;
-image2_solved.onload = onLoadImage;
-image3.onload = onLoadImage;
-image3_solved.onload = onLoadImage;
+for (let i = 0; i < CHARACTERS; i++) {
+  images[i].onload = onLoadImage;
+  solvedImages[i].onload = onLoadImage;
+  clothedImages[i].onload = onLoadImage;
+}
 
 document.getElementById("score").innerHTML = "00:00:00";
