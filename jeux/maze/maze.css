@@ -1,4 +1,11 @@
 #character {
-    max-height: 64px;
-    max-width: 64px;
+    max-height: 96px;
+    max-width: 96px;
+}
+
+#game-container {
+    /* Stop background image overflowing by stretching it while keeping its ratio */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;    
 }

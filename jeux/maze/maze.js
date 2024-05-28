@@ -246,7 +246,7 @@ window.onload = async function () {
   window.DEBUG = false;
 
   function onGoalReached() {
-    alert("You reached the goal!");
+    showGameOver()
   }
 
   let maze = new Maze(DEBUG ? PATH_IMAGE : BACKGROUND_IMAGE, PATH_IMAGE, onGoalReached);
