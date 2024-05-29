@@ -62,7 +62,7 @@ function initPuzzle(puzzle) {
       horizontalPiecesCount: puzzle.puzzleSizeWidth,
       verticalPiecesCount: puzzle.puzzleSizeHeight,
     });
-    // background.shuffle(0.8);
+    background.shuffle(0.8);
 
     background.draw();
 
