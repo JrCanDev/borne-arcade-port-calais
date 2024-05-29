@@ -101,14 +101,35 @@ optimize_images() {
     echo "Optimizing images... (this may take a while)"
     
     echo "> Optimizing JPEG images..."
-    find img -type f -iname '*.jpg' -exec jpegtran -copy none -optimize -perfect -outfile {} {} \; > /dev/null
-    find img -type f -iname '*.jpeg' -exec jpegtran -copy none -optimize -perfect -outfile {} {} \; > /dev/null
+    find img -type f -iname '*.jpg' -exec sh -c '
+        jpegtran -copy none -optimize -perfect -outfile /tmp/optimized.jpg {}
+        if [ $(stat -c%s "/tmp/optimized.jpg") -lt $(stat -c%s "{}") ]; then
+            mv /tmp/optimized.jpg {}
+        fi
+    ' \; > /dev/null
+    find img -type f -iname '*.jpeg' -exec sh -c '
+        jpegtran -copy none -optimize -perfect -outfile /tmp/optimized.jpeg {}
+        if [ $(stat -c%s "/tmp/optimized.jpeg") -lt $(stat -c%s "{}") ]; then
+            mv /tmp/optimized.jpeg {}
+        fi
+    ' \; > /dev/null
     
     echo "> Optimizing PNG images..."
-    oxipng -q -o max -s -a --fast -Z -r . > /dev/null
+    find img -type f -iname '*.png' -exec sh -c '
+        cp {} /tmp/original.png
+        oxipng -q -o max -s -a --fast -Z -r /tmp/original.png > /dev/null
+        if [ $(stat -c%s "/tmp/original.png") -lt $(stat -c%s "{}") ]; then
+            mv /tmp/original.png {}
+        fi
+    ' \; > /dev/null
     
     echo "> Optimizing SVG images..."
-    find img -type f -iname '*.svg' -exec svgo -i {} \; > /dev/null
+    find img -type f -iname '*.svg' -exec sh -c '
+        svgo -o /tmp/optimized.svg -i {}
+        if [ $(stat -c%s "/tmp/optimized.svg") -lt $(stat -c%s "{}") ]; then
+            mv /tmp/optimized.svg {}
+        fi
+    ' \; > /dev/null
 }
 
 # Main script
