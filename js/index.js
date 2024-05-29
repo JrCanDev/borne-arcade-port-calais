@@ -422,7 +422,7 @@ class Pacman extends BgAnimation {
     this.pelletSize = 25;
     this.superPelletSize = 50;
     this.pelletGap = 10;
-    this.pacmanGhostGap = 500;
+    this.pacmanGhostGap = 550;
     this.paths = this.getPaths();
     this.pacmanIntervalId = null;
     this.isPacmanSuper = false;
