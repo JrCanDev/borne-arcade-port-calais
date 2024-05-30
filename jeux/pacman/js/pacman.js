@@ -7,7 +7,7 @@ class Pacman {
       this.positionX = 276;
       this.positionY = 416;
       this.positionStep = 2;
-      this.size = 16;
+      this.size = 20;
       this.moving = false;
       this.movingTimer = null;
       this.movingSpeed = 15;
