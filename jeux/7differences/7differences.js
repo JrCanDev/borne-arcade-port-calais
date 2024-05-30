@@ -1,5 +1,5 @@
 DIFFERENCE_COUNT = 7;
-MEMORISE_SECONDS = 5;
+MEMORISE_SECONDS = 10;
 
 window.onload = async function () {
   let ORIGINAL_IMAGE = document.getElementById("original-img");

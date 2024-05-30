@@ -37,7 +37,7 @@
 }
 
 .slide-in {
-    animation: slideInFromBottom 4s ease-in;
+    animation: slideInFromBottom 0s ease-in;
 }
 
 .slide-in-quick {
