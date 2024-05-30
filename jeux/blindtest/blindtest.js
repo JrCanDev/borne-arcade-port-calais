@@ -8,6 +8,7 @@ let play_button_elem = null;
 let answers_elem = null;
 let explanation_elem = null;
 let explanation_img_elem = null;
+let question_container_elem = null;
 
 async function onLocaleChange() {
   let i = 1;
@@ -51,6 +52,7 @@ async function onLocaleChange() {
   play_button_elem = document.getElementById("play-button");
   explanation_elem = document.getElementById("explanation");
   explanation_img_elem = document.getElementById("explanation-img");
+  question_container_elem = document.getElementById("question-container");
 
   question_elem.addEventListener("animationend", () => {
     question_elem.classList.remove("zoomInOut");
@@ -94,6 +96,8 @@ function answerCallback() {
   explanation_elem.classList.add("nextbutton");
   explanation_img_elem.src = questions[Object.keys(questions)[current_question - 2]].images[0];
   explanation_img_elem.style.display = "block";
+  question_container_elem.style.old_width = question_container_elem.style.width;
+  question_container_elem.style.width = "80%";
   
   stopAudio();
   updateDisplay();
@@ -108,6 +112,7 @@ function updateDisplay() {
 }
 
 function nextQuestion() {
+  question_container_elem.style.width = question_container_elem.style.old_width;
   explanation_img_elem.style.display = "none";
   play_button_elem.style.display = "block";
   play_button_elem.classList.remove("wrong-answer");

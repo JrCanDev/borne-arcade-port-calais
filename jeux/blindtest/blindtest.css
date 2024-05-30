@@ -112,7 +112,7 @@
 #explanation {
     display: none;
     animation: flyFadeInFromBottom 0.7s;
-    margin-bottom: 170px !important;
+    margin-bottom: 8% !important;
 }
 
 .nextbutton::after {
