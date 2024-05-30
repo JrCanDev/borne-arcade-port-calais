@@ -87,7 +87,7 @@ function onCombined() {
     height: CANVAS_SIZE,
     pieceSize: PIECE_SIZE,
     proximity: PIECE_SIZE / 3,
-    borderFill: PIECE_SIZE / 10 + 1,
+    borderFill: PIECE_SIZE / 10,
     strokeWidth: 0,
     lineSoftness: 0,
     image: combinedImages[guessed],

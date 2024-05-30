@@ -12,3 +12,22 @@
 #restart-button:active {
     opacity: 0.5;  
 }
+
+#game-container {
+    position: relative;
+}
+
+.agent {
+    position: absolute;
+    z-index: 1;
+    color: black;
+    bottom: 88px;
+}
+
+#agent1 {
+    left: 16px;
+}
+
+#agent3 {
+    right: 88px;
+}
