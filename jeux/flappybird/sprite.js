@@ -9,7 +9,8 @@ s_score,
 s_splash,
 s_buttons,
 s_numberS,
-s_numberB;
+s_numberB,
+s_cliff;
 
 
 function Sprite(img) {
@@ -40,4 +41,6 @@ async function initSprites() {
 	}
 
 	s_splash = new Sprite(await getImageWithAvailableExtension("img/tap"));
+
+	s_cliff = new Sprite(await getImageWithAvailableExtension("img/cliff"));
 }

@@ -135,10 +135,26 @@ var canvas,
         s_pipeNorth.draw(ctx, p.x, p.y + 80 + p.height);
       }
     },
+  },
+  cliff = {
+    x: 0,
+    y: 235,
+    update: function () {
+      if (this.x > -s_cliff.width) {
+        this.x -= 2 * deltaTime;
+      }
+    },
+    draw: function (ctx) {
+      s_cliff.draw(ctx, this.x, this.y);
+    },
+    reset: function () {
+      this.x = 0;
+    },
   };
 
 function restart() {
   pipes.reset();
+  cliff.reset();
   score = 0;
   currentstate = states.Splash;
 }
@@ -195,6 +211,7 @@ function update() {
   }
   if (currentstate === states.Game) {
     pipes.update();
+    cliff.update();
   }
 
   bird.update();
@@ -206,6 +223,7 @@ function render() {
 
   bird.draw(ctx);
   pipes.draw(ctx);
+  cliff.draw(ctx);
 
   s_fg.draw(ctx, fgpos, height - s_fg.height);
   s_fg.draw(ctx, fgpos + s_fg.width - 1, height - s_fg.height);
