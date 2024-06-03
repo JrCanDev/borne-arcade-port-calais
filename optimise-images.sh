@@ -63,79 +63,153 @@ check_executables() {
 # Function to resize images
 resize_images() {
     echo "Resizing images..."
+
+    needs_resizing() {
+        local img=$1
+        local target_width=$2
+        local target_height=$3
+        local current_dimensions=$(identify -format "%wx%h" "$img")
+        local current_width=${current_dimensions%x*}
+        local current_height=${current_dimensions#*x}
+
+needs_resizing() {
+    # Check if the image needs resizing
+    # $1: image path
+    # $2: target width (-1 to ignore)
+    # $3: target height (-1 to ignore)
+    local img=$1
+    local target_width=$2
+    local target_height=$3
+    local current_dimensions=$(identify -format "%wx%h" "$img")
+    local current_width=${current_dimensions%x*}
+    local current_height=${current_dimensions#*x}
+
+    if [[ $target_width -ne -1 && $current_width -gt $target_width ]]; then
+        echo "  - $img: resizing to ${target_width}x$target_height"
+        echo "    Current dimensions: $current_dimensions"
+        echo "    Target dimensions: ${target_width}x${target_height}"
+        return 0
+    fi
+
+    if [[ $target_height -ne -1 && $current_height -gt $target_height ]]; then
+        echo "  - $img: resizing to ${target_width}x$target_height"
+        echo "    Current dimensions: $current_dimensions"
+        echo "    Target dimensions: ${target_width}x${target_height}"
+        return 0
+    fi
+
+    return 1
+}
+    }
+
     echo "> Resizing index background image..."
     index_bg="img/index-bg*"
-    convert $index_bg -resize x1350 $index_bg > /dev/null;
+    for img in $index_bg; do
+        if needs_resizing $img -1 1350; then
+            convert $img -resize x1350\> $img > /dev/null;
+        fi
+    done
 
     echo "> Resizing intro background image..."
     intro_bg="img/intro-bg*"
-    convert $intro_bg -resize 1920x1080\> $intro_bg > /dev/null;
+    for img in $intro_bg; do
+        if needs_resizing $img 1920 1080; then
+            convert $img -resize 1920x1080\> $img > /dev/null;
+        fi
+    done
 
     echo "> Resizing logos..."
     for img in img/logo*; do
         if [[ $img == *.svg ]]; then
             continue
         fi
-        convert $img -resize 512x512\> $img > /dev/null;
+        if needs_resizing $img 512 512; then
+            convert $img -resize 512x512\> $img > /dev/null;
+        fi
     done
 
     echo "> Resizing info panels..."
     for img in img/*-top.* img/*-bottom.*; do
-        convert $img -resize x372 $img > /dev/null;
+        if needs_resizing $img -1 372; then
+            convert $img -resize x372 $img > /dev/null;
+        fi
     done
 
     echo "> Resizing activity images..."
     for activity in "${ACTIVITIES[@]}"; do
         path="img/$activity*";
-        convert $path -resize x389 $path > /dev/null;
+        if needs_resizing $path -1 389; then
+            convert $path -resize x389 $path > /dev/null;
+        fi
     done
 
     echo "> Resizing quiz images..."
     for img in jeux/quiz/img/*; do
-        convert $img -resize 600x600\> $img > /dev/null;
+        if needs_resizing $img 600 600; then
+            convert $img -resize 600x600\> $img > /dev/null;
+        fi
+    done
+
+    echo "> Resizing blindtest images..."
+    for img in jeux/blindtest/img/*; do
+        if needs_resizing $img 600 600; then
+            convert $img -resize 600x600\> $img > /dev/null;
+        fi
     done
 }
 
-# Function to optimize images
-optimize_images() {
+# Function to optimise images
+optimise_images() {
     echo "Optimizing images... (this may take a while)"
     
     echo "> Optimizing JPEG images..."
-    find img -type f -iname '*.jpg' -exec sh -c '
-        jpegtran -copy none -optimize -perfect -outfile /tmp/optimized.jpg {}
-        if [ $(stat -c%s "/tmp/optimized.jpg") -lt $(stat -c%s "{}") ]; then
-            mv /tmp/optimized.jpg {}
+    find . -type f -iname '*.jpg' -exec sh -c '
+        jpegtran -copy none -optimise -perfect -outfile /tmp/optimised.jpg {} > /dev/null
+        if [ $(stat -c%s "/tmp/optimised.jpg") -lt $(stat -c%s "{}") ]; then
+            printf "  - {}: optimised\n" >&2
+            printf "    Original size:  $(stat -c%s "{}") bytes\n" >&2
+            printf "    Optimised size: $(stat -c%s "/tmp/optimised.jpg") bytes\n" >&2
+            mv /tmp/optimised.jpg {} > /dev/null
         fi
-    ' \; > /dev/null
-    find img -type f -iname '*.jpeg' -exec sh -c '
-        jpegtran -copy none -optimize -perfect -outfile /tmp/optimized.jpeg {}
-        if [ $(stat -c%s "/tmp/optimized.jpeg") -lt $(stat -c%s "{}") ]; then
-            mv /tmp/optimized.jpeg {}
+    ' \;
+    find . -type f -iname '*.jpeg' -exec sh -c '
+        jpegtran -copy none -optimise -perfect -outfile /tmp/optimised.jpeg {} > /dev/null
+        if [ $(stat -c%s "/tmp/optimised.jpeg") -lt $(stat -c%s "{}") ]; then
+            printf "  - {}: optimised\n" >&2
+            printf "    Original size:  $(stat -c%s "{}") bytes\n" >&2
+            printf "    Optimised size: $(stat -c%s "/tmp/optimised.jpeg") bytes\n" >&2
+            mv /tmp/optimised.jpeg {} > /dev/null
         fi
-    ' \; > /dev/null
+    ' \;
     
     echo "> Optimizing PNG images..."
-    find img -type f -iname '*.png' -exec sh -c '
+    find . -type f -iname '*.png' -exec sh -c '
         cp {} /tmp/original.png
         oxipng -q -o max -s -a --fast -Z -r /tmp/original.png > /dev/null
         if [ $(stat -c%s "/tmp/original.png") -lt $(stat -c%s "{}") ]; then
-            mv /tmp/original.png {}
+            printf "  - {}: optimised\n" >&2
+            printf "    Original size:  $(stat -c%s "{}") bytes\n" >&2
+            printf "    Optimised size: $(stat -c%s "/tmp/original.png") bytes\n" >&2
+            mv /tmp/original.png {} > /dev/null
         fi
-    ' \; > /dev/null
+    ' \;
     
     echo "> Optimizing SVG images..."
-    find img -type f -iname '*.svg' -exec sh -c '
-        svgo -o /tmp/optimized.svg -i {}
-        if [ $(stat -c%s "/tmp/optimized.svg") -lt $(stat -c%s "{}") ]; then
-            mv /tmp/optimized.svg {}
+    find . -type f -iname '*.svg' -exec sh -c '
+        svgo -o /tmp/optimised.svg -i {} > /dev/null
+        if [ $(stat -c%s "/tmp/optimised.svg") -lt $(stat -c%s "{}") ]; then
+            printf "  - {}: optimised\n" >&2
+            printf "    Original size:  $(stat -c%s "{}") bytes\n" >&2
+            printf "    Optimised size: $(stat -c%s "/tmp/optimised.svg") bytes\n" >&2
+            mv /tmp/optimised.svg {} > /dev/null
         fi
-    ' \; > /dev/null
+    ' \;
 }
 
 # Main script
 if [[ $1 == "-h" || $1 == "--help" ]]; then
-    echo "Usage: ./optimize-images.sh [OPTION]"
-    echo "Optimize all images in the project by resizing them to the correct dimensions and losslessly compressing them."
+    echo "Usage: ./optimise-images.sh [OPTION]"
+    echo "Optimise all images in the project by resizing them to the correct dimensions and losslessly compressing them."
     echo "Options:"
     echo "  -i, --install  Install dependencies (imagemagick, libjpeg-progs, oxipng [cargo], svgo [npm])"
     exit 0
@@ -147,4 +221,4 @@ fi
 
 check_executables
 resize_images
-optimize_images
+optimise_images
