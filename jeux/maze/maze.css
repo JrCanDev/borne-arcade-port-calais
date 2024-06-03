@@ -9,3 +9,22 @@
     background-repeat: no-repeat;
     background-position: center;    
 }
+
+#right {
+    justify-content: space-between;
+}
+
+#goals {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.15);
+    margin-bottom: 24px;
+}
+
+#goals p {
+    margin: 8px;
+}
+
+#goals h1 {
+    margin: 0;
+}
