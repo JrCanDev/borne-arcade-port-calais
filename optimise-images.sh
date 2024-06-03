@@ -156,6 +156,13 @@ needs_resizing() {
             convert $img -resize 600x600\> $img > /dev/null;
         fi
     done
+
+    echo "> Resizing 7differences images..."
+    for img in jeux/7differences/img/*; do
+        if needs_resizing $img 1026 1026; then
+            convert $img -resize 1026x1026\> $img > /dev/null;
+        fi
+    done
 }
 
 # Function to optimise images
