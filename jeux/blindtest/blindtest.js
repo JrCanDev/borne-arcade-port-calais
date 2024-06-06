@@ -115,8 +115,8 @@ function nextQuestion() {
   question_container_elem.style.width = question_container_elem.style.old_width;
   explanation_img_elem.style.display = "none";
   play_button_elem.style.display = "block";
-  play_button_elem.classList.remove("wrong-answer");
-  play_button_elem.classList.remove("correct-answer");
+  explanation_img_elem.classList.remove("wrong-answer");
+  explanation_img_elem.classList.remove("correct-answer");
   question_elem.classList.add("zoomInOut");
   if (current_question > Object.keys(questions).length) {
     play_button_elem.style.display = "none";
