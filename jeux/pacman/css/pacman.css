@@ -3,6 +3,10 @@
 	src: url('../css/Quadrit.ttf');
 }
 
+body {
+	overflow: hidden
+}
+
 #message {
 	position: relative;
 	display: inline;

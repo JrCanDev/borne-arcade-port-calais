@@ -2,6 +2,10 @@
     position: relative;
 }
 
+body {
+	overflow: hidden
+}
+
 @keyframes slideInFromBottom {
     0% {
         transform: translateY(400%);

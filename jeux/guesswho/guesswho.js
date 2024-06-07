@@ -86,7 +86,7 @@ function onCombined() {
     width: CANVAS_SIZE,
     height: CANVAS_SIZE,
     pieceSize: PIECE_SIZE,
-    proximity: PIECE_SIZE / 3,
+    proximity: PIECE_SIZE * 0.6,
     borderFill: PIECE_SIZE / 10,
     strokeWidth: 0,
     lineSoftness: 0,
@@ -222,6 +222,7 @@ function onCombined() {
     });
 
     guesswho.puzzle.shuffle(CANVAS_SIZE, Y_POS - PIECE_SIZE * 2);
+    guesswho.redraw();
   }
 
   guesswho.adjustImagesToPuzzleHeight();
@@ -464,8 +465,6 @@ var onLoadImage = () => {
         pickImages(key, clothedCombination, solvedImages).forEach((image, i) => {
           context.drawImage(image, i * 400, 0, 400, 200);
         });
-        console.log(combinedKey);
-        console.log(canvas.toDataURL("image/png"));
         combinedImages[combinedKey].src = canvas.toDataURL("image/png");
       }
 
