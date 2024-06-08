@@ -239,12 +239,12 @@ class Character extends PositionedImage {
 
 class Game {
   constructor() {
-    this.initializeGame();
+    this.initializeGame()
   }
 
   async initializeGame() {
-    const gameScore = new Score();
-    gameScore.initScores();
+    this.gameScore = new Score();
+    this.gameScore.initScores();
 
     const gameContainer = document.getElementById('game-container');
     const gameContainerWidth = gameContainer.offsetWidth;
@@ -259,7 +259,9 @@ class Game {
 
     const solvedPositions = await fetch('solved_positions.json').then(response => response.json());
 
-    const characters = await Promise.all(Array.from({ length: TOTAL_CHARACTERS }, (_, i) => this.createCharacter(i, spaceBetweenCharacters, CHARACTER_WIDTH, TOTAL_ITEMS, solvedPositions[i])));
+    this.characters = await Promise.all(Array.from({ length: TOTAL_CHARACTERS }, (_, i) => this.createCharacter(i, spaceBetweenCharacters, CHARACTER_WIDTH, TOTAL_ITEMS, solvedPositions[i])));
+
+    this.loop = setInterval(() => this.gameLoop(), 100);
   }
 
   async createCharacter(index, spaceBetweenCharacters, characterWidth, totalItems, solvedPositions) {
@@ -275,6 +277,22 @@ class Game {
       clothes,
       items
     );
+  }
+
+  isGameOver() {
+    return this.characters.every(character => character.isFullyDressed());
+  }
+
+  async gameLoop() {
+    // Check if all characters are fully dressed
+    if (this.isGameOver()) {
+      this.gameScore.updateHighscore();
+      clearInterval(this.loop);
+      showGameOver()
+      return;
+    }
+
+    this.gameScore.updateScore();
   }
 }
 
