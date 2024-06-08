@@ -10,7 +10,3 @@
 #game-container {
     position: relative;
 }
-
-#game-container div {
-    border: 1px solid black;
-}

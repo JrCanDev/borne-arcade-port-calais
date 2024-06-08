@@ -187,7 +187,6 @@ class Item extends DraggableImage {
   }
 
   draggingCallback() {
-    console.log("dragging");
     if (this.character && this.collidesWith(this.character)) {
       this.disableDragging();
       this.setPosition(this.character.position.x + this.solvedPosition.x, this.character.position.y + this.solvedPosition.y);
@@ -209,7 +208,6 @@ class Clothes extends DraggableImage {
   }
 
   draggingCallback() {
-    console.log("dragging");
     if (this.character && this.collidesWith(this.character)) {
       this.disableDragging();
       this.setPosition(this.character.position.x, this.character.position.y);
