@@ -104,6 +104,14 @@ class PositionedImage {
   setZIndex(zIndex) {
     this.element.style.zIndex = zIndex;
   }
+
+  hide() {
+    this.element.style.display = 'none';
+  }
+
+  show() {
+    this.element.style.display = 'block';
+  }
 }
 
 class DraggableImage extends PositionedImage {
@@ -267,6 +275,9 @@ class Game {
 
     const items = await Promise.all(Array.from({ length: totalItems }, (_, j) => new Item(new Position(0, 0), `img/characters/${index + 1}/items/${j + 1}`, new Position(solvedPositions[j][0], solvedPositions[j][1]))));
 
+    // hide items
+    items.forEach(item => item.hide());
+
     const xPos = spaceBetweenCharacters + ((characterWidth + spaceBetweenCharacters) * index);
 
     return new Character(
@@ -277,17 +288,22 @@ class Game {
     );
   }
 
+  isClothingOver() {
+    return this.characters.every(character => character.isClothed());
+  }
+
   isGameOver() {
     return this.characters.every(character => character.isFullyDressed());
   }
 
   async gameLoop() {
-    // Check if all characters are fully dressed
     if (this.isGameOver()) {
       this.gameScore.updateHighscore();
       clearInterval(this.loop);
       showGameOver()
       return;
+    } else if (this.isClothingOver()) {
+      this.characters.forEach(character => character.items.forEach(item => item.show()));
     }
 
     this.gameScore.updateScore();
