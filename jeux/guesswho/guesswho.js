@@ -14,7 +14,9 @@ class Score {
   }
 
   updateHighscoreDisplay() {
-    let prettyTimeHighscore = new Date(this.highscore).toISOString().substr(11, 8);
+    let prettyTimeHighscore = new Date(this.highscore)
+      .toISOString()
+      .substr(11, 8);
     document.getElementById("highscore").innerHTML = prettyTimeHighscore;
   }
 
@@ -65,15 +67,15 @@ class PositionedImage {
     let img = new Image();
     return new Promise((resolve, reject) => {
       img.onload = () => {
-        let div = document.createElement('div');
+        let div = document.createElement("div");
         div.style.position = "absolute";
         div.style.left = this.position.x + "px";
         div.style.top = this.position.y + "px";
         div.style.width = img.naturalWidth + "px";
         div.style.height = img.naturalHeight + "px";
         div.style.backgroundImage = `url(${imageUrl})`;
-        div.style.backgroundSize = 'contain';
-        div.style.backgroundRepeat = 'no-repeat';
+        div.style.backgroundSize = "contain";
+        div.style.backgroundRepeat = "no-repeat";
         document.getElementById("game-container").appendChild(div);
         this.element = div;
         resolve();
@@ -106,11 +108,11 @@ class PositionedImage {
   }
 
   hide() {
-    this.element.style.display = 'none';
+    this.element.style.display = "none";
   }
 
   show() {
-    this.element.style.display = 'block';
+    this.element.style.display = "block";
   }
 }
 
@@ -125,14 +127,22 @@ class DraggableImage extends PositionedImage {
   }
 
   initDraggable() {
-    this.element.addEventListener('mousedown', this.dragStart.bind(this), false);
-    this.element.addEventListener('touchstart', this.dragStart.bind(this), false);
+    this.element.addEventListener(
+      "mousedown",
+      this.dragStart.bind(this),
+      false
+    );
+    this.element.addEventListener(
+      "touchstart",
+      this.dragStart.bind(this),
+      false
+    );
 
-    document.addEventListener('mouseup', this.dragEnd.bind(this), false);
-    document.addEventListener('touchend', this.dragEnd.bind(this), false);
+    document.addEventListener("mouseup", this.dragEnd.bind(this), false);
+    document.addEventListener("touchend", this.dragEnd.bind(this), false);
 
-    document.addEventListener('mousemove', this.drag.bind(this), false);
-    document.addEventListener('touchmove', this.drag.bind(this), false);
+    document.addEventListener("mousemove", this.drag.bind(this), false);
+    document.addEventListener("touchmove", this.drag.bind(this), false);
   }
 
   dragStart() {
@@ -173,7 +183,7 @@ class DraggableImage extends PositionedImage {
   }
 
   disableDragging() {
-    this.draggingEnabled = false
+    this.draggingEnabled = false;
     this.active = false;
   }
 
@@ -187,7 +197,7 @@ class Item extends DraggableImage {
     super(position, image).then((instance) => {
       instance.setZIndex(2);
       instance.solvedPosition = solvedPosition;
-    })
+    });
   }
 
   setCharacter(character) {
@@ -197,7 +207,10 @@ class Item extends DraggableImage {
   draggingCallback() {
     if (this.character && this.collidesWith(this.character)) {
       this.disableDragging();
-      this.setPosition(this.character.position.x + this.solvedPosition.x, this.character.position.y + this.solvedPosition.y);
+      this.setPosition(
+        this.character.position.x + this.solvedPosition.x,
+        this.character.position.y + this.solvedPosition.y
+      );
       this.setCharacter(this.character);
     }
   }
@@ -208,7 +221,7 @@ class Clothes extends DraggableImage {
     super(position, image).then((instance) => {
       instance.setZIndex(1);
       instance.character = null;
-    })
+    });
   }
 
   setCharacter(character) {
@@ -230,7 +243,7 @@ class Character extends PositionedImage {
       instance.clothes = clothes;
       instance.clothes.setCharacter(instance);
       instance.items = items;
-      instance.items.forEach(item => item.setCharacter(instance));
+      instance.items.forEach((item) => item.setCharacter(instance));
     });
   }
 
@@ -239,20 +252,23 @@ class Character extends PositionedImage {
   }
 
   isFullyDressed() {
-    return this.isClothed() && this.items.every(item => item.draggingEnabled === false);
+    return (
+      this.isClothed() &&
+      this.items.every((item) => item.draggingEnabled === false)
+    );
   }
 }
 
 class Game {
   constructor() {
-    this.initializeGame()
+    this.initializeGame();
   }
 
   async initializeGame() {
     this.gameScore = new Score();
     this.gameScore.initScores();
 
-    const gameContainer = document.getElementById('game-container');
+    const gameContainer = document.getElementById("game-container");
     const gameContainerWidth = gameContainer.offsetWidth;
 
     const CHARACTER_WIDTH = 200;
@@ -263,22 +279,56 @@ class Game {
     const remainingSpace = gameContainerWidth - totalCharactersWidth;
     const spaceBetweenCharacters = remainingSpace / (TOTAL_CHARACTERS + 1);
 
-    const solvedPositions = await fetch('solved_positions.json').then(response => response.json());
+    const solvedPositions = await fetch("solved_positions.json").then(
+      (response) => response.json()
+    );
 
-    this.characters = await Promise.all(Array.from({ length: TOTAL_CHARACTERS }, (_, i) => this.createCharacter(i, spaceBetweenCharacters, CHARACTER_WIDTH, TOTAL_ITEMS, solvedPositions[i])));
+    this.characters = await Promise.all(
+      Array.from({ length: TOTAL_CHARACTERS }, (_, i) =>
+        this.createCharacter(
+          i,
+          spaceBetweenCharacters,
+          CHARACTER_WIDTH,
+          TOTAL_ITEMS,
+          solvedPositions[i]
+        )
+      )
+    );
+    this.characters.forEach((character) => {
+      this.shuffle(character);
+      character.items.forEach((item) => item.hide());
+    });
 
     this.loop = setInterval(() => this.gameLoop(), 100);
   }
 
-  async createCharacter(index, spaceBetweenCharacters, characterWidth, totalItems, solvedPositions) {
-    const clothes = await new Clothes(new Position(256, 0), `img/characters/${index + 1}/clothes`);
+  async createCharacter(
+    index,
+    spaceBetweenCharacters,
+    characterWidth,
+    totalItems,
+    solvedPositions
+  ) {
+    const clothes = await new Clothes(
+      new Position(0, 0),
+      `img/characters/${index + 1}/clothes`
+    );
 
-    const items = await Promise.all(Array.from({ length: totalItems }, (_, j) => new Item(new Position(0, 0), `img/characters/${index + 1}/items/${j + 1}`, new Position(solvedPositions[j][0], solvedPositions[j][1]))));
+    const items = await Promise.all(
+      Array.from(
+        { length: totalItems },
+        (_, j) =>
+          new Item(
+            new Position(0, 0),
+            `img/characters/${index + 1}/items/${j + 1}`,
+            new Position(solvedPositions[j][0], solvedPositions[j][1])
+          )
+      )
+    );
 
-    // hide items
-    items.forEach(item => item.hide());
-
-    const xPos = spaceBetweenCharacters + ((characterWidth + spaceBetweenCharacters) * index);
+    const xPos =
+      spaceBetweenCharacters +
+      (characterWidth + spaceBetweenCharacters) * index;
 
     return new Character(
       new Position(xPos, 512),
@@ -288,22 +338,71 @@ class Game {
     );
   }
 
+  shuffle(character) {
+    const gameContainer = document.getElementById("game-container");
+    const gameContainerWidth = gameContainer.offsetWidth;
+    const gameContainerHeight = gameContainer.offsetHeight;
+
+    const randomPosition = (itemWidth, itemHeight) => {
+      return new Position(
+        Math.ceil(Math.random() * (gameContainerWidth - itemWidth)),
+        Math.ceil(Math.random() * (gameContainerHeight - itemHeight))
+      );
+    };
+
+    do {
+      let randomClothesPosition = randomPosition(
+        character.clothes.element.offsetWidth,
+        character.clothes.element.offsetHeight
+      );
+      character.clothes.setPosition(
+        randomClothesPosition.x,
+        randomClothesPosition.y
+      );
+    } while (
+      this.characters.some((otherCharacter) =>
+        character.clothes.collidesWith(otherCharacter)
+      )
+    );
+
+    character.items.forEach((item) => {
+      do {
+        let randomItemPosition = randomPosition(
+          item.element.offsetWidth,
+          item.element.offsetHeight
+        );
+        item.setPosition(randomItemPosition.x, randomItemPosition.y);
+      } while (
+        this.characters.some((otherCharacter) =>
+          item.collidesWith(otherCharacter)
+        ) ||
+        this.characters.some((otherCharacter) =>
+          otherCharacter.items.some(
+            (otherItem) => item.collidesWith(otherItem) && otherItem !== item
+          )
+        )
+      );
+    });
+  }
+
   isClothingOver() {
-    return this.characters.every(character => character.isClothed());
+    return this.characters.every((character) => character.isClothed());
   }
 
   isGameOver() {
-    return this.characters.every(character => character.isFullyDressed());
+    return this.characters.every((character) => character.isFullyDressed());
   }
 
   async gameLoop() {
     if (this.isGameOver()) {
       this.gameScore.updateHighscore();
       clearInterval(this.loop);
-      showGameOver()
+      showGameOver();
       return;
     } else if (this.isClothingOver()) {
-      this.characters.forEach(character => character.items.forEach(item => item.show()));
+      this.characters.forEach((character) =>
+        character.items.forEach((item) => item.show())
+      );
     }
 
     this.gameScore.updateScore();
@@ -312,4 +411,4 @@ class Game {
 
 window.onload = function () {
   const game = new Game();
-}
+};
