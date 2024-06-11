@@ -70,3 +70,25 @@ fi
 ```
 
 Le fichier `.bashrc` est exécuté à chaque connexion de l'utilisateur.
+
+## Configuration de l'audio
+
+La configuration de l'audio se fait en deux étapes : la consultation du volume actuel et son réglage.
+
+- **Consultation du volume actuel :** Pour connaître le volume actuel de la sortie audio, utilisez la commande suivante :
+
+```bash
+pactl get-sink-volume 0
+```
+
+Cette commande retourne le volume actuel de la sortie audio.
+
+- **Réglage du volume :** Pour ajuster le volume, utilisez la commande suivante :
+
+```bash
+pactl set-sink-volume 0 50%
+```
+
+Remplacez `50%` par le pourcentage de volume que vous souhaitez. Par exemple, si vous voulez régler le volume à 80%, la commande sera `pactl set-sink-volume 0 80%`.
+
+**Note :** Si votre sortie audio dispose d'un contrôle de volume matériel, il est recommandé de régler le volume du logiciel à 100% et d'ajuster le volume à l'aide du contrôle de volume matériel.
