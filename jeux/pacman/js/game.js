@@ -222,6 +222,7 @@ function lifes(l) {
 
 function gameover() {
   GAMEOVER = true;
+  showGameOver()
   document.getElementById("start").style.display = "flex";
   message("game over");
   stopTimes();
