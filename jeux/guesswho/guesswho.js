@@ -250,12 +250,22 @@ class Clothes extends DraggableImage {
 }
 
 class Character extends PositionedImage {
-  constructor(position, image, clothes, items) {
+  constructor(position, image, name, clothes, items) {
     super(position, image).then((instance) => {
+      const gameContainer = document.getElementById("game-container");
+
+      instance.name = name;
       instance.clothes = clothes;
       instance.clothes.setCharacter(instance);
       instance.items = items;
       instance.items.forEach((item) => item.setCharacter(instance));
+      
+      let nameP = document.createElement("p");
+      nameP.classList.add("character-name");
+      nameP.style.left = position.x - gameContainer.offsetLeft + "px";
+      nameP.innerHTML = instance.name;
+      gameContainer.appendChild(nameP);
+      instance.nameElement = nameP;
     });
   }
 
@@ -284,6 +294,7 @@ class Game {
     const gameContainerWidth = gameContainer.offsetWidth;
 
     const CHARACTER_WIDTH = 200;
+    const CHARACTER_NAMES = [getTranslation("game.guesswho.agent1"), getTranslation("game.guesswho.agent2"), getTranslation("game.guesswho.agent3")];
     const TOTAL_CHARACTERS = 3;
     const TOTAL_ITEMS = 4;
 
@@ -299,6 +310,7 @@ class Game {
       Array.from({ length: TOTAL_CHARACTERS }, (_, i) =>
         this.createCharacter(
           i,
+          CHARACTER_NAMES[i],
           spaceBetweenCharacters,
           CHARACTER_WIDTH,
           TOTAL_ITEMS,
@@ -316,6 +328,7 @@ class Game {
 
   async createCharacter(
     index,
+    name,
     spaceBetweenCharacters,
     characterWidth,
     totalItems,
@@ -345,6 +358,7 @@ class Game {
     return new Character(
       new Position(xPos, 512),
       `img/characters/${index + 1}/character`,
+      name,
       clothes,
       items
     );
@@ -421,6 +435,6 @@ class Game {
   }
 }
 
-window.onload = function () {
-  const game = new Game();
+function onLocaleChange() {
+  new Game();
 };

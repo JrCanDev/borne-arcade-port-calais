@@ -10,3 +10,11 @@
 #game-container {
     position: relative;
 }
+
+.character-name {
+    color: black;    
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    bottom: 20px;
+}
