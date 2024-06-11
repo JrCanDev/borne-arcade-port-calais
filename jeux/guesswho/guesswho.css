@@ -1,33 +1,12 @@
-#puzzle {
-    transition: opacity 1s linear;
-    background-position: center;
-    background-size: contain;
-}
-
 #restart-button {
     border: 0;
-    filter: invert(100%);    
+    filter: invert(100%);
 }
 
 #restart-button:active {
-    opacity: 0.5;  
+    opacity: 0.5;
 }
 
 #game-container {
     position: relative;
-}
-
-.agent {
-    position: absolute;
-    z-index: 1;
-    color: black;
-    bottom: 88px;
-}
-
-#agent1 {
-    left: 16px;
-}
-
-#agent3 {
-    right: 88px;
 }
