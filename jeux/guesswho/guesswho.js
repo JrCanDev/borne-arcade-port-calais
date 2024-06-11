@@ -173,14 +173,25 @@ class DraggableImage extends PositionedImage {
 
   setDraggingPosition(x, y) {
     // Adjust position to be relative to the container
-    this.position.x = x - this.container.offsetLeft;
-    this.position.y = y - this.container.offsetTop;
+    let newX = x - this.container.offsetLeft;
+    let newY = y - this.container.offsetTop;
     // Center the image on the cursor
-    this.position.x -= parseFloat(this.element.style.width) / 2;
-    this.position.y -= parseFloat(this.element.style.height) / 2;
+    newX -= parseFloat(this.element.style.width) / 2;
+    newY -= parseFloat(this.element.style.height) / 2;
+    // Check boundaries
+    if (newX < 0) newX = 0;
+    if (newY < 0) newY = 0;
+    if (newX + parseFloat(this.element.style.width) > this.container.offsetWidth) {
+      newX = this.container.offsetWidth - parseFloat(this.element.style.width);
+    }
+    if (newY + parseFloat(this.element.style.height) > this.container.offsetHeight) {
+      newY = this.container.offsetHeight - parseFloat(this.element.style.height);
+    }
     // Set the new position
-    this.element.style.left = this.position.x + "px";
-    this.element.style.top = this.position.y + "px";
+    this.position.x = newX;
+    this.position.y = newY;
+    this.element.style.left = newX + "px";
+    this.element.style.top = newY + "px";
   }
 
   disableDragging() {
