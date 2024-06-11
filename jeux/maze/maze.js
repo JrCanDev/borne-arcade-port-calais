@@ -256,9 +256,56 @@ class Maze {
   }
 }
 
+class Score {
+  constructor() {
+    this.timeToSolve = NaN;
+    this.score = Infinity;
+    this.highscore = parseInt(localStorage.getItem("maze")) || 86399000;
+  }
+
+  updateHighscore() {
+    if (this.score < this.highscore) {
+      this.highscore = this.score;
+      localStorage.setItem("maze", this.highscore);
+      this.updateHighscoreDisplay();
+    }
+  }
+
+  updateHighscoreDisplay() {
+    let prettyTimeHighscore = new Date(this.highscore)
+      .toISOString()
+      .substr(11, 8);
+    document.getElementById("highscore").innerHTML = prettyTimeHighscore;
+  }
+
+  updateScoreDisplay() {
+    let prettyTime = new Date(this.score).toISOString().substr(11, 8);
+    document.getElementById("score").innerHTML = prettyTime;
+  }
+
+  updateScore() {
+    let delta = new Date().getTime() - this.timeToSolve;
+    this.score = delta;
+    this.updateScoreDisplay();
+  }
+
+  initScores() {
+    document.getElementById("score").innerHTML = "00:00:00";
+    this.timeToSolve = new Date().getTime();
+    this.updateScore();
+    this.updateHighscoreDisplay();
+  }
+
+  resetScores() {
+    this.initScores();
+  }
+}
+
 window.onload = async function () {
   let backgroundImages = [];
   let pathImages = [];
+  let score = new Score();
+  score.initScores();
 
   for (let i = 0; i < GOALS + 1; i++) {
     backgroundImages.push(`img/bg${i}`);
@@ -266,6 +313,13 @@ window.onload = async function () {
   }
 
   let currentGoal = 0;
+
+  setInterval(() => {
+    if (currentGoal > 6) {
+      return;
+    }
+    score.updateScore();
+  }, 1000);
 
   function onGoalReached() {
     currentGoal++;
@@ -275,6 +329,7 @@ window.onload = async function () {
       onGoalReached
     );
     if (currentGoal >= 6) {
+      score.updateHighscore();
       showGameOver();
     }
   }
