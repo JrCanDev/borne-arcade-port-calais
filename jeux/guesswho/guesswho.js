@@ -76,6 +76,7 @@ class PositionedImage {
         div.style.backgroundImage = `url(${imageUrl})`;
         div.style.backgroundSize = "contain";
         div.style.backgroundRepeat = "no-repeat";
+        div.style.backgroundPosition = "center";
         document.getElementById("game-container").appendChild(div);
         this.element = div;
         resolve();
@@ -311,7 +312,7 @@ class Game {
   ) {
     const clothes = await new Clothes(
       new Position(0, 0),
-      `img/characters/${index + 1}/clothes`
+      `img/characters/${index + 1}/clothes`,
     );
 
     const items = await Promise.all(
