@@ -168,4 +168,6 @@ function nextQuestion() {
   }
   question_audio_elem.src =
     questions[Object.keys(questions)[current_question - 1]].audio;
+  
+  playAudio();
 }

@@ -22,6 +22,7 @@ Pour que le projet fonctionne correctement, vous devez changer certains paramèt
 2. Recherchez `security.fileuri.strict_origin_policy` et assurez vous que cette valeur soit à `false`. Cela permet à Firefox d'accéder aux fichiers locaux.
 3. Recherchez `browser.translations.automaticallyPopup` et assurez vous que cette valeur soit à `false`. Cela empêche la traduction automatique des pages web.
 4. Recherchez `dom.w3c_touch_events.enabled` et assurez vous que cette valeur soit à `1`. Cela permet de supporter les écrans tactiles.
+5. Recherchez `media.autoplay.default` et assurez vous que cette valeur soit à `0`. Cela autorise la lecture automatique des vidéos et des sons.
 
 ## Quitter Firefox
 
