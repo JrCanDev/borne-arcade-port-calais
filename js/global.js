@@ -26,10 +26,6 @@ function redirectToIndex() {
   var path = window.location.pathname;
   var pathParts = path.split("/");
 
-  if (pathParts[pathParts.length - 1] === "index.html") {
-    return;
-  }
-
   (async function checkAndRedirect() {
     for (var i = pathParts.length; i >= 0; i--) {
       var newPath = pathParts.slice(0, i).join("/") + "/index.html";
