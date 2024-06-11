@@ -16,8 +16,10 @@
 ## Configuration initiale
 
 1. Une fois l'installation terminée, redémarrez votre ordinateur, retirez la clé USB et connectez-vous en tant que l'utilisateur borne.
-1. Retirez le mot de passe de l'utilisateur borne en utilisant la commande suivante dans le terminal : `sudo passwd -d borne`.
-1. Installez les mises à jour en utilisant la commande suivante dans le terminal : `sudo apt-get update && sudo apt-get upgrade`.
+2. Ajouter l'utilisateur borne au groupe `sudo` en utilisant la commande suivante dans le terminal : `su - -c "usermod -aG sudo borne"`.
+3. Relancez la session de l'utilisateur borne en vous déconnectant et en vous reconnectant avec la commande `exit`.
+4. Retirez le mot de passe de l'utilisateur borne en utilisant la commande suivante dans le terminal : `sudo passwd -d borne`.
+5. Installez les mises à jour en utilisant la commande suivante dans le terminal : `sudo apt-get update && sudo apt-get upgrade`.
 
 ## Configuration de l'interface utilisateur
 

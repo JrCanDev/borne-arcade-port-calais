@@ -5,10 +5,19 @@
 Installez le serveur X et les outils que l'on utilisera en utilisant la commande suivante dans le terminal :
 
 ```bash
-sudo apt-get install xorg xdotool
+sudo apt-get install xorg xdotool pulseaudio
 ```
 
 ## Configuration du serveur X
+
+Créez la configuration du serveur X par défaut en utilisant la commande suivante :
+
+```bash
+Xorg -configure
+mv xorg.conf.new /etc/X11/xorg.conf.d/xorgconfigure.conf
+```
+
+Cela permettra de créer un fichier de configuration du serveur X qui correspond à la configuration actuelle de l'écran.
 
 Créez un fichier `.xinitrc` dans le répertoire personnel de l'utilisateur non-root (`/home/borne/.xinitrc`) et ajoutez-y les lignes suivante en utilisant un editeur de texte tel que `nano` :
 
@@ -52,6 +61,10 @@ Ajoutez les lignes suivantes a la fin du fichier `.bashrc` de l'utilisateur non-
 
 ```bash
 if [ -z "$DISPLAY" ] && [ $(tty) == /dev/tty1 ]; then
+  # On a besoin de sleep quelque millisecondes pour
+  # laisser la fonctionalité de l'écran tactile s'initialiser.
+  # On utilise 2 secondes pour être sûr.
+  sleep 2
   startx -- -nocursor
 fi
 ```
