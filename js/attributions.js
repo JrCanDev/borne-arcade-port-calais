@@ -43,3 +43,12 @@ window.onload = function () {
         }, 5000);
     });
 }
+
+window.addEventListener('scroll', function() {
+    var scrollDown = document.getElementById('scrollDown');
+    if (window.scrollY > 0) {
+        scrollDown.classList.add('hide');
+    } else {
+        scrollDown.classList.remove('hide');
+    }
+});
