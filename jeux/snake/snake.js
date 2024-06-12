@@ -102,6 +102,9 @@ window.onload = function () {
   // Increase the segment count
   Snake.prototype.grow = function () {
     this.growsegments++;
+    if (this.growsegments % 7 === 0) {
+      this.speed++;
+    }
   };
 
   // Check we are allowed to move
@@ -193,7 +196,7 @@ window.onload = function () {
 
   function newGame() {
     // Initialize the snake
-    snake.init(10, 10, 1, 10, 4);
+    snake.init(10, 10, 1, 6, 4);
 
     // Generate the default level
     level.generate();
