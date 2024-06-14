@@ -1,6 +1,7 @@
 #character {
     max-height: 96px;
     max-width: 96px;
+    animation: grow-shrink 1s infinite ease-in-out;
 }
 
 #game-container {
