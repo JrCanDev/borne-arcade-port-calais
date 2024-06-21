@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Joshua Vandaële" /><link rel="canonical" href="https://jrcandev.github.io/borne-arcade-port-calais/miseenmarche/debian/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Installation de Debian - Borne d'Arcade du Port de Calais</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../css/print-site-enum-headings1.css" rel="stylesheet" />
+        <link href="../../css/print-site-enum-headings2.css" rel="stylesheet" />
+        <link href="../../css/print-site-enum-headings3.css" rel="stylesheet" />
+        <link href="../../css/print-site-enum-headings4.css" rel="stylesheet" />
+        <link href="../../css/print-site-enum-headings5.css" rel="stylesheet" />
+        <link href="../../css/print-site-enum-headings6.css" rel="stylesheet" />
+        <link href="../../css/print-site.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Installation de Debian";
+        var mkdocs_page_input_path = "miseenmarche/debian.md";
+        var mkdocs_page_url = "/borne-arcade-port-calais/miseenmarche/debian/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Borne d'Arcade du Port de Calais
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Accueil</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../remiseazero/">Remise à Zéro des Scores</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Outils</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../outils/traduction/">Outil de Traduction</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../outils/optimisation/">Outil d'optimisation des images</a>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../print_page">Documentation au format imprimable</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Mise en marche</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../">Mise en marche</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Installation de Debian</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#preparation">Préparation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#configuration-initiale">Configuration initiale</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#configuration-de-linterface-utilisateur">Configuration de l'interface utilisateur</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#configuration-de-grub">Configuration de grub</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#optimisation-du-demarrage-optionnel">Optimisation du démarrage (Optionnel)</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../firefox/">Installation de Firefox</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../application/">Installation de l'application</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../xserver/">Installation du Serveur X</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Personnalisation de l'Application</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../personnalisation/images/">Changer les Images</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../personnalisation/textes/">Changer les textes</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Borne d'Arcade du Port de Calais</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Mise en marche</li>
+      <li class="breadcrumb-item active">Installation de Debian</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/JrCanDev/borne-arcade-port-calais/edit/master/docs/miseenmarche/debian.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="installation-de-debian">Installation de Debian</h1>
+<h2 id="preparation">Préparation</h2>
+<ol>
+<li>Téléchargez l'image ISO netinstall de Debian <strong>standard</strong> (Sans <a href="https://fr.wikipedia.org/wiki/Environnement_de_bureau">environnement de bureau</a>) sur le site officiel de Debian : <a href="https://www.debian.org/CD/live/">https://www.debian.org/CD/live/</a>.</li>
+<li>Flasher l'image ISO sur une clé USB en utilisant un logiciel tel que <a href="https://github.com/pbatard/rufus/releases/latest">Rufus</a> ou <a href="https://github.com/balena-io/etcher/releases/latest">Etcher</a>.</li>
+</ol>
+<h2 id="installation">Installation</h2>
+<ol>
+<li>Démarrez votre ordinateur sur la clé USB.</li>
+<li>Suivez les instructions d'installation de Debian.</li>
+<li>Lors de l'étape de sélection du nom de l'ordinateur, choisissez <code>borne</code>.</li>
+<li>Lors de l'étape de sélection du nom de l'utilisateur, choisissez <code>borne</code>.</li>
+<li>Lors de l'étape de sélection du mot de passe, choisissez <code>borne</code>.</li>
+</ol>
+<h2 id="configuration-initiale">Configuration initiale</h2>
+<ol>
+<li>Une fois l'installation terminée, redémarrez votre ordinateur, retirez la clé USB et connectez-vous en tant que l'utilisateur borne.</li>
+<li>Ajouter l'utilisateur borne au groupe <code>sudo</code> en utilisant la commande suivante dans le terminal : <code>su - -c "usermod -aG sudo borne"</code>.</li>
+<li>Relancez la session de l'utilisateur borne en vous déconnectant et en vous reconnectant avec la commande <code>exit</code>.</li>
+<li>Retirez le mot de passe de l'utilisateur borne en utilisant la commande suivante dans le terminal : <code>sudo passwd -d borne</code>.</li>
+<li>Installez les mises à jour en utilisant la commande suivante dans le terminal : <code>sudo apt-get update &amp;&amp; sudo apt-get upgrade</code>.</li>
+</ol>
+<h2 id="configuration-de-linterface-utilisateur">Configuration de l'interface utilisateur</h2>
+<p>Pour activer la connexion automatique de l'utilisateur borne et le lancement de l'interface graphique au démarrage, vous devez modifier certains fichiers de configuration.</p>
+<ol>
+<li>
+<p>Ouvrez le fichier <code>/etc/systemd/logind.conf</code> en utilisant la commande suivante dans le terminal : <code>sudo nano /etc/systemd/logind.conf</code>. Recherchez la ligne <code>#NAutoVTs=6</code> et remplacez-la par <code>NAutoVTs=1</code>. Enregistrez et quittez le fichier.</p>
+</li>
+<li>
+<p>Créez un fichier override pour le service <code>getty@tty1</code> en utilisant la commande suivante dans le terminal : <code>sudo systemctl edit getty@tty1</code>. Ajoutez les lignes suivantes dans le fichier et enregistrez-le :</p>
+</li>
+</ol>
+<pre><code class="language-conf">[Service]
+ExecStart=
+ExecStart=-/sbin/agetty --autologin borne --noclear %I $TERM
+</code></pre>
+<h2 id="configuration-de-grub">Configuration de grub</h2>
+<ol>
+<li>Cachez <a href="https://fr.wikipedia.org/wiki/GNU_GRUB">grub</a> au démarrage en modifiant le fichier de configuration <code>/etc/default/grub</code> en utilisant la commande <code>sudo nano /etc/default/grub</code>. Ajoutez et modifiez les lignes suivantes dans le fichier et enregistrez-le :</li>
+</ol>
+<pre><code class="language-conf">GRUB_TIMEOUT=0
+GRUB_HIDDEN_TIMEOUT=0
+GRUB_HIDDEN_TIMEOUT_QUIET=true
+</code></pre>
+<p>Enregistrez et quittez le fichier, puis mettez à jour la configuration de grub en utilisant la commande suivante dans le terminal : <code>sudo update-grub</code>.</p>
+<h2 id="optimisation-du-demarrage-optionnel">Optimisation du démarrage (Optionnel)</h2>
+<ol>
+<li>
+<p>Désactivez les services inutiles afin d'accélerer le temps pour boot en utilisant la commande suivante dans le terminal : <code>sudo systemctl mask &lt;service&gt;</code>. Remplacez <code>&lt;service&gt;</code> par le nom du service que vous souhaitez désactiver. Par exemple, pour désactiver le service <code>bluetooth</code>, utilisez la commande suivante : <code>sudo systemctl mask bluetooth</code>. Quelques services que vous pouvez désactiver sont:</p>
+</li>
+<li>
+<p><code>bluetooth</code> - Si vous n'utilisez pas le Bluetooth.</p>
+</li>
+<li><code>cups</code> - Si vous n'utilisez pas d'imprimante.</li>
+<li><code>exim4</code> - Si vous n'utilisez pas de serveur de messagerie.</li>
+</ol>
+<p>Une liste complète des services peut être trouvée en utilisant la commande suivante dans le terminal : <code>systemctl list-unit-files</code>.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../" class="btn btn-neutral float-left" title="Mise en marche"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../firefox/" class="btn btn-neutral float-right" title="Installation de Firefox">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/JrCanDev/borne-arcade-port-calais/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../firefox/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../js/print-site.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
