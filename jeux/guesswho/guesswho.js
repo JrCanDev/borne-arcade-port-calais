@@ -31,10 +31,13 @@ class Score {
     this.updateScoreDisplay();
   }
 
-  initScores() {
-    document.getElementById("score").innerHTML = "00:00:00";
+  startScores() {
     this.timeToSolve = new Date().getTime();
     this.updateScore();
+  }
+
+  initScores() {
+    document.getElementById("score").innerHTML = "00:00:00";
     this.updateHighscoreDisplay();
   }
 
@@ -259,7 +262,7 @@ class Character extends PositionedImage {
       instance.clothes.setCharacter(instance);
       instance.items = items;
       instance.items.forEach((item) => item.setCharacter(instance));
-      
+
       let nameP = document.createElement("p");
       nameP.classList.add("character-name");
       nameP.style.left = position.x - gameContainer.offsetLeft + "px";
@@ -289,6 +292,14 @@ class Game {
   async initializeGame() {
     this.gameScore = new Score();
     this.gameScore.initScores();
+    this.gameScoreStarted = false;
+
+    document.addEventListener("touchstart", () => {
+      if (!this.gameScoreStarted) {
+        this.gameScoreStarted = true;
+        this.gameScore.startScores();
+      }
+    });
 
     const gameContainer = document.getElementById("game-container");
     const gameContainerWidth = gameContainer.offsetWidth;
@@ -430,8 +441,9 @@ class Game {
         character.items.forEach((item) => item.show())
       );
     }
-
-    this.gameScore.updateScore();
+    if (this.gameScoreStarted) {
+      this.gameScore.updateScore();
+    }
   }
 }
 

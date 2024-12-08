@@ -18,6 +18,7 @@
 </head>
 
 <body>
+    <p data-i18n="game_select.subtitle" id="subtitle"></p>
     <header>
         <img src="img/logout.svg" id="logout" onclick="redirectToPage(event, 'index.html')">
         <div id="flags">
@@ -88,7 +89,8 @@
             <div class="game-card">
                 <h1 data-i18n="game.quiz.theme"></h1>
                 <div class="game-text">
-                    <h2><span class="quiz-name" data-i18n="game.quiz.name"></span> & <span class="differences-name" data-i18n="game.7differences.name"></span></h2>
+                    <h2><span class="quiz-name" data-i18n="game.quiz.name"></span> & <span class="differences-name"
+                            data-i18n="game.7differences.name"></span></h2>
                     <p data-i18n="game.quiz.description"></p>
                     <hr>
                     <p data-i18n="game.7differences.description"></p>
@@ -101,7 +103,8 @@
             <div class="game-card">
                 <h1 data-i18n="game.blindtest.theme"></h1>
                 <div class="game-text">
-                    <h2><span class="blindtest-name" data-i18n="game.blindtest.name"></span> & <span class="pacman-name" data-i18n="game.pacman.name"></span></h2>
+                    <h2><span class="blindtest-name" data-i18n="game.blindtest.name"></span> & <span class="pacman-name"
+                            data-i18n="game.pacman.name"></span></h2>
                     <p data-i18n="game.blindtest.description"></p>
                     <hr>
                     <p data-i18n="game.pacman.description"></p>
@@ -147,7 +150,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="modal" id="quiz-7differences">
         <span class="modal-close"
             onclick="document.getElementById('quiz-7differences').style.display = 'none'">&times;</span>
@@ -162,7 +165,8 @@
                 </div>
                 <div class="modal-choice" onclick="redirectToPage(event, 'jeux/7differences/game.html')">
                     <button>
-                        <span class="differences-name" id="differences-modal-button" data-i18n="game.7differences.name"></span>
+                        <span class="differences-name" id="differences-modal-button"
+                            data-i18n="game.7differences.name"></span>
                     </button>
                     <p data-i18n="game.7differences.description"></p>
                 </div>
@@ -170,4 +174,5 @@
         </div>
     </div>
 </body>
+
 </html>

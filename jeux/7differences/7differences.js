@@ -1,5 +1,5 @@
 DIFFERENCE_COUNT = 7;
-MEMORISE_SECONDS = 10;
+MEMORISE_SECONDS = 20;
 
 window.onload = async function () {
   let ORIGINAL_IMAGE = document.getElementById("original-img");
@@ -69,7 +69,7 @@ window.onload = async function () {
       COUNTDOWN_COUNTER.style.fontSize = "64px";
       COUNTDOWN_COUNTER.style.top = "400px";
       COUNTDOWN_COUNTER.classList.add("slide-in-quick");
-      COUNTDOWN_COUNTER.removeEventListener("animationend", () => {});
+      COUNTDOWN_COUNTER.removeEventListener("animationend", () => { });
     });
     COUNTDOWN_COUNTER.classList.add("slide-out");
     ORIGINAL_IMAGE.classList.add("slide-out");

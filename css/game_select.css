@@ -55,6 +55,15 @@ header a {
     box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.9);
 }
 
+#subtitle {
+    position: absolute;
+    left: 823px;
+    top: 150px;
+    text-align: center;
+    font-size: 48px;
+    padding-top: 16px;
+}
+
 #selected-language {
     box-shadow: 0px 0px 16px rgba(255, 255, 255, 0.9) !important;
 }
@@ -317,13 +326,16 @@ button:active {
     0% {
         transform: translateX(256px) rotate(10deg) scale(0.9);
     }
+
     50% {
         transform: translateX(-512px) rotate(-10deg) scale(0.9);
 
     }
+
     75% {
         transform: translateX(256px) rotate(10deg);
     }
+
     100% {
         transform: translateX(256px) rotate(10deg) scale(0.9);
     }
