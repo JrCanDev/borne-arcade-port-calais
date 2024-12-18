@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Joshua Vandaële" /><link rel="canonical" href="https://jrcandev.github.io/borne-arcade-port-calais/miseenmarche/xserver/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Installation du Serveur X - Borne d'Arcade du Port de Calais</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../css/print-site-enum-headings1.css" rel="stylesheet" />
+        <link href="../../css/print-site-enum-headings2.css" rel="stylesheet" />
+        <link href="../../css/print-site-enum-headings3.css" rel="stylesheet" />
+        <link href="../../css/print-site-enum-headings4.css" rel="stylesheet" />
+        <link href="../../css/print-site-enum-headings5.css" rel="stylesheet" />
+        <link href="../../css/print-site-enum-headings6.css" rel="stylesheet" />
+        <link href="../../css/print-site.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Installation du Serveur X";
+        var mkdocs_page_input_path = "miseenmarche/xserver.md";
+        var mkdocs_page_url = "/borne-arcade-port-calais/miseenmarche/xserver/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Borne d'Arcade du Port de Calais
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Accueil</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../remiseazero/">Remise à Zéro des Scores</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Outils</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../outils/traduction/">Outil de Traduction</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../outils/optimisation/">Outil d'optimisation des images</a>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../print_page">Documentation au format imprimable</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Mise en marche</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../">Mise en marche</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../debian/">Installation de Debian</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../firefox/">Installation de Firefox</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../application/">Installation de l'application</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Installation du Serveur X</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#prerequis">Prérequis</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#configuration-du-serveur-x">Configuration du serveur X</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#rendre-le-fichier-executable">Rendre le fichier exécutable</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#lancer-le-serveur-x-au-demarrage">Lancer le serveur X au démarrage</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#configuration-de-laudio">Configuration de l'audio</a>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Personnalisation de l'Application</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../personnalisation/images/">Changer les Images</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../personnalisation/textes/">Changer les textes</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Borne d'Arcade du Port de Calais</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Mise en marche</li>
+      <li class="breadcrumb-item active">Installation du Serveur X</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/JrCanDev/borne-arcade-port-calais/edit/master/docs/miseenmarche/xserver.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="installation-du-serveur-x">Installation du serveur X</h1>
+<h2 id="prerequis">Prérequis</h2>
+<p>Installez le serveur X et les outils que l'on utilisera en utilisant la commande suivante dans le terminal :</p>
+<pre><code class="language-bash">sudo apt-get install xorg xdotool pulseaudio
+</code></pre>
+<h2 id="configuration-du-serveur-x">Configuration du serveur X</h2>
+<p>Créez la configuration du serveur X par défaut en utilisant la commande suivante :</p>
+<pre><code class="language-bash">Xorg -configure
+mv xorg.conf.new /etc/X11/xorg.conf.d/xorgconfigure.conf
+</code></pre>
+<p>Cela permettra de créer un fichier de configuration du serveur X qui correspond à la configuration actuelle de l'écran.</p>
+<p>Créez un fichier <code>.xinitrc</code> dans le répertoire personnel de l'utilisateur non-root (<code>/home/borne/.xinitrc</code>) et ajoutez-y les lignes suivante en utilisant un editeur de texte tel que <code>nano</code> :</p>
+<pre><code class="language-sh"># Lancer Firefox en mode kiosque
+exec firefox --disable-pinch --kiosk /chemin/absolut/vers/index.html &amp;
+# Redimensionner et déplacer la fenêtre de Firefox
+for win in $(xdotool search --sync &quot;Firefox&quot;); do
+  xdotool windowsize $win 1920 1080 &amp;
+  xdotool windowmove $win 0 0 &amp;
+done
+# Désactiver l'économiseur d'écran et l'extinction de l'écran
+xset s off
+xset s noblank
+xset -dpms
+# Attendre que Firefox se ferme
+while pgrep &quot;firefox&quot; &gt; /dev/null; do
+  sleep 1
+done
+</code></pre>
+<p>Cela permettra de lancer Firefox en mode kiosque au démarrage du serveur X, de redimensionner la fenêtre de Firefox à la taille de l'écran, et d'attendre que Firefox se ferme avant de fermer le serveur X.</p>
+<p><code>/chemin/absolut/vers/index.html</code> doit être remplacé par le chemin absolu vers le fichier HTML que vous souhaitez afficher dans Firefox. Par exemple, <code>/home/borne/borne-arcade-port-calais/index.html</code>.</p>
+<p><code>--disable-pinch</code> est utilisé pour désactiver le zoom sur les écrans tactiles.</p>
+<p><code>--kiosk</code> est utilisé pour ouvrir Firefox en mode kiosque, ce qui signifie que Firefox s'ouvrira en plein écran sans barre d'adresse ni barre d'onglets.</p>
+<h2 id="rendre-le-fichier-executable">Rendre le fichier exécutable</h2>
+<p>Rendez le fichier <code>.xinitrc</code> exécutable avec la commande :</p>
+<pre><code class="language-bash">sudo chmod +x .xinitrc
+</code></pre>
+<h2 id="lancer-le-serveur-x-au-demarrage">Lancer le serveur X au démarrage</h2>
+<p>Ajoutez les lignes suivantes a la fin du fichier <code>.bashrc</code> de l'utilisateur non-root (<code>/home/borne/.bashrc</code>) pour lancer le serveur X au démarrage :</p>
+<pre><code class="language-bash">if [ -z &quot;$DISPLAY&quot; ] &amp;&amp; [ $(tty) == /dev/tty1 ]; then
+  # On a besoin de sleep quelque millisecondes pour
+  # laisser la fonctionalité de l'écran tactile s'initialiser.
+  # On utilise 2 secondes pour être sûr.
+  sleep 2
+  startx -- -nocursor
+fi
+</code></pre>
+<p>Le fichier <code>.bashrc</code> est exécuté à chaque connexion de l'utilisateur.</p>
+<h2 id="configuration-de-laudio">Configuration de l'audio</h2>
+<p>La configuration de l'audio se fait en deux étapes : la consultation du volume actuel et son réglage.</p>
+<ul>
+<li><strong>Consultation du volume actuel :</strong> Pour connaître le volume actuel de la sortie audio, utilisez la commande suivante :</li>
+</ul>
+<pre><code class="language-bash">pactl get-sink-volume 0
+</code></pre>
+<p>Cette commande retourne le volume actuel de la sortie audio.</p>
+<ul>
+<li><strong>Réglage du volume :</strong> Pour ajuster le volume, utilisez la commande suivante :</li>
+</ul>
+<pre><code class="language-bash">pactl set-sink-volume 0 50%
+</code></pre>
+<p>Remplacez <code>50%</code> par le pourcentage de volume que vous souhaitez. Par exemple, si vous voulez régler le volume à 80%, la commande sera <code>pactl set-sink-volume 0 80%</code>.</p>
+<p><strong>Note :</strong> Si votre sortie audio dispose d'un contrôle de volume matériel, il est recommandé de régler le volume du logiciel à 100% et d'ajuster le volume à l'aide du contrôle de volume matériel.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../application/" class="btn btn-neutral float-left" title="Installation de l'application"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../personnalisation/images/" class="btn btn-neutral float-right" title="Changer les Images">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/JrCanDev/borne-arcade-port-calais/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../application/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../personnalisation/images/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../js/print-site.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
