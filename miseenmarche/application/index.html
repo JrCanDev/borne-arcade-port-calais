@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Joshua Vandaële" /><link rel="canonical" href="https://jrcandev.github.io/borne-arcade-port-calais/miseenmarche/application/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Installation de l'application - Borne d'Arcade du Port de Calais</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../css/print-site-enum-headings1.css" rel="stylesheet" />
+        <link href="../../css/print-site-enum-headings2.css" rel="stylesheet" />
+        <link href="../../css/print-site-enum-headings3.css" rel="stylesheet" />
+        <link href="../../css/print-site-enum-headings4.css" rel="stylesheet" />
+        <link href="../../css/print-site-enum-headings5.css" rel="stylesheet" />
+        <link href="../../css/print-site-enum-headings6.css" rel="stylesheet" />
+        <link href="../../css/print-site.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Installation de l\u0027application";
+        var mkdocs_page_input_path = "miseenmarche/application.md";
+        var mkdocs_page_url = "/borne-arcade-port-calais/miseenmarche/application/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Borne d'Arcade du Port de Calais
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Accueil</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../remiseazero/">Remise à Zéro des Scores</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Outils</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../outils/traduction/">Outil de Traduction</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../outils/optimisation/">Outil d'optimisation des images</a>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="" href="../../print_page">Documentation au format imprimable</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Mise en marche</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../">Mise en marche</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../debian/">Installation de Debian</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../firefox/">Installation de Firefox</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Installation de l'application</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#prerequis">Prérequis</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#clonage-du-depot">Clonage du dépôt</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#extraction-du-depot">Extraction du dépôt</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#utilisation-dune-cle-usb">Utilisation d'une clé USB</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#changement-de-proprietaire">Changement de propriétaire</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../xserver/">Installation du Serveur X</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Personnalisation de l'Application</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../personnalisation/images/">Changer les Images</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../personnalisation/textes/">Changer les textes</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Borne d'Arcade du Port de Calais</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Mise en marche</li>
+      <li class="breadcrumb-item active">Installation de l'application</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/JrCanDev/borne-arcade-port-calais/edit/master/docs/miseenmarche/application.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="installation-de-lapplication">Installation de l'application</h1>
+<h2 id="prerequis">Prérequis</h2>
+<p>Avant de commencer l'installation, assurez-vous d'avoir installé <a href="https://git-scm.com/">Git</a> sur votre machine. Si ce n'est pas le cas, vous pouvez l'installer en utilisant la commande suivante dans le terminal :</p>
+<pre><code class="language-bash">sudo apt-get install git
+</code></pre>
+<p>Si vous ne souhaitez pas installer Git, vous pouvez également télécharger le dépôt sur une clé USB et le copier sur l'ordinateur.</p>
+<h2 id="clonage-du-depot">Clonage du dépôt</h2>
+<p>Pour obtenir une copie du dépôt sur votre machine, utilisez la commande suivante dans le terminal :</p>
+<pre><code class="language-bash">git clone https://github.com/JrCanDev/borne-arcade-port-calais.git
+</code></pre>
+<p>Si vous ne souhaitez pas utiliser Git, vous pouvez télécharger le dépôt en cliquant sur le bouton "Code" en haut de la <a href="https://github.com/JrCanDev/borne-arcade-port-calais">page du dépôt</a>.</p>
+<h2 id="extraction-du-depot">Extraction du dépôt</h2>
+<p>Si vous avez téléchargé le dépôt, décompressez et extrayez le fichier téléchargé.</p>
+<h2 id="utilisation-dune-cle-usb">Utilisation d'une clé USB</h2>
+<p>Si vous n'utilisez pas de clé USB, vous pouvez passer à la section "Changement de propriétaire". Si vous utilisez une clé USB, suivez les étapes suivantes :</p>
+<ul>
+<li>Branchez la clé USB contenant le dossier <code>borne-arcade-port-calais</code> sur l'ordinateur de la borne d'arcade.</li>
+<li>Montez la clé USB en utilisant la commande suivante dans le terminal :</li>
+</ul>
+<pre><code class="language-bash">sudo mount /dev/sdX /mnt
+</code></pre>
+<p>Remplacez <code>/dev/sdX</code> par le nom de votre périphérique USB. Vous pouvez trouver ce nom en utilisant la commande <code>lsblk</code>.</p>
+<ul>
+<li>Copiez le dossier <code>borne-arcade-port-calais</code> dans le répertoire personnel de l'utilisateur non-root (<code>/home/borne</code>) en utilisant la commande suivante dans le terminal :</li>
+</ul>
+<pre><code class="language-bash">sudo cp -r /mnt/borne-arcade-port-calais /home/borne/borne-arcade-port-calais
+</code></pre>
+<ul>
+<li>Démontez la clé USB en utilisant la commande suivante dans le terminal :</li>
+</ul>
+<pre><code class="language-bash">sudo umount /mnt
+</code></pre>
+<p>Retirez ensuite la clé USB.</p>
+<h2 id="changement-de-proprietaire">Changement de propriétaire</h2>
+<p>Pour que l'application fonctionne correctement, vous devez changer le propriétaire du dossier <code>borne-arcade-port-calais</code>. Utilisez la commande suivante dans le terminal :</p>
+<pre><code class="language-bash">sudo chown -R borne:borne /home/borne/borne-arcade-port-calais
+</code></pre>
+<p>Remplacez <code>borne</code> par le nom de l'utilisateur non-root et <code>/home/borne/borne-arcade-port-calais</code> par le chemin absolu vers le dossier contenant l'application.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../firefox/" class="btn btn-neutral float-left" title="Installation de Firefox"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../xserver/" class="btn btn-neutral float-right" title="Installation du Serveur X">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/JrCanDev/borne-arcade-port-calais/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../firefox/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../xserver/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../js/print-site.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
